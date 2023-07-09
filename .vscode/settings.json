@@ -2,5 +2,6 @@
   "eslint.workingDirectories": ["./next-ver"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "cSpell.words": ["Avenir", "Kaku", "Ryota", "Sasaki", "Sasaki's", "Wantedly"]
 }
