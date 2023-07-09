@@ -1,0 +1,10 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "repository": "https://github.com/philip82148/portfolio",
+  "author": "philip82148 <92205270+philip82148@users.noreply.github.com>",
+  "private": true,
+  "workspaces": [
+    "next-ver"
+  ]
+}
