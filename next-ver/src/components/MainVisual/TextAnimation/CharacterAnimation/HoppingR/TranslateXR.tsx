@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import type { TransformType } from '..'
 
-export const TranslateX: TransformType = ({ children, durationS }) => {
+export const TranslateXR: TransformType = ({ children, durationS }) => {
   const [phase, setPhase] = useState(0)
 
   let style: CSSProperties
@@ -22,7 +22,7 @@ export const TranslateX: TransformType = ({ children, durationS }) => {
       }
       break
     case 2:
-      phaseDurationS = 0
+      phaseDurationS = 0.1
       style = {
         transform: `translate(-100vw, 0)`,
       }

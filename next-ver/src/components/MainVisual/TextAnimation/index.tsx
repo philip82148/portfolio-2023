@@ -12,9 +12,13 @@ export const TextAnimation: React.FC<{ children: string }> = ({ children }) => {
   }, [children.length])
 
   useEffect(() => {
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       setDurationSs([...Array(children.length)].map(() => randomInt(5, 10)))
     }, 20000)
+
+    return () => {
+      clearInterval(intervalId)
+    }
   }, [children.length])
 
   return (
