@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import { Typography } from '@mui/material'
 
 import { MainVisual } from '@/components/MainVisual'
 import { WorkCard } from '@/components/WorkCard'
@@ -17,6 +18,9 @@ const Home: NextPage = () => {
           { display: 'Portfolio Ver. 3' },
         ]}
       />
+      <Typography variant="h2" textAlign="center" mt={10}>
+        -------------------- 以下製作中 --------------------
+      </Typography>
       <PersonalHistory>
         <EpochCard
           title="小学6年~"
