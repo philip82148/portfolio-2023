@@ -1,5 +1,5 @@
 import { Box, Fade, Link, Paper, Stack, Typography } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 
 import type { TechType } from './TechTag'
 import { TechTag } from './TechTag'
@@ -46,7 +46,7 @@ export const WorkCard: React.FC<{
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     openOrClose(!closeOnMount)
   }, [closeOnMount])
 
