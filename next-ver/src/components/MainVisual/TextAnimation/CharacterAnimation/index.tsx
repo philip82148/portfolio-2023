@@ -1,5 +1,6 @@
 import { useLayoutEffect, useState } from 'react'
 
+import { Hopping } from './Hopping'
 import { NoTransform } from './NoTransform'
 import { RotateX } from './RotateX'
 import { RotateY } from './RotateY'
@@ -15,7 +16,7 @@ export const CharacterAnimation: React.FC<{ children: string; durationS: number;
   const [randomNo, setRandomNo] = useState(0)
 
   useLayoutEffect(() => {
-    setRandomNo(Math.floor(4 * Math.random()))
+    setRandomNo(Math.floor(Math.random() * 5))
   }, [state])
 
   switch (randomNo) {
@@ -27,5 +28,7 @@ export const CharacterAnimation: React.FC<{ children: string; durationS: number;
       return <RotateY durationS={durationS}>{children}</RotateY>
     case 3:
       return <RotateZ durationS={durationS}>{children}</RotateZ>
+    case 4:
+      return <Hopping durationS={durationS}>{children}</Hopping>
   }
 }
