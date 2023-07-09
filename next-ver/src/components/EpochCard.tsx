@@ -14,9 +14,7 @@ export const EpochCard: React.FC<{ title: string; caption?: string; newTechs?: T
       <Typography>{caption}</Typography>
       <Typography variant="h4">新しく覚えた言語/フレームワーク</Typography>
       <Stack direction="row" justifyContent="center" spacing={1}>
-        {newTechs?.map((tech, i) => (
-          <TechTag key={i} techType={tech} />
-        ))}
+        {newTechs?.map((tech, i) => <TechTag key={i} techType={tech} />)}
       </Stack>
     </Box>
   )
