@@ -51,6 +51,7 @@ jobs:
           tar \
             --dereference --hard-dereference \
             -cvf "$RUNNER_TEMP/artifact.tar" \
+            ./index.html
             -C ./next-ver \
             ./next-ver
       - name: Upload artifact
