@@ -1,0 +1,6 @@
+{
+  "eslint.workingDirectories": ["./next-ver"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
