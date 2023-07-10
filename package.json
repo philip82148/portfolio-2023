@@ -8,6 +8,7 @@
     "next-ver"
   ],
   "scripts": {
-    "format": "yarn workspace next-ver format"
+    "format": "yarn workspace next-ver format",
+    "dev": "yarn workspace next-ver dev"
   }
 }
