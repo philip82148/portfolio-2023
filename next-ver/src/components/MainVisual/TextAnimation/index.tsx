@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { CharacterAnimation } from './CharacterAnimation'
 
@@ -8,14 +8,13 @@ export const TextAnimation: React.FC<{ children: string }> = ({ children }) => {
   const randomInt = (min: number, max: number): number =>
     Math.floor(Math.random() * (max - min + 1)) + min
 
-  useLayoutEffect(() => {
-    setDurationSs([...Array(children.length)].map(() => randomInt(5, 10)))
-  }, [children.length])
-
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const setAllDurationSs = (): void => {
       setDurationSs([...Array(children.length)].map(() => randomInt(5, 10)))
-    }, 20000)
+    }
+
+    setAllDurationSs()
+    const intervalId = setInterval(setAllDurationSs, 20000)
 
     return () => {
       clearInterval(intervalId)

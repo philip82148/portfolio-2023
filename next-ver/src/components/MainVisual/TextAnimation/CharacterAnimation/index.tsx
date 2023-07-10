@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { HoppingL } from './HoppingL'
 import { HoppingR } from './HoppingR'
@@ -16,7 +16,7 @@ export const CharacterAnimation: React.FC<{ children: string; durationS: number;
 }) => {
   const [randomNo, setRandomNo] = useState(0)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setRandomNo(Math.floor(Math.random() * 6))
   }, [state])
 
