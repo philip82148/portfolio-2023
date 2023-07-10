@@ -74,7 +74,8 @@ export const WorkCard: React.FC<{
         target="_blank"
         sx={{
           transition: 'all 1s',
-          color: '#fff',
+          color: 'text.primary',
+          fontWeight: 700,
           textDecoration: 'none',
           cursor: !isOpen || url ? 'pointer' : 'unset',
           position: 'absolute',
@@ -88,10 +89,10 @@ export const WorkCard: React.FC<{
       <Fade in={isOpen} timeout={1000}>
         <Paper
           ref={paperRef}
+          elevation={2}
           sx={{
             borderRadius: 5,
-            bgcolor: '#BFB893',
-            color: '#fff',
+            bgcolor: '#fff',
             ml: rightAlign ? 'auto' : 0,
             mr: !rightAlign ? 'auto' : 0,
             p: 4,

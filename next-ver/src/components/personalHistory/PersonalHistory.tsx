@@ -1,11 +1,13 @@
-import { Container, Divider, Stack } from '@mui/material'
+import { Box, Container, Divider, Stack } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 
 export const PersonalHistory: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
-    <Container sx={{ mt: 10, mb: 10, display: { sm: 'block', xs: 'none' } }} fixed>
-      <Stack divider={<AutoHeightDivider />}>{children}</Stack>
-    </Container>
+    <Box sx={{ background: '#e9e9e9' }}>
+      <Container sx={{ pt: 10, pb: 10, display: { sm: 'block', xs: 'none' } }} fixed>
+        <Stack divider={<AutoHeightDivider />}>{children}</Stack>
+      </Container>
+    </Box>
   )
 }
 
