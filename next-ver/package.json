@@ -10,7 +10,7 @@
     "prettier:fix": "prettier --write .",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "format": "yarn prettier:fix && yarn lint:fix"
+    "format": "yarn prettier:fix && yarn lint:fix && yarn tsc"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -33,6 +33,7 @@
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-sort-exports": "^0.8.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "prettier": "^3.0.0"
   }

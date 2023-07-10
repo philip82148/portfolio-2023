@@ -6,5 +6,9 @@
   "private": true,
   "workspaces": [
     "next-ver"
-  ]
+  ],
+  "scripts": {
+    "format": "yarn workspace next-ver format",
+    "dev": "yarn workspace next-ver dev"
+  }
 }

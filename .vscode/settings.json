@@ -3,5 +3,13 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "cSpell.words": ["Avenir", "Kaku", "Ryota", "Sasaki", "Sasaki's", "Wantedly"]
+  "cSpell.words": [
+    "Avenir",
+    "Kaku",
+    "meibo",
+    "Ryota",
+    "Sasaki",
+    "Sasaki's",
+    "Wantedly"
+  ]
 }

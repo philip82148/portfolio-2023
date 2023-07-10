@@ -1,10 +1,8 @@
 import { Typography } from '@mui/material'
 import type { NextPage } from 'next'
 
-import { EpochCard } from '@/components/EpochCard'
 import { MainVisual } from '@/components/MainVisual'
-import { PersonalHistory } from '@/components/PersonalHistory'
-import { WorkCard } from '@/components/WorkCard'
+import { EpochCard, PersonalHistory, WorkCard } from '@/components/personalHistory'
 
 const Home: NextPage = () => {
   return (
@@ -50,7 +48,18 @@ const Home: NextPage = () => {
         />
         <EpochCard
           title="大学"
-          newTechs={['jquery', 'php', 'mysql', 'wordpress', 'flutter', 'kotlin', 'typescript', 'react', 'next', 'nest']}
+          newTechs={[
+            'jquery',
+            'php',
+            'mysql',
+            'wordpress',
+            'flutter',
+            'kotlin',
+            'typescript',
+            'react',
+            'next',
+            'nest',
+          ]}
         />
         <WorkCard
           title="philip82148/mention-generator"

@@ -16,7 +16,10 @@ export const WorkCard: React.FC<{
 }> = ({ rightAlign, title, url, imageSrc, caption, tags, closeOnMount }) => {
   const [isOpen, setIsOpen] = useState(!closeOnMount)
   const [boxHeight, setBoxHeight] = useState<number>()
-  const [titlePosition, setTitlePosition] = useState<{ top: number | string; left: number | string }>({
+  const [titlePosition, setTitlePosition] = useState<{
+    top: number | string
+    left: number | string
+  }>({
     top: '50%',
     left: '50%',
   })
@@ -77,6 +80,7 @@ export const WorkCard: React.FC<{
           position: 'absolute',
           zIndex: 1,
           ...titlePosition,
+          maxWidth: '100%',
         }}
       >
         {title}
@@ -92,13 +96,14 @@ export const WorkCard: React.FC<{
             mr: !rightAlign ? 'auto' : 0,
             p: 4,
             width: 1000,
+            maxWidth: '100%',
           }}
           onClick={() => {
             openOrClose(!isOpen)
           }}
         >
           <Stack direction={rightAlign ? 'row-reverse' : 'row'} justifyContent="space-between">
-            <Stack justifyContent="space-between" sx={{ width: 600 }}>
+            <Stack justifyContent="space-between" sx={{ width: 600, maxWidth: '100%' }}>
               <Box>
                 <Link ref={titleRef} sx={{ visibility: 'hidden' }}>
                   {title}
@@ -112,7 +117,6 @@ export const WorkCard: React.FC<{
             <Box
               sx={{
                 position: 'relative',
-                width: 300,
                 height: 200,
                 borderRadius: 3,
                 overflow: 'hidden',

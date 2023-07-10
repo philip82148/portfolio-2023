@@ -5,7 +5,8 @@ import { CharacterAnimation } from './CharacterAnimation'
 export const TextAnimation: React.FC<{ children: string }> = ({ children }) => {
   const [durationSs, setDurationSs] = useState<number[]>([])
 
-  const randomInt = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1)) + min
+  const randomInt = (min: number, max: number): number =>
+    Math.floor(Math.random() * (max - min + 1)) + min
 
   useLayoutEffect(() => {
     setDurationSs([...Array(children.length)].map(() => randomInt(5, 10)))

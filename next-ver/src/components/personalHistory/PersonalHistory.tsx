@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 export const PersonalHistory: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
-    <Container sx={{ mt: 10, mb: 10 }}>
+    <Container sx={{ mt: 10, mb: 10, display: { sm: 'block', xs: 'none' } }} fixed>
       <Stack divider={<AutoHeightDivider />}>{children}</Stack>
     </Container>
   )

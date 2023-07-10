@@ -45,11 +45,17 @@ export const MainVisual: React.FC<{
               <TextAnimation>Ryota Sasaki</TextAnimation>
             </Box>
           </Box>
-          <Box sx={{ fontSize: { lg: 26, md: 18, sm: 22 }, mb: '5px' }}>Keio University Student Software Engineer</Box>
+          <Box sx={{ fontSize: { lg: 26, md: 18, sm: 22 }, mb: '5px' }}>
+            Keio University Student Software Engineer
+          </Box>
           <Box sx={{ height: 120 }}>
             <Stack
               direction="row"
-              sx={{ height: { lg: 35, sm: 25, xs: 18 }, ml: '1px', mt: { lg: '28px', md: '18px', xs: '14px' } }}
+              sx={{
+                height: { lg: 35, sm: 25, xs: 18 },
+                ml: '1px',
+                mt: { lg: '28px', md: '18px', xs: '14px' },
+              }}
               spacing={{ lg: 5, sm: 3, xs: 1 }}
             >
               <Link href="https://github.com/philip82148">
@@ -75,13 +81,19 @@ export const MainVisual: React.FC<{
           {listItems.map((listItem, i) => (
             <Fragment key={i}>
               {listItem.href ? (
-                <Link href={listItem.href} sx={{ fontSize: { lg: 22, md: 18 }, color: '#fff', textDecoration: 'none' }}>
+                <Link
+                  href={listItem.href}
+                  sx={{ fontSize: { lg: 22, md: 18 }, color: '#fff', textDecoration: 'none' }}
+                >
                   {listItem.display}
                 </Link>
               ) : (
                 <Box
                   onClick={listItem.onClick}
-                  sx={{ fontSize: { lg: 22, md: 18 }, cursor: listItem.onClick ? 'pointer' : 'not-allowed' }}
+                  sx={{
+                    fontSize: { lg: 22, md: 18 },
+                    cursor: listItem.onClick ? 'pointer' : 'not-allowed',
+                  }}
                 >
                   {listItem.display}
                 </Box>

@@ -9,11 +9,11 @@ export const EpochCard: React.FC<{ title: string; caption?: string; newTechs?: T
   newTechs,
 }) => {
   return (
-    <Box sx={{ width: 600, m: '0 auto', textAlign: 'center' }}>
+    <Box sx={{ width: 600, maxWidth: '100%', m: '0 auto', textAlign: 'center' }}>
       <Typography variant="h2">{title}</Typography>
       <Typography>{caption}</Typography>
       <Typography variant="h4">新しく覚えた言語/フレームワーク</Typography>
-      <Stack direction="row" justifyContent="center" spacing={1}>
+      <Stack direction="row" flexWrap={'wrap'} justifyContent="center" spacing={1}>
         {newTechs?.map((tech, i) => <TechTag key={i} techType={tech} />)}
       </Stack>
     </Box>
