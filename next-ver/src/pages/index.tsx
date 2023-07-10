@@ -50,7 +50,18 @@ const Home: NextPage = () => {
         />
         <EpochCard
           title="大学"
-          newTechs={['jquery', 'php', 'mysql', 'wordpress', 'flutter', 'kotlin', 'typescript', 'react', 'next', 'nest']}
+          newTechs={[
+            'jquery',
+            'php',
+            'mysql',
+            'wordpress',
+            'flutter',
+            'kotlin',
+            'typescript',
+            'react',
+            'next',
+            'nest',
+          ]}
         />
         <WorkCard
           title="philip82148/mention-generator"

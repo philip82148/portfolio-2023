@@ -16,7 +16,10 @@ export const WorkCard: React.FC<{
 }> = ({ rightAlign, title, url, imageSrc, caption, tags, closeOnMount }) => {
   const [isOpen, setIsOpen] = useState(!closeOnMount)
   const [boxHeight, setBoxHeight] = useState<number>()
-  const [titlePosition, setTitlePosition] = useState<{ top: number | string; left: number | string }>({
+  const [titlePosition, setTitlePosition] = useState<{
+    top: number | string
+    left: number | string
+  }>({
     top: '50%',
     left: '50%',
   })
