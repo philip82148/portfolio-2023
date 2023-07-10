@@ -2,9 +2,7 @@ import type { NextPage } from 'next'
 import { Typography } from '@mui/material'
 
 import { MainVisual } from '@/components/MainVisual'
-import { WorkCard } from '@/components/WorkCard'
-import { PersonalHistory } from '@/components/PersonalHistory'
-import { EpochCard } from '@/components/EpochCard'
+import { EpochCard, PersonalHistory, WorkCard } from '@/components/personalHistory'
 
 const Home: NextPage = () => {
   return (
