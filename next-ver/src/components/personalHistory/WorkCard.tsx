@@ -96,35 +96,39 @@ export const WorkCard: React.FC<{
             ml: rightAlign ? 'auto' : 0,
             mr: !rightAlign ? 'auto' : 0,
             p: 4,
-            width: 1000,
-            maxWidth: '100%',
+            width: 800,
           }}
           onClick={() => {
             openOrClose(!isOpen)
           }}
         >
           <Stack direction={rightAlign ? 'row-reverse' : 'row'} justifyContent="space-between">
-            <Stack justifyContent="space-between" sx={{ width: 600, maxWidth: '100%' }}>
+            <Stack justifyContent="space-between" sx={{ width: 430 }}>
               <Box>
                 <Link ref={titleRef} sx={{ visibility: 'hidden' }}>
                   {title}
                 </Link>
                 <Typography>{caption}</Typography>
               </Box>
-              <Stack direction="row" spacing={1}>
+              <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
                 {tags?.map((tag, i) => <TechTag key={i} techType={tag} />)}
               </Stack>
             </Stack>
             <Box
+              component="a"
               sx={{
-                position: 'relative',
-                height: 200,
+                width: 250,
+                // minHeight: 150,
                 borderRadius: 3,
-                overflow: 'hidden',
+                background: `url(${imageSrc}) center`,
+                backgroundSize: 'cover',
+                transition: 'all 0.5s',
+                '&:hover': {
+                  borderRadius: 0,
+                  transform: 'scale(2)',
+                },
               }}
-            >
-              <img src={imageSrc} alt={title} style={{ height: '100%' }} />
-            </Box>
+            />
           </Stack>
         </Paper>
       </Fade>
