@@ -41,8 +41,10 @@ export const WorkCard: React.FC<{
       // close
       setIsOpen(false)
       if (boxRef.current && titleRef.current) {
+        // タイトルは一行一行を取得する
         const { offsetWidth: boxWidth } = boxRef.current
-        const { offsetWidth: titleWidth, offsetHeight: titleHeight } = titleRef.current
+        const { width: titleWidth, height: titleHeight } = titleRef.current.getClientRects()[0]
+
         setBoxHeight(titleHeight)
         setTitlePosition({ top: 0, left: (boxWidth - titleWidth) / 2 })
       }
