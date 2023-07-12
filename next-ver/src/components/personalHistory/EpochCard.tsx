@@ -14,7 +14,7 @@ export const EpochCard: React.FC<{ title: string; caption?: string; newTechs?: T
         sx={{
           fontSize: '2rem',
           fontWeight: 700,
-          borderBottom: '2px solid #0f0',
+          borderBottom: '2px solid #333',
           p: 2,
           pb: 1,
         }}
