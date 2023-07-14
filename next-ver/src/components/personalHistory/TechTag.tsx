@@ -1,23 +1,27 @@
+import type { SxProps, Theme } from '@mui/material'
 import { Chip } from '@mui/material'
 
 export type TechType =
-  | 'java'
-  | 'PICのアセンブリ言語'
-  | 'c'
-  | 'javascript'
-  | 'python'
-  | 'html'
-  | 'css'
-  | 'jquery'
-  | 'php'
-  | 'mysql'
-  | 'wordpress'
-  | 'flutter'
-  | 'kotlin'
-  | 'typescript'
-  | 'react'
-  | 'next'
-  | 'nest'
-export const TechTag: React.FC<{ techType: TechType }> = ({ techType }) => {
-  return <Chip label={techType} sx={{}} />
+  | 'Java'
+  | 'PICアセンブラ'
+  | 'C'
+  | 'JavaScript'
+  | 'Python'
+  | 'HTML'
+  | 'CSS'
+  | 'jQuery'
+  | 'PHP'
+  | 'MySQL'
+  | 'WordPress'
+  | 'Flutter'
+  | 'Kotlin'
+  | 'TypeScript'
+  | 'React'
+  | 'Next.js'
+  | 'NestJS'
+export const TechTag: React.FC<{ techType: TechType; sx?: SxProps<Theme> }> = ({
+  techType,
+  sx,
+}) => {
+  return <Chip label={techType} variant="outlined" sx={{ fontSize: '1rem', p: '0 4px', ...sx }} />
 }

@@ -1,6 +1,10 @@
 import { Box, Divider, Link, Stack } from '@mui/material'
 import type { MouseEventHandler } from 'react'
 import { Fragment } from 'react'
+import { Pacifico, Crete_Round } from 'next/font/google'
+
+const nameFont = Pacifico({ weight: '400', preload: false })
+const mainFont = Crete_Round({ weight: '400', preload: false })
 
 export const MainVisual: React.FC<{
   listItems: Array<{ display: string; onClick?: MouseEventHandler<HTMLDivElement>; href?: string }>
@@ -9,6 +13,7 @@ export const MainVisual: React.FC<{
     <Stack
       justifyContent="center"
       alignItems="center"
+      className={mainFont.className}
       sx={{
         minHeight: { xl: 864, lg: 675, md: 506 },
         height: '100vh',
@@ -33,6 +38,7 @@ export const MainVisual: React.FC<{
         <Stack>
           <Box sx={{ height: 120, position: 'relative' }}>
             <Box
+              className={nameFont.className}
               sx={{
                 position: 'absolute',
                 bottom: 0,

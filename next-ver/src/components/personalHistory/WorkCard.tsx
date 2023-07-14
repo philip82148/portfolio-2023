@@ -5,49 +5,43 @@ import type { TechType } from './TechTag'
 import { TechTag } from './TechTag'
 
 export const WorkCard: React.FC<{
-  rightAlign?: boolean
   title: string
   url?: string
   demoUrl?: string
-  imageSrc: string
   caption: string
-  tags?: TechType[]
+  imageSrc: string
+  techs: TechType[]
   closeOnMount?: boolean
-}> = ({ rightAlign, title, url, imageSrc, caption, tags, closeOnMount }) => {
+  rightAlign?: boolean
+}> = ({ title, url, imageSrc, caption, techs, closeOnMount, rightAlign }) => {
   const [isOpen, setIsOpen] = useState(!closeOnMount)
   const [boxHeight, setBoxHeight] = useState<number>()
-  const [titlePosition, setTitlePosition] = useState<{
-    top: number | string
+  const [dummyTitlePosition, setDummyTitlePosition] = useState<{
+    top: number
     left: number | string
-  }>({
-    top: '50%',
-    left: '50%',
-  })
+  }>({ top: 0, left: '50%' })
 
   const boxRef = useRef<HTMLDivElement>(null)
   const paperRef = useRef<HTMLDivElement>(null)
-  const titleRef = useRef<HTMLAnchorElement>(null)
+  const dummyTitleRef = useRef<HTMLAnchorElement>(null)
 
   const openOrClose = (open: boolean): void => {
     if (open) {
       // open
       setIsOpen(true)
       if (paperRef.current) setBoxHeight(paperRef.current.offsetHeight)
-      if (titleRef.current) {
-        const { offsetTop: top, offsetLeft: left } = titleRef.current
-        setTitlePosition({ top, left })
+      if (dummyTitleRef.current) {
+        const { offsetTop: top, offsetLeft: left } = dummyTitleRef.current
+        setDummyTitlePosition({ top, left })
       }
     } else {
       // close
       setIsOpen(false)
-      if (boxRef.current && titleRef.current) {
-        // タイトルは一行一行を取得する
-        const { offsetWidth: boxWidth } = boxRef.current
-        const { width: titleWidth, height: titleHeight } = titleRef.current.getClientRects()[0]
-
-        setBoxHeight(titleHeight)
-        setTitlePosition({ top: 0, left: (boxWidth - titleWidth) / 2 })
+      if (dummyTitleRef.current) {
+        const { height } = dummyTitleRef.current.getClientRects()[0]
+        setBoxHeight(height)
       }
+      setDummyTitlePosition({ top: 0, left: '50%' })
     }
   }
 
@@ -57,6 +51,7 @@ export const WorkCard: React.FC<{
 
   return (
     <Box
+      className={!isOpen ? 'closed' : undefined} // AutoDivider用
       ref={boxRef}
       sx={{
         transition: 'all 1s',
@@ -75,15 +70,16 @@ export const WorkCard: React.FC<{
         href={url}
         target="_blank"
         sx={{
-          transition: 'all 1s',
-          color: 'text.primary',
           fontWeight: 700,
           textDecoration: 'none',
-          cursor: !isOpen || url ? 'pointer' : 'unset',
+          transition: 'all 1s',
           position: 'absolute',
           zIndex: 1,
-          ...titlePosition,
-          maxWidth: '100%',
+          ...dummyTitlePosition,
+          cursor: !isOpen || url ? 'pointer' : undefined,
+          color: isOpen ? '#fff' : '#333',
+          maxWidth: isOpen ? 430 : '100%',
+          ml: !isOpen ? -25 : 0,
         }}
       >
         {title}
@@ -94,7 +90,8 @@ export const WorkCard: React.FC<{
           elevation={2}
           sx={{
             borderRadius: 5,
-            bgcolor: '#fff',
+            bgcolor: '#333',
+            color: '#fff',
             ml: rightAlign ? 'auto' : 0,
             mr: !rightAlign ? 'auto' : 0,
             p: 4,
@@ -107,26 +104,32 @@ export const WorkCard: React.FC<{
           <Stack direction={rightAlign ? 'row-reverse' : 'row'} justifyContent="space-between">
             <Stack justifyContent="space-between" sx={{ width: 430 }}>
               <Box>
-                <Link ref={titleRef} sx={{ visibility: 'hidden' }}>
+                <Link
+                  ref={dummyTitleRef}
+                  sx={{ fontWeight: 700, textDecoration: 'none', visibility: 'hidden' }}
+                >
                   {title}
                 </Link>
                 <Typography>{caption}</Typography>
               </Box>
-              <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
-                {tags?.map((tag, i) => <TechTag key={i} techType={tag} />)}
+              <Stack direction="row" flexWrap="wrap" useFlexGap spacing={1} sx={{ mt: 6 }}>
+                {techs?.map((tag, i) => <TechTag key={i} techType={tag} sx={{ color: 'white' }} />)}
               </Stack>
             </Stack>
             <Box
               component="a"
               sx={{
+                position: 'relative',
                 width: 250,
                 // minHeight: 150,
                 borderRadius: 3,
-                background: `url(${imageSrc}) center`,
+                background: `no-repeat center url(${imageSrc})`,
                 backgroundSize: 'cover',
-                transition: 'all 0.5s',
+                transition: 'all 0.5s 0.5s',
                 '&:hover': {
+                  zIndex: 2,
                   borderRadius: 0,
+                  backgroundSize: 'contain',
                   transform: 'scale(2)',
                 },
               }}
