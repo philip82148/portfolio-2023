@@ -113,7 +113,7 @@ export const WorkCard: React.FC<{
           zIndex: 1,
           ...dummyTitlePosition,
           cursor: !isOpen || url ? 'pointer' : undefined,
-          color: isOpen ? '#fff' : '#333',
+          color: isOpen ? '#fff' : '#1e7667',
           maxWidth: isOpen ? 430 : '100%',
           ml: !isOpen ? -25 : 0,
         }}
@@ -126,7 +126,7 @@ export const WorkCard: React.FC<{
           elevation={2}
           sx={{
             borderRadius: 5,
-            bgcolor: '#333',
+            bgcolor: '#1e7667',
             color: '#fff',
             ml: rightAlign ? 'auto' : 0,
             mr: !rightAlign ? 'auto' : 0,

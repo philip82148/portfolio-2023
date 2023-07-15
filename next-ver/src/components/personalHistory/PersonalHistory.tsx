@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 export const PersonalHistory: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
-    <Box sx={{ background: '#e9e9e9', overflow: 'hidden' }}>
+    <Box sx={{ background: '#d3e1df', overflow: 'hidden' }}>
       <Box
         sx={{
           width: '100%',
