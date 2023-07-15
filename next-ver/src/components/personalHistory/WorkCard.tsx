@@ -15,7 +15,7 @@ export const WorkCard: React.FC<{
   rightAlign?: boolean
 }> = ({ title, imageSrc, url, demoUrl, caption, techs, closeOnMount, rightAlign }) => {
   // open/close用
-  const [isOpen, setIsOpen] = useState(!closeOnMount)
+  const [isClosed, setIsClosed] = useState(!!closeOnMount)
   const [parentBoxHeight, setParentBoxHeight] = useState<number>()
   const [dummyTitlePosition, setDummyTitlePosition] = useState<{
     top: number
@@ -25,29 +25,27 @@ export const WorkCard: React.FC<{
   const paperRef = useRef<HTMLDivElement>(null)
   const dummyTitleRef = useRef<HTMLAnchorElement>(null)
 
-  const openOrClose = (open: boolean): void => {
-    if (open) {
-      // open
-      setIsOpen(true)
-      if (paperRef.current) setParentBoxHeight(paperRef.current.offsetHeight)
-      if (dummyTitleRef.current) {
-        const { offsetTop: top, offsetLeft: left } = dummyTitleRef.current
-        setDummyTitlePosition({ top, left })
-      }
-    } else {
-      // close
-      setIsOpen(false)
-      if (dummyTitleRef.current) {
-        const span = dummyTitleRef.current.firstElementChild
-        const lineHeight = span?.getClientRects()[0].height
-        setParentBoxHeight(lineHeight)
-      }
-      setDummyTitlePosition({ top: 0, left: '50%' })
+  const open = (): void => {
+    setIsClosed(false)
+    if (paperRef.current) setParentBoxHeight(paperRef.current.offsetHeight)
+    if (dummyTitleRef.current) {
+      const { offsetTop: top, offsetLeft: left } = dummyTitleRef.current
+      setDummyTitlePosition({ top, left })
     }
   }
 
+  const close = (): void => {
+    setIsClosed(true)
+    if (dummyTitleRef.current) {
+      const span = dummyTitleRef.current.firstElementChild
+      const lineHeight = span?.getClientRects()[0].height
+      setParentBoxHeight(lineHeight)
+    }
+    setDummyTitlePosition({ top: 0, left: '50%' })
+  }
+
   useEffect(() => {
-    openOrClose(!closeOnMount)
+    closeOnMount ? close() : open()
   }, [closeOnMount])
 
   // image拡大用
@@ -88,7 +86,7 @@ export const WorkCard: React.FC<{
 
   return (
     <Box
-      className={!isOpen ? 'closed' : undefined} // AutoDivider状態判定用
+      className={isClosed ? 'closed' : undefined} // AutoDivider状態判定用
       sx={{
         transition: 'all 1s',
         position: 'relative',
@@ -98,29 +96,35 @@ export const WorkCard: React.FC<{
     >
       <Link
         onClick={(e) => {
-          if (!isOpen) {
+          if (isClosed) {
             e.preventDefault()
-            openOrClose(true)
+            open()
           }
         }}
         href={url}
         target="_blank"
-        sx={{
-          fontWeight: 700,
-          textDecoration: 'none',
-          transition: 'all 1s',
-          position: 'absolute',
-          zIndex: 1,
-          ...dummyTitlePosition,
-          cursor: !isOpen || url ? 'pointer' : undefined,
-          color: isOpen ? '#fff' : '#1e7667',
-          maxWidth: isOpen ? 430 : '100%',
-          ml: !isOpen ? -25 : 0,
-        }}
+        sx={[
+          {
+            fontWeight: 700,
+            textDecoration: 'none',
+            transition: 'all 1s',
+            position: 'absolute',
+            zIndex: 1,
+            ...dummyTitlePosition,
+            color: '#fff',
+            maxWidth: 430,
+          },
+          isClosed && {
+            cursor: 'pointer',
+            color: '#1e7667',
+            maxWidth: '100%',
+            ml: -25,
+          },
+        ]}
       >
         {title}
       </Link>
-      <Fade in={isOpen} timeout={1000}>
+      <Fade in={!isClosed} timeout={1000}>
         <Paper
           ref={paperRef}
           elevation={2}
@@ -134,7 +138,7 @@ export const WorkCard: React.FC<{
             width: 800,
           }}
           onClick={() => {
-            openOrClose(!isOpen)
+            isClosed ? open() : close()
           }}
         >
           <Stack direction={rightAlign ? 'row-reverse' : 'row'} justifyContent="space-between">

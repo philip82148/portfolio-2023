@@ -7,25 +7,16 @@ export const Separator: React.FC<{
 }> = ({ bgcolorAbove, bgcolorBelow, skewDirection = 'up' }) => {
   return (
     <Box
-      sx={[
-        { bgcolor: bgcolorBelow, overflow: 'hidden' },
-        skewDirection === 'down' && { bgcolor: bgcolorAbove },
-      ]}
+      sx={[{ bgcolor: skewDirection === 'up' ? bgcolorBelow : bgcolorAbove, overflow: 'hidden' }]}
     >
       <Box
-        sx={[
-          {
-            width: '100%',
-            height: 200,
-            bgcolor: bgcolorAbove,
-            transform: 'skewY(-4deg)',
-            transformOrigin: 'left',
-          },
-          skewDirection === 'down' && {
-            bgcolor: bgcolorBelow,
-            transform: 'skewY(4deg)',
-          },
-        ]}
+        sx={{
+          width: '100%',
+          height: 200,
+          transformOrigin: 'left',
+          bgcolor: skewDirection === 'up' ? bgcolorAbove : bgcolorBelow,
+          transform: skewDirection === 'up' ? 'skewY(-4deg)' : 'skewY(4deg)',
+        }}
       />
     </Box>
   )
