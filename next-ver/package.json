@@ -10,12 +10,13 @@
     "prettier:fix": "prettier --write .",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "format": "yarn prettier:fix && yarn lint:fix && yarn tsc"
+    "format": "yarn prettier:fix && yarn lint:fix && yarn tsc --noEmit"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.7",
+    "@next/font": "^13.4.10",
     "@types/node": "20.4.1",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",

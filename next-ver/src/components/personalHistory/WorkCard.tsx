@@ -5,124 +5,203 @@ import type { TechType } from './TechTag'
 import { TechTag } from './TechTag'
 
 export const WorkCard: React.FC<{
-  rightAlign?: boolean
   title: string
+  imageSrc: string
   url?: string
   demoUrl?: string
-  imageSrc: string
   caption: string
-  tags?: TechType[]
+  techs: TechType[]
   closeOnMount?: boolean
-}> = ({ rightAlign, title, url, imageSrc, caption, tags, closeOnMount }) => {
-  const [isOpen, setIsOpen] = useState(!closeOnMount)
-  const [boxHeight, setBoxHeight] = useState<number>()
-  const [titlePosition, setTitlePosition] = useState<{
-    top: number | string
+  rightAlign?: boolean
+}> = ({ title, imageSrc, url, demoUrl, caption, techs, closeOnMount, rightAlign }) => {
+  // open/close用
+  const [isClosed, setIsClosed] = useState(!!closeOnMount)
+  const [parentBoxHeight, setParentBoxHeight] = useState<number>()
+  const [dummyTitlePosition, setDummyTitlePosition] = useState<{
+    top: number
     left: number | string
-  }>({
-    top: '50%',
-    left: '50%',
-  })
+  }>()
 
-  const boxRef = useRef<HTMLDivElement>(null)
   const paperRef = useRef<HTMLDivElement>(null)
-  const titleRef = useRef<HTMLAnchorElement>(null)
+  const dummyTitleRef = useRef<HTMLAnchorElement>(null)
 
-  const openOrClose = (open: boolean): void => {
-    if (open) {
-      // open
-      setIsOpen(true)
-      if (paperRef.current) setBoxHeight(paperRef.current.offsetHeight)
-      if (titleRef.current) {
-        const { offsetTop: top, offsetLeft: left } = titleRef.current
-        setTitlePosition({ top, left })
-      }
-    } else {
-      // close
-      setIsOpen(false)
-      if (boxRef.current && titleRef.current) {
-        const { offsetWidth: boxWidth } = boxRef.current
-        const { offsetWidth: titleWidth, offsetHeight: titleHeight } = titleRef.current
-        setBoxHeight(titleHeight)
-        setTitlePosition({ top: 0, left: (boxWidth - titleWidth) / 2 })
-      }
+  const open = (): void => {
+    setIsClosed(false)
+    if (paperRef.current) setParentBoxHeight(paperRef.current.offsetHeight)
+    if (dummyTitleRef.current) {
+      const { offsetTop: top, offsetLeft: left } = dummyTitleRef.current
+      setDummyTitlePosition({ top, left })
     }
   }
 
+  const close = (): void => {
+    setIsClosed(true)
+    if (dummyTitleRef.current) {
+      const span = dummyTitleRef.current.firstElementChild
+      const lineHeight = span?.getClientRects()[0].height
+      setParentBoxHeight(lineHeight)
+    }
+    setDummyTitlePosition({ top: 0, left: '50%' })
+  }
+
   useEffect(() => {
-    openOrClose(!closeOnMount)
+    closeOnMount ? close() : open()
   }, [closeOnMount])
+
+  // image拡大用
+  const [imageBoxHeight, setImageBoxHeight] = useState(0)
+  const [imageSize, setImageSize] = useState({ width: 0, height: 0 })
+
+  const captionBoxRef = useRef<HTMLDivElement>(null)
+  const imageBoxRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    const onImageLoad = (): void => {
+      if (!captionBoxRef.current || !imageBoxRef.current || !imageRef.current) return
+
+      const { offsetHeight: captionBoxHeight } = captionBoxRef.current
+      const { offsetWidth: imageBoxWidth } = imageBoxRef.current
+      const { naturalWidth, naturalHeight } = imageRef.current
+
+      setImageBoxHeight(captionBoxHeight)
+
+      // object-fit: coverとなるように拡大したサイズにする
+      const scale = Math.max(imageBoxWidth / naturalWidth, captionBoxHeight / naturalHeight)
+      const width = naturalWidth * scale
+      const height = naturalHeight * scale
+
+      setImageSize({ width, height })
+    }
+
+    if (!imageRef.current) return
+
+    if (imageRef.current.complete) {
+      onImageLoad()
+      return
+    }
+
+    imageRef.current.addEventListener('load', onImageLoad)
+  }, [])
 
   return (
     <Box
-      ref={boxRef}
+      className={isClosed ? 'closed' : undefined} // AutoDivider状態判定用
       sx={{
         transition: 'all 1s',
         position: 'relative',
-        height: boxHeight,
+        height: parentBoxHeight,
         fontSize: '1.6rem',
       }}
     >
       <Link
         onClick={(e) => {
-          if (!isOpen) {
+          if (isClosed) {
             e.preventDefault()
-            openOrClose(true)
+            open()
           }
         }}
         href={url}
         target="_blank"
-        sx={{
-          transition: 'all 1s',
-          color: '#fff',
-          textDecoration: 'none',
-          cursor: !isOpen || url ? 'pointer' : 'unset',
-          position: 'absolute',
-          zIndex: 1,
-          ...titlePosition,
-          maxWidth: '100%',
-        }}
+        sx={[
+          {
+            fontWeight: 700,
+            textDecoration: 'none',
+            transition: 'all 1s',
+            position: 'absolute',
+            zIndex: 1,
+            ...dummyTitlePosition,
+            color: '#fff',
+            maxWidth: 430,
+          },
+          isClosed && {
+            cursor: 'pointer',
+            color: '#1e7667',
+            maxWidth: '100%',
+            ml: -25,
+          },
+        ]}
       >
         {title}
       </Link>
-      <Fade in={isOpen} timeout={1000}>
+      <Fade in={!isClosed} timeout={1000}>
         <Paper
           ref={paperRef}
+          elevation={2}
           sx={{
             borderRadius: 5,
-            bgcolor: '#BFB893',
+            bgcolor: '#1e7667',
             color: '#fff',
             ml: rightAlign ? 'auto' : 0,
             mr: !rightAlign ? 'auto' : 0,
             p: 4,
-            width: 1000,
-            maxWidth: '100%',
+            width: 800,
           }}
           onClick={() => {
-            openOrClose(!isOpen)
+            isClosed ? open() : close()
           }}
         >
           <Stack direction={rightAlign ? 'row-reverse' : 'row'} justifyContent="space-between">
-            <Stack justifyContent="space-between" sx={{ width: 600, maxWidth: '100%' }}>
-              <Box>
-                <Link ref={titleRef} sx={{ visibility: 'hidden' }}>
-                  {title}
+            <Stack ref={captionBoxRef} sx={{ width: 430, height: 'min-content' }}>
+              <Link
+                underline="none"
+                ref={dummyTitleRef}
+                sx={{ fontWeight: 700, visibility: 'hidden' }}
+              >
+                <span>{title}</span>
+              </Link>
+              {demoUrl && (
+                <Link href={demoUrl} color="#fff" underline="hover" variant="body1">
+                  {demoUrl}
                 </Link>
-                <Typography>{caption}</Typography>
-              </Box>
-              <Stack direction="row" spacing={1}>
-                {tags?.map((tag, i) => <TechTag key={i} techType={tag} />)}
+              )}
+              <Typography>{caption}</Typography>
+              <Stack direction="row" flexWrap="wrap" useFlexGap spacing={1} sx={{ mt: 6 }}>
+                {techs?.map((tag, i) => <TechTag key={i} techType={tag} sx={{ color: 'white' }} />)}
               </Stack>
             </Stack>
             <Box
+              ref={imageBoxRef}
               sx={{
                 position: 'relative',
-                height: 200,
-                borderRadius: 3,
-                overflow: 'hidden',
+                width: 250,
+                height: imageBoxHeight,
               }}
             >
-              <img src={imageSrc} alt={title} style={{ height: '100%' }} />
+              <Box
+                component="a"
+                sx={{
+                  position: 'absolute',
+                  zIndex: 2,
+                  top: '50%',
+                  left: '50%',
+                  overflow: 'hidden',
+                  transform: 'translate(-50%, -50%)',
+                  transition: 'all 0.5s 0.5s',
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 3,
+                  '&:hover': {
+                    zIndex: 3,
+                    ...imageSize,
+                    borderRadius: 0,
+                    transform: 'translate(-50%, -50%) scale(2)',
+                  },
+                }}
+              >
+                <img
+                  ref={imageRef}
+                  src={imageSrc}
+                  alt=""
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    ...imageSize,
+                  }}
+                />
+              </Box>
             </Box>
           </Stack>
         </Paper>
