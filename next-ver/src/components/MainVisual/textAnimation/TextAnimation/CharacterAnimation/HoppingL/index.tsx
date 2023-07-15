@@ -1,5 +1,5 @@
 import type { TransformType } from '..'
-import { TranslateXL } from '../TranslateXL'
+import { TranslateXL } from '../translate'
 
 export const HoppingL: TransformType = ({ children, durationS, state }) => {
   return (

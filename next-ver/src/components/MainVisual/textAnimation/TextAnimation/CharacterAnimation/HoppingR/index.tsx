@@ -1,5 +1,5 @@
 import type { TransformType } from '..'
-import { TranslateXR } from '../TranslateXR'
+import { TranslateXR } from '../translate'
 
 export const HoppingR: TransformType = ({ children, durationS, state }) => {
   return (
