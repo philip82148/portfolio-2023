@@ -38,8 +38,9 @@ export const WorkCard: React.FC<{
       // close
       setIsOpen(false)
       if (dummyTitleRef.current) {
-        const { height } = dummyTitleRef.current.getClientRects()[0]
-        setParentBoxHeight(height)
+        const span = dummyTitleRef.current.firstElementChild
+        const lineHeight = span?.getClientRects()[0].height
+        setParentBoxHeight(lineHeight)
       }
       setDummyTitlePosition({ top: 0, left: '50%' })
     }
@@ -142,7 +143,7 @@ export const WorkCard: React.FC<{
                 ref={dummyTitleRef}
                 sx={{ fontWeight: 700, textDecoration: 'none', visibility: 'hidden' }}
               >
-                {title}
+                <span>{title}</span>
               </Link>
               <Typography>{caption}</Typography>
               <Stack direction="row" flexWrap="wrap" useFlexGap spacing={1} sx={{ mt: 6 }}>
@@ -161,6 +162,7 @@ export const WorkCard: React.FC<{
                 component="a"
                 sx={{
                   position: 'absolute',
+                  zIndex: 2,
                   top: '50%',
                   left: '50%',
                   overflow: 'hidden',
@@ -170,8 +172,8 @@ export const WorkCard: React.FC<{
                   height: '100%',
                   borderRadius: 3,
                   '&:hover': {
+                    zIndex: 3,
                     ...imageSize,
-                    zIndex: 2,
                     borderRadius: 0,
                     transform: 'translate(-50%, -50%) scale(2)',
                   },
