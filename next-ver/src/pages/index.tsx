@@ -1,23 +1,29 @@
 import type { NextPage } from 'next'
+import { useRef } from 'react'
 
 import { MainVisual } from '@/components/MainVisual'
 import { Separator } from '@/components/Separator'
 import { EpochCard, PersonalHistory, WorkCard } from '@/components/personalHistory'
 
 const Home: NextPage = () => {
+  const personalHistoryRef = useRef<HTMLDivElement>(null)
+
   return (
     <>
       <MainVisual
         listItems={[
           { display: 'About Me' },
           { display: 'Skills' },
-          { display: 'History' },
+          {
+            display: 'History',
+            onClick: () => personalHistoryRef.current?.scrollIntoView({ behavior: 'smooth' }),
+          },
           { display: 'Portfolio Ver. 2' },
           { display: 'Portfolio Ver. 3' },
         ]}
       />
-      <Separator bgcolorAbove="#d3e1df" bgcolorBelow="#fff" />
-      <PersonalHistory bgcolor="#fff">
+      <Separator bgcolorUp="#d3e1df" bgcolorDown="#fff" />
+      <PersonalHistory ref={personalHistoryRef} bgcolor="#fff">
         <EpochCard
           title="小学6年~"
           caption="小説「ぼくらの七日間戦争」に出てくるエレクトロニクスの天才中学生のキャラクターに憧れ、独学で電子工作を始める。同時にパソコンの仕組みが知りたくてJavaを学ぶ。本を読みながらメモ帳を作ったりした。"
@@ -114,7 +120,7 @@ const Home: NextPage = () => {
         />
         <EpochCard title="大学" />
       </PersonalHistory>
-      <Separator bgcolorAbove="#fff" bgcolorBelow="#d3e1df" skewDirection="down" />
+      <Separator bgcolorUp="#fff" bgcolorDown="#d3e1df" skewDirection="down" />
     </>
   )
 }

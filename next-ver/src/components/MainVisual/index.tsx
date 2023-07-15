@@ -1,7 +1,8 @@
 import { Box, Divider, Link, Stack } from '@mui/material'
 import { Pacifico, Crete_Round } from 'next/font/google'
 import type { MouseEventHandler } from 'react'
-import { Fragment } from 'react'
+
+import { TextAnimation, useTextAnimationState } from './textAnimation'
 
 const nameFont = Pacifico({ weight: '400', preload: false })
 const mainFont = Crete_Round({ weight: '400', preload: false })
@@ -9,6 +10,8 @@ const mainFont = Crete_Round({ weight: '400', preload: false })
 export const MainVisual: React.FC<{
   listItems: Array<{ display: string; onClick?: MouseEventHandler<HTMLDivElement>; href?: string }>
 }> = ({ listItems }) => {
+  const textAnimationState = useTextAnimationState()
+
   return (
     <Stack
       justifyContent="center"
@@ -36,9 +39,8 @@ export const MainVisual: React.FC<{
         }}
       >
         <Stack>
-          <Box sx={{ height: 120, position: 'relative' }}>
+          <Box className={nameFont.className} sx={{ height: 120, position: 'relative' }}>
             <Box
-              className={nameFont.className}
               sx={{
                 position: 'absolute',
                 bottom: 0,
@@ -46,11 +48,13 @@ export const MainVisual: React.FC<{
                 ml: { lg: '-6px', sm: '-4px', xs: '-2px' },
               }}
             >
-              Ryota Sasaki
+              <TextAnimation state={textAnimationState}>Ryota Sasaki</TextAnimation>
             </Box>
           </Box>
           <Box sx={{ fontSize: { lg: 26, md: 18, sm: 22 }, mb: '5px' }}>
-            Keio University Student Software Engineer
+            <TextAnimation state={textAnimationState}>
+              Keio University Student Software Engineer
+            </TextAnimation>
           </Box>
           <Box sx={{ height: 120 }}>
             <Stack
@@ -83,26 +87,20 @@ export const MainVisual: React.FC<{
           }}
         >
           {listItems.map((listItem, i) => (
-            <Fragment key={i}>
+            <Box key={i} sx={{ fontSize: { lg: 22, md: 18 } }}>
               {listItem.href ? (
-                <Link
-                  href={listItem.href}
-                  sx={{ fontSize: { lg: 22, md: 18 }, color: '#fff', textDecoration: 'none' }}
-                >
+                <Link href={listItem.href} color="white" underline="none">
                   {listItem.display}
                 </Link>
               ) : (
                 <Box
                   onClick={listItem.onClick}
-                  sx={{
-                    fontSize: { lg: 22, md: 18 },
-                    cursor: listItem.onClick ? 'pointer' : 'not-allowed',
-                  }}
+                  sx={{ cursor: listItem.onClick ? 'pointer' : 'not-allowed' }}
                 >
                   {listItem.display}
                 </Box>
               )}
-            </Fragment>
+            </Box>
           ))}
         </Stack>
       </Stack>
