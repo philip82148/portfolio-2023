@@ -1,3 +1,4 @@
+import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 import { CharacterAnimation } from './CharacterAnimation'
@@ -22,12 +23,12 @@ export const TextAnimation: React.FC<{ children: string }> = ({ children }) => {
   }, [children.length])
 
   return (
-    <>
+    <Box sx={{ transformStyle: 'preserve-3d', perspective: 1000 }}>
       {children.split('').map((character, i) => (
         <CharacterAnimation durationS={durationSs[i] ?? 5} key={i} state={durationSs}>
           {character}
         </CharacterAnimation>
       ))}
-    </>
+    </Box>
   )
 }

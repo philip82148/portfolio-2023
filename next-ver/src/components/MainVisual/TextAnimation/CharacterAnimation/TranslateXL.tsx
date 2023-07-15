@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 
-import type { TransformType } from '..'
+import type { TransformType } from '.'
 
 export const TranslateXL: TransformType = ({ children, durationS }) => {
   const [phase, setPhase] = useState(0)

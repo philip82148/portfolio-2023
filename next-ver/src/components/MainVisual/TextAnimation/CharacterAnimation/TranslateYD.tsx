@@ -1,9 +1,9 @@
 import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 
-import type { TransformType } from '..'
+import type { TransformType } from '.'
 
-export const TranslateXR: TransformType = ({ children, durationS }) => {
+export const TranslateYD: TransformType = ({ children, durationS }) => {
   const [phase, setPhase] = useState(0)
 
   let style: CSSProperties
@@ -18,13 +18,13 @@ export const TranslateXR: TransformType = ({ children, durationS }) => {
       phaseDurationS = durationS * 0.5
       style = {
         transition: `all ${phaseDurationS}s linear`,
-        transform: `translate(100vw, 0)`,
+        transform: `translate(0, -100vh)`,
       }
       break
     case 2:
       phaseDurationS = 0.1
       style = {
-        transform: `translate(-100vw, 0)`,
+        transform: `translate(0, 100vh)`,
       }
       break
     default:

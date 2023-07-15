@@ -16,7 +16,7 @@ const Home: NextPage = () => {
           { display: 'Portfolio Ver. 3' },
         ]}
       />
-      <Separator bgcolorAbove="#d3e1df" bgcolorBelow="#fff" />
+      <Separator bgcolorUp="#d3e1df" bgcolorDown="#fff" />
       <PersonalHistory bgcolor="#fff">
         <EpochCard
           title="小学6年~"
@@ -114,7 +114,7 @@ const Home: NextPage = () => {
         />
         <EpochCard title="大学" />
       </PersonalHistory>
-      <Separator bgcolorAbove="#fff" bgcolorBelow="#d3e1df" skewDirection="down" />
+      <Separator bgcolorUp="#fff" bgcolorDown="#d3e1df" skewDirection="down" />
     </>
   )
 }
