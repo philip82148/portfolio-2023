@@ -53,7 +53,9 @@ export const MainVisual: React.FC<{
             </Box>
           </Box>
           <Box sx={{ fontSize: { lg: 26, md: 18, sm: 22 }, mb: '5px' }}>
-            Keio University Student Software Engineer
+            <TextAnimation state={textAnimationState}>
+              Keio University Student Software Engineer
+            </TextAnimation>
           </Box>
           <Box sx={{ height: 120 }}>
             <Stack
@@ -92,7 +94,7 @@ export const MainVisual: React.FC<{
                   href={listItem.href}
                   sx={{ fontSize: { lg: 22, md: 18 }, color: '#fff', textDecoration: 'none' }}
                 >
-                  {listItem.display}
+                  <TextAnimation state={textAnimationState}>{listItem.display}</TextAnimation>
                 </Link>
               ) : (
                 <Box
@@ -102,7 +104,7 @@ export const MainVisual: React.FC<{
                     cursor: listItem.onClick ? 'pointer' : 'not-allowed',
                   }}
                 >
-                  {listItem.display}
+                  <TextAnimation state={textAnimationState}>{listItem.display}</TextAnimation>
                 </Box>
               )}
             </Fragment>
