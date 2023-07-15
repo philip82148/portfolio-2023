@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import type { TransformType } from '.'
 
-export const RotateY: TransformType = ({ children, durationS }) => {
+export const RotateY: TransformType = ({ children, durationS, state }) => {
   const [phase, setPhase] = useState(0)
   const degree = useRef(0)
 
@@ -36,6 +36,10 @@ export const RotateY: TransformType = ({ children, durationS }) => {
         setPhase((phase) => phase + 1)
       }, phaseDurationS * 1000)
   }, [phase, phaseDurationS])
+
+  useEffect(() => {
+    setPhase(0)
+  }, [state])
 
   return <span style={{ display: 'inline-block', whiteSpace: 'pre', ...style }}>{children}</span>
 }

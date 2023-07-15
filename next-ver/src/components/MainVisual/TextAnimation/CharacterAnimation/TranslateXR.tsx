@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import type { TransformType } from '.'
 
-export const TranslateXR: TransformType = ({ children, durationS }) => {
+export const TranslateXR: TransformType = ({ children, durationS, state }) => {
   const [phase, setPhase] = useState(0)
 
   let style: CSSProperties
@@ -42,6 +42,10 @@ export const TranslateXR: TransformType = ({ children, durationS }) => {
         setPhase((phase) => phase + 1)
       }, phaseDurationS * 1000)
   }, [phase, phaseDurationS])
+
+  useEffect(() => {
+    setPhase(0)
+  }, [state])
 
   return <span style={{ display: 'inline-block', whiteSpace: 'pre', ...style }}>{children}</span>
 }

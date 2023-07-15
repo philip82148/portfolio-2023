@@ -3,32 +3,28 @@ import { useEffect, useState } from 'react'
 
 import { CharacterAnimation } from './CharacterAnimation'
 
-export const TextAnimation: React.FC<{ children: string }> = ({ children }) => {
+export const TextAnimation: React.FC<{ children: string; state: unknown }> = ({
+  children,
+  state,
+}) => {
   const [durationSs, setDurationSs] = useState<number[]>([])
 
   const randomInt = (min: number, max: number): number =>
     Math.floor(Math.random() * (max - min + 1)) + min
 
   useEffect(() => {
-    const setAllDurationSs = (): void => {
-      setDurationSs([...Array(children.length)].map(() => randomInt(5, 10)))
-    }
-
-    setAllDurationSs()
-    const intervalId = setInterval(setAllDurationSs, 20000)
-
-    return () => {
-      clearInterval(intervalId)
-    }
-  }, [children.length])
+    setDurationSs([...Array(children.length)].map(() => randomInt(5, 10)))
+  }, [children.length, state])
 
   return (
     <Box sx={{ transformStyle: 'preserve-3d', perspective: 1000 }}>
       {children.split('').map((character, i) => (
-        <CharacterAnimation durationS={durationSs[i] ?? 5} key={i} state={durationSs}>
+        <CharacterAnimation durationS={durationSs[i] ?? 5} key={i} state={state}>
           {character}
         </CharacterAnimation>
       ))}
     </Box>
   )
 }
+
+export { useTextAnimationState } from './useTextAnimationState'

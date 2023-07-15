@@ -3,7 +3,7 @@ import { Pacifico, Crete_Round } from 'next/font/google'
 import type { MouseEventHandler } from 'react'
 import { Fragment } from 'react'
 
-import { TextAnimation } from './TextAnimation'
+import { TextAnimation, useTextAnimationState } from './TextAnimation'
 
 const nameFont = Pacifico({ weight: '400', preload: false })
 const mainFont = Crete_Round({ weight: '400', preload: false })
@@ -11,6 +11,8 @@ const mainFont = Crete_Round({ weight: '400', preload: false })
 export const MainVisual: React.FC<{
   listItems: Array<{ display: string; onClick?: MouseEventHandler<HTMLDivElement>; href?: string }>
 }> = ({ listItems }) => {
+  const textAnimationState = useTextAnimationState()
+
   return (
     <Stack
       justifyContent="center"
@@ -47,7 +49,7 @@ export const MainVisual: React.FC<{
                 ml: { lg: '-6px', sm: '-4px', xs: '-2px' },
               }}
             >
-              <TextAnimation>Ryota Sasaki</TextAnimation>
+              <TextAnimation state={textAnimationState}>Ryota Sasaki</TextAnimation>
             </Box>
           </Box>
           <Box sx={{ fontSize: { lg: 26, md: 18, sm: 22 }, mb: '5px' }}>

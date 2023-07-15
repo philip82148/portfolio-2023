@@ -11,7 +11,7 @@ import { TranslateYU } from './TranslateYU'
 import { TranslateZB } from './TranslateZB'
 import { TranslateZF } from './TranslateZF'
 
-export type TransformType = React.FC<React.PropsWithChildren<{ durationS: number }>>
+export type TransformType = React.FC<React.PropsWithChildren<{ durationS: number; state: unknown }>>
 
 export const CharacterAnimation: React.FC<{
   children: string
@@ -24,26 +24,22 @@ export const CharacterAnimation: React.FC<{
     setRandomNo(Math.floor(Math.random() * 10))
   }, [state])
 
-  switch (randomNo) {
-    case 0:
-      return <NoTransform durationS={durationS}>{children}</NoTransform>
-    case 1:
-      return <RotateX durationS={durationS}>{children}</RotateX>
-    case 2:
-      return <RotateY durationS={durationS}>{children}</RotateY>
-    case 3:
-      return <RotateZ durationS={durationS}>{children}</RotateZ>
-    case 4:
-      return <TranslateXL durationS={durationS}>{children}</TranslateXL>
-    case 5:
-      return <TranslateXR durationS={durationS}>{children}</TranslateXR>
-    case 6:
-      return <TranslateYU durationS={durationS}>{children}</TranslateYU>
-    case 7:
-      return <TranslateYD durationS={durationS}>{children}</TranslateYD>
-    case 8:
-      return <TranslateZF durationS={durationS}>{children}</TranslateZF>
-    case 9:
-      return <TranslateZB durationS={durationS}>{children}</TranslateZB>
-  }
+  const Transform: TransformType = [
+    NoTransform,
+    RotateX,
+    RotateY,
+    RotateZ,
+    TranslateXL,
+    TranslateXR,
+    TranslateYU,
+    TranslateYD,
+    TranslateZF,
+    TranslateZB,
+  ][randomNo]
+
+  return (
+    <Transform durationS={durationS} state={state}>
+      {children}
+    </Transform>
+  )
 }
