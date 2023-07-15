@@ -14,14 +14,14 @@ export const WorkCard: React.FC<{
   closeOnMount?: boolean
   rightAlign?: boolean
 }> = ({ title, url, imageSrc, caption, techs, closeOnMount, rightAlign }) => {
+  // open/close用
   const [isOpen, setIsOpen] = useState(!closeOnMount)
-  const [boxHeight, setBoxHeight] = useState<number>()
+  const [parentBoxHeight, setParentBoxHeight] = useState<number>()
   const [dummyTitlePosition, setDummyTitlePosition] = useState<{
     top: number
     left: number | string
-  }>({ top: 0, left: '50%' })
+  }>()
 
-  const boxRef = useRef<HTMLDivElement>(null)
   const paperRef = useRef<HTMLDivElement>(null)
   const dummyTitleRef = useRef<HTMLAnchorElement>(null)
 
@@ -29,7 +29,7 @@ export const WorkCard: React.FC<{
     if (open) {
       // open
       setIsOpen(true)
-      if (paperRef.current) setBoxHeight(paperRef.current.offsetHeight)
+      if (paperRef.current) setParentBoxHeight(paperRef.current.offsetHeight)
       if (dummyTitleRef.current) {
         const { offsetTop: top, offsetLeft: left } = dummyTitleRef.current
         setDummyTitlePosition({ top, left })
@@ -39,7 +39,7 @@ export const WorkCard: React.FC<{
       setIsOpen(false)
       if (dummyTitleRef.current) {
         const { height } = dummyTitleRef.current.getClientRects()[0]
-        setBoxHeight(height)
+        setParentBoxHeight(height)
       }
       setDummyTitlePosition({ top: 0, left: '50%' })
     }
@@ -49,14 +49,49 @@ export const WorkCard: React.FC<{
     openOrClose(!closeOnMount)
   }, [closeOnMount])
 
+  // image拡大用
+  const [imageBoxHeight, setImageBoxHeight] = useState(0)
+  const [imageSize, setImageSize] = useState({ width: 0, height: 0 })
+
+  const captionBoxRef = useRef<HTMLDivElement>(null)
+  const imageBoxRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    const onImageLoad = (): void => {
+      if (!captionBoxRef.current || !imageBoxRef.current || !imageRef.current) return
+
+      const { offsetHeight: captionBoxHeight } = captionBoxRef.current
+      const { offsetWidth: imageBoxWidth } = imageBoxRef.current
+      const { naturalWidth, naturalHeight } = imageRef.current
+
+      setImageBoxHeight(captionBoxHeight)
+
+      // object-fit: coverとなるように拡大したサイズにする
+      const scale = Math.max(imageBoxWidth / naturalWidth, captionBoxHeight / naturalHeight)
+      const width = naturalWidth * scale
+      const height = naturalHeight * scale
+
+      setImageSize({ width, height })
+    }
+
+    if (!imageRef.current) return
+
+    if (imageRef.current.complete) {
+      onImageLoad()
+      return
+    }
+
+    imageRef.current.addEventListener('load', onImageLoad)
+  }, [])
+
   return (
     <Box
-      className={!isOpen ? 'closed' : undefined} // AutoDivider用
-      ref={boxRef}
+      className={!isOpen ? 'closed' : undefined} // AutoDivider状態判定用
       sx={{
         transition: 'all 1s',
         position: 'relative',
-        height: boxHeight,
+        height: parentBoxHeight,
         fontSize: '1.6rem',
       }}
     >
@@ -102,38 +137,60 @@ export const WorkCard: React.FC<{
           }}
         >
           <Stack direction={rightAlign ? 'row-reverse' : 'row'} justifyContent="space-between">
-            <Stack justifyContent="space-between" sx={{ width: 430 }}>
-              <Box>
-                <Link
-                  ref={dummyTitleRef}
-                  sx={{ fontWeight: 700, textDecoration: 'none', visibility: 'hidden' }}
-                >
-                  {title}
-                </Link>
-                <Typography>{caption}</Typography>
-              </Box>
+            <Stack ref={captionBoxRef} sx={{ width: 430, height: 'min-content' }}>
+              <Link
+                ref={dummyTitleRef}
+                sx={{ fontWeight: 700, textDecoration: 'none', visibility: 'hidden' }}
+              >
+                {title}
+              </Link>
+              <Typography>{caption}</Typography>
               <Stack direction="row" flexWrap="wrap" useFlexGap spacing={1} sx={{ mt: 6 }}>
                 {techs?.map((tag, i) => <TechTag key={i} techType={tag} sx={{ color: 'white' }} />)}
               </Stack>
             </Stack>
             <Box
-              component="a"
+              ref={imageBoxRef}
               sx={{
                 position: 'relative',
                 width: 250,
-                // minHeight: 150,
-                borderRadius: 3,
-                background: `no-repeat center url(${imageSrc})`,
-                backgroundSize: 'cover',
-                transition: 'all 0.5s 0.5s',
-                '&:hover': {
-                  zIndex: 2,
-                  borderRadius: 0,
-                  backgroundSize: 'contain',
-                  transform: 'scale(2)',
-                },
+                height: imageBoxHeight,
               }}
-            />
+            >
+              <Box
+                component="a"
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  overflow: 'hidden',
+                  transform: 'translate(-50%, -50%)',
+                  transition: 'all 0.5s 0.5s',
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 3,
+                  '&:hover': {
+                    ...imageSize,
+                    zIndex: 2,
+                    borderRadius: 0,
+                    transform: 'translate(-50%, -50%) scale(2)',
+                  },
+                }}
+              >
+                <img
+                  ref={imageRef}
+                  src={imageSrc}
+                  alt=""
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    ...imageSize,
+                  }}
+                />
+              </Box>
+            </Box>
           </Stack>
         </Paper>
       </Fade>
