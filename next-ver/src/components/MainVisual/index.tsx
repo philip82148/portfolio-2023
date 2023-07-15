@@ -3,7 +3,7 @@ import { Pacifico, Crete_Round } from 'next/font/google'
 import type { MouseEventHandler } from 'react'
 import { Fragment } from 'react'
 
-import { TextAnimation, useTextAnimationState } from './TextAnimation'
+import { TextAnimation, useTextAnimationState } from './textAnimation'
 
 const nameFont = Pacifico({ weight: '400', preload: false })
 const mainFont = Crete_Round({ weight: '400', preload: false })

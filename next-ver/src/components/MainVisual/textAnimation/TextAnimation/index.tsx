@@ -26,5 +26,3 @@ export const TextAnimation: React.FC<{ children: string; state: unknown }> = ({
     </Box>
   )
 }
-
-export { useTextAnimationState } from './useTextAnimationState'
