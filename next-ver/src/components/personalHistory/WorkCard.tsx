@@ -6,14 +6,14 @@ import { TechTag } from './TechTag'
 
 export const WorkCard: React.FC<{
   title: string
+  imageSrc: string
   url?: string
   demoUrl?: string
   caption: string
-  imageSrc: string
   techs: TechType[]
   closeOnMount?: boolean
   rightAlign?: boolean
-}> = ({ title, url, imageSrc, caption, techs, closeOnMount, rightAlign }) => {
+}> = ({ title, imageSrc, url, demoUrl, caption, techs, closeOnMount, rightAlign }) => {
   // open/close用
   const [isOpen, setIsOpen] = useState(!closeOnMount)
   const [parentBoxHeight, setParentBoxHeight] = useState<number>()
@@ -140,11 +140,17 @@ export const WorkCard: React.FC<{
           <Stack direction={rightAlign ? 'row-reverse' : 'row'} justifyContent="space-between">
             <Stack ref={captionBoxRef} sx={{ width: 430, height: 'min-content' }}>
               <Link
+                underline="none"
                 ref={dummyTitleRef}
-                sx={{ fontWeight: 700, textDecoration: 'none', visibility: 'hidden' }}
+                sx={{ fontWeight: 700, visibility: 'hidden' }}
               >
                 <span>{title}</span>
               </Link>
+              {demoUrl && (
+                <Link href={demoUrl} color="#fff" underline="hover" variant="body1">
+                  {demoUrl}
+                </Link>
+              )}
               <Typography>{caption}</Typography>
               <Stack direction="row" flexWrap="wrap" useFlexGap spacing={1} sx={{ mt: 6 }}>
                 {techs?.map((tag, i) => <TechTag key={i} techType={tag} sx={{ color: 'white' }} />)}

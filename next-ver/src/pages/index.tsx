@@ -28,7 +28,7 @@ const Home: NextPage = () => {
         />
         <WorkCard
           title="電気ショックタイマー(電子工作)"
-          imageSrc="images/no-image.jpg"
+          imageSrc="images/in-preparation.jpg"
           caption="中毒並みに時間を忘れて作業に熱中してしまうことがあり、普通のタイマーでは作業をやめられなかったため、電気ショックで時間を知らせるタイマーを作った。"
           closeOnMount
           techs={['PICアセンブラ']}
@@ -72,7 +72,8 @@ const Home: NextPage = () => {
         <WorkCard
           title="philip82148/selva"
           url="https://github.com/philip82148/selva"
-          imageSrc="images/no-image.jpg"
+          imageSrc="images/in-preparation.jpg"
+          demoUrl="http://khaosbbs.com/"
           caption="友達と二人で授業の評定サイト(WordPressテーマ)を作る。学部2年の時に作ったもので、いつかデザインを改善したいと思っている。"
           techs={['WordPress', 'PHP', 'MySQL', 'JavaScript', 'HTML', 'CSS']}
           rightAlign
@@ -95,14 +96,16 @@ const Home: NextPage = () => {
         <WorkCard
           title="philip82148/kishukusha-meibo"
           url="https://github.com/philip82148/kishukusha-meibo"
-          imageSrc="images/no-image.jpg"
-          caption="日吉寄宿舎の寮生の名簿を作る作業が毎年大変だったので、自動化するプログラムを作った。"
+          demoUrl="https://philip82148.github.io/kishukusha-meibo/"
+          imageSrc="images/in-preparation.jpg"
+          caption="日吉寄宿舎で寮生の名簿を作る作業があり、電話番号や住所のフォーマットを整える作業が毎年大変だったので、自動化するプログラムを作った。"
           techs={['Next.js', 'TypeScript']}
         />
         <WorkCard
           title="philip82148/portfolio"
           url="https://github.com/philip82148/portfolio"
-          imageSrc="images/no-image.jpg"
+          demoUrl="https://philip82148.github.io/portfolio/"
+          imageSrc="images/in-preparation.jpg"
           caption="このポートフォリオを作る。"
           techs={['Next.js', 'TypeScript']}
           rightAlign
