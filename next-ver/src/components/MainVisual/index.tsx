@@ -1,7 +1,6 @@
 import { Box, Divider, Link, Stack } from '@mui/material'
 import { Pacifico, Crete_Round } from 'next/font/google'
 import type { MouseEventHandler } from 'react'
-import { Fragment } from 'react'
 
 import { TextAnimation, useTextAnimationState } from './textAnimation'
 
@@ -88,26 +87,20 @@ export const MainVisual: React.FC<{
           }}
         >
           {listItems.map((listItem, i) => (
-            <Fragment key={i}>
+            <Box key={i} sx={{ fontSize: { lg: 22, md: 18 } }}>
               {listItem.href ? (
-                <Link
-                  href={listItem.href}
-                  sx={{ fontSize: { lg: 22, md: 18 }, color: '#fff', textDecoration: 'none' }}
-                >
-                  <TextAnimation state={textAnimationState}>{listItem.display}</TextAnimation>
+                <Link href={listItem.href} color="white" underline="none">
+                  {listItem.display}
                 </Link>
               ) : (
                 <Box
                   onClick={listItem.onClick}
-                  sx={{
-                    fontSize: { lg: 22, md: 18 },
-                    cursor: listItem.onClick ? 'pointer' : 'not-allowed',
-                  }}
+                  sx={{ cursor: listItem.onClick ? 'pointer' : 'not-allowed' }}
                 >
-                  <TextAnimation state={textAnimationState}>{listItem.display}</TextAnimation>
+                  {listItem.display}
                 </Box>
               )}
-            </Fragment>
+            </Box>
           ))}
         </Stack>
       </Stack>
