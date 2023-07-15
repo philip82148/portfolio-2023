@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 
 import { MainVisual } from '@/components/MainVisual'
+import { Separator } from '@/components/Separator'
 import { EpochCard, PersonalHistory, WorkCard } from '@/components/personalHistory'
 
 const Home: NextPage = () => {
@@ -15,7 +16,8 @@ const Home: NextPage = () => {
           { display: 'Portfolio Ver. 3' },
         ]}
       />
-      <PersonalHistory>
+      <Separator bgcolorAbove="#d3e1df" bgcolorBelow="#fff" />
+      <PersonalHistory bgcolor="#fff">
         <EpochCard
           title="小学6年~"
           caption="小説「ぼくらの七日間戦争」に出てくるエレクトロニクスの天才中学生のキャラクターに憧れ、独学で電子工作を始める。同時にパソコンの仕組みが知りたくてJavaを学ぶ。本を読みながらメモ帳を作ったりした。"
@@ -112,6 +114,7 @@ const Home: NextPage = () => {
         />
         <EpochCard title="大学" />
       </PersonalHistory>
+      <Separator bgcolorAbove="#fff" bgcolorBelow="#d3e1df" skewDirection="down" />
     </>
   )
 }

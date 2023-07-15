@@ -1,34 +1,7 @@
-import { Box, Container, Divider, Stack, Typography } from '@mui/material'
+import { Divider } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 
-export const PersonalHistory: React.FC<React.PropsWithChildren> = ({ children }) => {
-  return (
-    <Box sx={{ background: '#d3e1df', overflow: 'hidden' }}>
-      <Box
-        sx={{
-          width: '100%',
-          height: 200,
-          background: '#fff',
-          zIndex: 0,
-          transform: 'skewY(-4deg)',
-          transformOrigin: 'top left',
-        }}
-      />
-      <Container fixed sx={{ pt: 10, pb: 10 }}>
-        <Stack alignItems="center">
-          <Typography variant="h2" sx={{ borderBottom: '2px solid #333', p: 3, pb: 1, mb: 10 }}>
-            History
-          </Typography>
-          <Stack divider={<AutoHeightDivider />} sx={{ width: '100%' }}>
-            {children}
-          </Stack>
-        </Stack>
-      </Container>
-    </Box>
-  )
-}
-
-const AutoHeightDivider: React.FC = () => {
+export const AutoHeightDivider: React.FC = () => {
   const [height, setHeight] = useState(40)
 
   const dividerRef = useRef<HTMLHRElement>(null)
