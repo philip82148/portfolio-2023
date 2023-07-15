@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react'
 
 import { NoTransform } from './NoTransform'
-import { RotateX } from './RotateX'
-import { RotateY } from './RotateY'
-import { RotateZ } from './RotateZ'
-import { TranslateXL } from './TranslateXL'
-import { TranslateXR } from './TranslateXR'
-import { TranslateYD } from './TranslateYD'
-import { TranslateYU } from './TranslateYU'
-import { TranslateZB } from './TranslateZB'
-import { TranslateZF } from './TranslateZF'
+import { RotateX, RotateY, RotateZ } from './rotate'
+import {
+  TranslateXL,
+  TranslateXR,
+  TranslateYD,
+  TranslateYU,
+  TranslateZB,
+  TranslateZF,
+} from './translate'
 
-export type TransformType = React.FC<React.PropsWithChildren<{ durationS: number; state: unknown }>>
+export type TransformProps = React.PropsWithChildren<{ durationS: number; state: unknown }>
+export type TransformType = React.FC<TransformProps>
 
 export const CharacterAnimation: React.FC<{
   children: string
