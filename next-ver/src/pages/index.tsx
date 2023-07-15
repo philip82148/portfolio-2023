@@ -118,7 +118,7 @@ const Home: NextPage = () => {
           techs={['Next.js', 'TypeScript']}
           rightAlign
         />
-        <EpochCard title="大学" />
+        <EpochCard title="現在" />
       </PersonalHistory>
       <Separator bgcolorUp="#fff" bgcolorDown="#d3e1df" skewDirection="down" />
     </>
