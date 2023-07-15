@@ -1,7 +1,7 @@
 import { Box, Divider, Link, Stack } from '@mui/material'
+import { Pacifico, Crete_Round } from 'next/font/google'
 import type { MouseEventHandler } from 'react'
 import { Fragment } from 'react'
-import { Pacifico, Crete_Round } from 'next/font/google'
 
 const nameFont = Pacifico({ weight: '400', preload: false })
 const mainFont = Crete_Round({ weight: '400', preload: false })
