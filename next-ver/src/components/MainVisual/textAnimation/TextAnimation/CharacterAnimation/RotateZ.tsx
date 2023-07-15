@@ -1,37 +1,32 @@
 import type { CSSProperties } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type { TransformType } from '.'
 
 export const RotateZ: TransformType = ({ children, durationS, state }) => {
   const [phase, setPhase] = useState(0)
-  const degree = useRef(0)
 
   let style: CSSProperties
   let phaseDurationS: number
+  let degree: number
 
   switch (phase) {
     case 0:
       phaseDurationS = 0
-      degree.current = 0
       style = { transform: `rotateZ(0deg)` }
-      break
-    case 1:
-      phaseDurationS = durationS
-      degree.current = 360 * phaseDurationS
-      style = {
-        transition: `all ${phaseDurationS}s cubic-bezier(0.4, 0, 0.2, 1)`,
-        transform: `rotateZ(${degree.current}deg)`,
-      }
       break
     default:
-      phaseDurationS = 0
-      style = { transform: `rotateZ(0deg)` }
+      phaseDurationS = durationS
+      degree = 360 * Math.round(phaseDurationS)
+      style = {
+        transition: `all ${phaseDurationS}s cubic-bezier(0.4, 0, 0.2, 1)`,
+        transform: `rotateZ(${degree}deg)`,
+      }
       break
   }
 
   useEffect(() => {
-    if (phase < 2)
+    if (phase < 1)
       setTimeout(() => {
         setPhase((phase) => phase + 1)
       }, phaseDurationS * 1000)

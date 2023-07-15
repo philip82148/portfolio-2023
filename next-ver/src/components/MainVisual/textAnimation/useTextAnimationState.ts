@@ -6,7 +6,6 @@ export const useTextAnimationState = (): unknown => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTextAnimationState(Math.random())
-      console.log('set')
     }, 20000)
 
     return () => {

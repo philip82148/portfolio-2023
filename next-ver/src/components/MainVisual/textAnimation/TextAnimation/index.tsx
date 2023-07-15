@@ -9,11 +9,8 @@ export const TextAnimation: React.FC<{ children: string; state: unknown }> = ({
 }) => {
   const [durationSs, setDurationSs] = useState<number[]>([])
 
-  const randomInt = (min: number, max: number): number =>
-    Math.floor(Math.random() * (max - min + 1)) + min
-
   useEffect(() => {
-    setDurationSs([...Array(children.length)].map(() => randomInt(5, 10)))
+    setDurationSs([...Array(children.length)].map(() => Math.random() * 5 + 5))
   }, [children.length, state])
 
   return (
