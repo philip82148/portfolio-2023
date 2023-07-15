@@ -1,5 +1,6 @@
-import type { CSSProperties } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+
+import { usePhase } from './usePhase'
 
 import type { TransformProps, TransformType } from '.'
 
@@ -17,50 +18,51 @@ const Translate: React.FC<TransformProps & { axis: 'X' | 'Y' | 'Z'; signature: '
   axis,
   signature,
 }) => {
-  const [phase, setPhase] = useState(0)
+  const { phase, spanRef, setPhase } = usePhase()
 
-  let style: CSSProperties
-  let phaseDurationS: number
+  const animationNamePrefix = `translate${axis}${String(durationS).substring(2)}`
+  let animation: string
 
-  const reversedSignature = { '+': '-', '-': '+' }[signature]
-  const abs = { X: '100vw', Y: '100vh', Z: '1000px' }[axis]
   switch (phase) {
     case 0:
-      phaseDurationS = 0.1
-      style = { transform: `translate${axis}(0)` }
-      break
-    case 1:
-      phaseDurationS = durationS * 0.5
-      style = {
-        transition: `all ${phaseDurationS}s linear`,
-        transform: `translate${axis}(${signature}${abs})`,
-      }
-      break
-    case 2:
-      phaseDurationS = 0.1
-      style = {
-        transform: `translate${axis}(${reversedSignature}${abs})`,
-      }
+      animation = `${durationS * 0.5}s linear 0s both ${animationNamePrefix}phase0`
       break
     default:
-      phaseDurationS = durationS * 0.5
-      style = {
-        transition: `all ${phaseDurationS}s linear`,
-        transform: `translate${axis}(0)`,
-      }
+      animation = `${durationS * 0.5}s linear 0s both ${animationNamePrefix}phase1`
       break
   }
 
   useEffect(() => {
-    if (phase < 4)
-      setTimeout(() => {
-        setPhase((phase) => phase + 1)
-      }, phaseDurationS * 1000)
-  }, [phase, phaseDurationS])
-
-  useEffect(() => {
     setPhase(0)
-  }, [state])
+  }, [state, setPhase])
 
-  return <span style={{ display: 'inline-block', whiteSpace: 'pre', ...style }}>{children}</span>
+  const reversedSignature = { '+': '-', '-': '+' }[signature]
+  const abs = { X: '100vw', Y: '100vh', Z: '1000px' }[axis]
+
+  return (
+    <>
+      <span ref={spanRef} style={{ display: 'inline-block', whiteSpace: 'pre', animation }}>
+        {children}
+      </span>
+      <style jsx>{`
+        @keyframes ${animationNamePrefix}phase0 {
+          from {
+            transform: ${'translate' + axis}(0);
+          }
+          to {
+            transform: ${'translate' + axis}(${signature}${abs});
+          }
+        }
+
+        @keyframes ${animationNamePrefix}phase1 {
+          from {
+            transform: ${'translate' + axis}(${reversedSignature}${abs});
+          }
+          to {
+            transform: ${'translate' + axis}(0);
+          }
+        }
+      `}</style>
+    </>
+  )
 }
