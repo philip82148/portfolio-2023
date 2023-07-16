@@ -14,9 +14,9 @@ export const EpochCard: React.FC<{
       elevation={2}
       sx={{
         borderRadius: 5,
-        width: { lg: 800, xs: 650 },
-        ml: rightAlign ? 'auto' : 0,
-        mr: !rightAlign ? 'auto' : 0,
+        width: caption && { lg: 800, xs: 650 },
+        ml: !caption || rightAlign ? 'auto' : 0,
+        mr: !caption || !rightAlign ? 'auto' : 0,
         p: { md: caption ? '30px 80px' : '20px 40px', xs: 4 },
       }}
     >

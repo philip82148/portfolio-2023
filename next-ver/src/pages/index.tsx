@@ -41,7 +41,6 @@ const Home: NextPage = () => {
           caption="中毒並みに時間を忘れて作業に熱中してしまうことがあり、普通のタイマーでは作業をやめられなかったため、電気ショックで時間を知らせるタイマーを作った。"
           closeOnMount
           techs={['PICアセンブラ']}
-          rightAlign
         />
         <WorkCard
           title="philip82148/SDCardLibrary"
@@ -49,12 +48,12 @@ const Home: NextPage = () => {
           imageSrc="images/sd-card-library.png"
           caption="電子工作でICレコーダー用に作ったSDカードライブラリ。PICの少ないリソースでも動くようにメモリとプログラムメモリをなるだけ使わないように書いている。"
           techs={['C']}
+          rightAlign
         />
         <EpochCard
           title="高校"
           caption="電子工作で水中ドローンを作った。その際、ブラウザで操作できるコントローラを作ったため、HTML等ウェブ系の言語と、サーバー用にPythonを使った。"
           newTechs={['HTML', 'CSS', 'JavaScript', 'Python']}
-          rightAlign
         />
         <WorkCard
           title="水中ドローン(電子工作)"

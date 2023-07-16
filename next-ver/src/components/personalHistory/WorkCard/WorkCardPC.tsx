@@ -159,7 +159,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                 <span>{title}</span>
               </Link>
               {demoUrl && (
-                <Link href={demoUrl} color="#333" underline="hover" variant="body1">
+                <Link href={demoUrl} target="_blank" color="#333" underline="hover" variant="body1">
                   {demoUrl}
                 </Link>
               )}
