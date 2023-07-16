@@ -1,6 +1,8 @@
 import type { TechType } from '../TechTag'
+import { useIsPC } from '../useIsPC'
 
 import { WorkCardPC } from './WorkCardPC'
+import { WorkCardSP } from './WorkCardSP'
 
 export type WorkCardProps = {
   title: string
@@ -13,5 +15,6 @@ export type WorkCardProps = {
   rightAlign?: boolean
 }
 export const WorkCard: React.FC<WorkCardProps> = (props) => {
-  return <WorkCardPC {...props} />
+  const isPC = useIsPC()
+  return <>{isPC ? <WorkCardPC {...props} /> : <WorkCardSP {...props} />}</>
 }
