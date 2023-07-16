@@ -45,8 +45,16 @@ export const WorkCard: React.FC<{
   }
 
   useEffect(() => {
-    closeOnMount ? close() : open()
-  }, [closeOnMount])
+    const onResize = (): void => {
+      isClosed ? close() : open()
+    }
+
+    onResize()
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('resize', onResize)
+    }
+  }, [isClosed])
 
   // image拡大用
   const [imageBoxHeight, setImageBoxHeight] = useState(0)
@@ -112,12 +120,12 @@ export const WorkCard: React.FC<{
             zIndex: 1,
             ...dummyTitlePosition,
             color: '#fff',
-            maxWidth: 430,
+            maxWidth: { lg: 430, xs: 350 },
           },
           isClosed && {
             cursor: 'pointer',
-            color: '#1e7667',
-            maxWidth: '100%',
+            color: '#129c70', // '#258d6c'
+            maxWidth: { xs: '100%' },
             ml: -25,
           },
         ]}
@@ -130,19 +138,19 @@ export const WorkCard: React.FC<{
           elevation={2}
           sx={{
             borderRadius: 5,
-            bgcolor: '#1e7667',
+            bgcolor: '#1f8766', // '#1e765a',
             color: '#fff',
             ml: rightAlign ? 'auto' : 0,
             mr: !rightAlign ? 'auto' : 0,
             p: 4,
-            width: 800,
+            width: { lg: 800, xs: 650 },
           }}
           onClick={() => {
             isClosed ? open() : close()
           }}
         >
           <Stack direction={rightAlign ? 'row-reverse' : 'row'} justifyContent="space-between">
-            <Stack ref={captionBoxRef} sx={{ width: 430, height: 'min-content' }}>
+            <Stack ref={captionBoxRef} sx={{ width: { lg: 430, xs: 350 }, height: 'min-content' }}>
               <Link
                 underline="none"
                 ref={dummyTitleRef}
@@ -157,14 +165,16 @@ export const WorkCard: React.FC<{
               )}
               <Typography>{caption}</Typography>
               <Stack direction="row" flexWrap="wrap" useFlexGap spacing={1} sx={{ mt: 6 }}>
-                {techs?.map((tag, i) => <TechTag key={i} techType={tag} sx={{ color: 'white' }} />)}
+                {techs?.map((tag, i) => (
+                  <TechTag key={i} techType={tag} sx={{ color: 'white', borderColor: '#fff' }} />
+                ))}
               </Stack>
             </Stack>
             <Box
               ref={imageBoxRef}
               sx={{
                 position: 'relative',
-                width: 250,
+                width: { lg: 250, xs: 200 },
                 height: imageBoxHeight,
               }}
             >
@@ -187,6 +197,9 @@ export const WorkCard: React.FC<{
                     borderRadius: 0,
                     transform: 'translate(-50%, -50%) scale(2)',
                   },
+                }}
+                onClick={(e) => {
+                  e.stopPropagation()
                 }}
               >
                 <img
