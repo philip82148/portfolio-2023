@@ -11,26 +11,29 @@ export const EpochCard: React.FC<{ title: string; caption?: string; newTechs?: T
   return (
     <Paper
       elevation={2}
-      sx={{ m: 'auto', borderRadius: 5, p: { md: caption ? '30px 80px' : '20px 40px', xs: 4 } }}
+      sx={{
+        m: 'auto',
+        borderRadius: 5,
+        p: { md: caption ? '30px 80px' : '20px 40px', xs: 4 },
+        width: caption ? 560 : undefined,
+      }}
     >
-      <Stack sx={{ width: 400 }}>
-        <Typography sx={{ fontSize: '1.6rem', fontWeight: 700, textAlign: 'center' }}>
-          {title}
-        </Typography>
-        {caption && <Typography sx={{ mt: 1 }}>{caption}</Typography>}
-        {newTechs && (
-          <>
-            <Typography
-              sx={{ fontSize: '1.2rem', fontWeight: 700, mt: 3, mb: 1, textAlign: 'center' }}
-            >
-              新しく覚えた言語/フレームワーク
-            </Typography>
-            <Stack direction="row" justifyContent="center" flexWrap="wrap" useFlexGap spacing={1}>
-              {newTechs?.map((tech, i) => <TechTag key={i} techType={tech} />)}
-            </Stack>
-          </>
-        )}
-      </Stack>
+      <Typography sx={{ fontSize: '1.6rem', fontWeight: 700, textAlign: 'center' }}>
+        {title}
+      </Typography>
+      {caption && <Typography sx={{ mt: 1 }}>{caption}</Typography>}
+      {newTechs && (
+        <>
+          <Typography
+            sx={{ fontSize: '1.2rem', fontWeight: 700, mt: 3, mb: 1, textAlign: 'center' }}
+          >
+            新しく覚えた言語/フレームワーク
+          </Typography>
+          <Stack direction="row" justifyContent="center" flexWrap="wrap" useFlexGap spacing={1}>
+            {newTechs?.map((tech, i) => <TechTag key={i} techType={tech} />)}
+          </Stack>
+        </>
+      )}
     </Paper>
   )
 }

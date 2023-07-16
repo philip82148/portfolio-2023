@@ -120,7 +120,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
             position: 'absolute',
             zIndex: 1,
             ...dummyTitlePosition,
-            color: '#fff',
+            color: '#333',
             maxWidth: { lg: 430, xs: 350 },
           },
           isClosed && {
@@ -139,8 +139,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
           elevation={2}
           sx={{
             borderRadius: 5,
-            bgcolor: '#1f8766', // '#1e765a',
-            color: '#fff',
+            bgcolor: '#d3e1df', // '#1e765a',
             ml: rightAlign ? 'auto' : 0,
             mr: !rightAlign ? 'auto' : 0,
             p: 4,
@@ -160,14 +159,14 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                 <span>{title}</span>
               </Link>
               {demoUrl && (
-                <Link href={demoUrl} color="#fff" underline="hover" variant="body1">
+                <Link href={demoUrl} color="#333" underline="hover" variant="body1">
                   {demoUrl}
                 </Link>
               )}
               <Typography>{caption}</Typography>
               <Stack direction="row" flexWrap="wrap" useFlexGap spacing={1} sx={{ mt: 6 }}>
                 {techs?.map((tag, i) => (
-                  <TechTag key={i} techType={tag} sx={{ color: 'white', borderColor: '#fff' }} />
+                  <TechTag key={i} techType={tag} sx={{ color: '#333', borderColor: '#333' }} />
                 ))}
               </Stack>
             </Stack>
