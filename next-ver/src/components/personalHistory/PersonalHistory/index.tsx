@@ -1,15 +1,29 @@
 import { Box, Container, Stack, Typography } from '@mui/material'
-import { forwardRef } from 'react'
+import React, { cloneElement, forwardRef, useState } from 'react'
 
 import { useIsPC } from '../useIsPC'
 
 import { AutoHeightDivider } from './AutoHeightDivider'
 
-type PersonalHistoryProps = React.PropsWithChildren<{ bgcolor: string }>
+type PersonalHistoryProps = {
+  children: React.ReactElement[]
+  closedOnMounts: boolean[]
+  bgcolor: string
+}
 const InnerPersonalHistory: React.ForwardRefRenderFunction<HTMLDivElement, PersonalHistoryProps> = (
-  { children, bgcolor },
+  { children, closedOnMounts, bgcolor },
   ref: React.Ref<HTMLDivElement>,
 ) => {
+  const [isCloseds, setIsCloseds] = useState<boolean[]>(closedOnMounts)
+
+  let rightAlign = true
+  const nextRightAlign = (update: boolean = false): boolean => {
+    const nextRightAlign = !rightAlign
+
+    if (update) rightAlign = nextRightAlign
+    return nextRightAlign
+  }
+
   const isPC = useIsPC()
 
   return (
@@ -20,7 +34,18 @@ const InnerPersonalHistory: React.ForwardRefRenderFunction<HTMLDivElement, Perso
             History
           </Typography>
           <Stack divider={isPC && <AutoHeightDivider />} sx={{ width: '100%' }}>
-            {children}
+            {children.map((child, i, children) =>
+              cloneElement(child, {
+                onClick: () => {
+                  setIsCloseds((isCloseds) =>
+                    children.map((_child, j) => (j === i ? !isCloseds[j] : !!isCloseds[j])),
+                  )
+                },
+                isClosed: isCloseds[i],
+                rightAlign: isCloseds[i] ? nextRightAlign() : nextRightAlign(true),
+                key: i,
+              }),
+            )}
           </Stack>
         </Stack>
       </Container>

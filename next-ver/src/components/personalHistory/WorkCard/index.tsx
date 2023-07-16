@@ -11,8 +11,9 @@ export type WorkCardProps = {
   demoUrl?: string
   caption: string
   techs: TechType[]
-  closeOnMount?: boolean
+  isClosed?: boolean
   rightAlign?: boolean
+  onClick?: () => void
 }
 export const WorkCard: React.FC<WorkCardProps> = (props) => {
   const isPC = useIsPC()
