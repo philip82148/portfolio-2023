@@ -23,7 +23,11 @@ const Home: NextPage = () => {
         ]}
       />
       <Separator bgcolorUp="#d3e1df" bgcolorDown="#fff" />
-      <PersonalHistory ref={personalHistoryRef} bgcolor="#fff">
+      <PersonalHistory
+        ref={personalHistoryRef}
+        bgcolor="#fff"
+        closedOnMounts={[false, false, true, false, false, true]}
+      >
         <EpochCard
           title="小学6年~"
           caption="小説「ぼくらの七日間戦争」に出てくるエレクトロニクスの天才中学生のキャラクターに憧れ、独学で電子工作を始める。同時にパソコンの仕組みが知りたくてJavaを学ぶ。本を読みながらメモ帳を作ったりした。"
@@ -38,7 +42,6 @@ const Home: NextPage = () => {
           title="電気ショックタイマー(電子工作)"
           imageSrc="images/in-preparation.jpg"
           caption="中毒並みに時間を忘れて作業に熱中してしまうことがあり、普通のタイマーでは作業をやめられなかったため、電気ショックで時間を知らせるタイマーを作った。"
-          closeOnMount
           techs={['PICアセンブラ']}
         />
         <WorkCard
@@ -47,7 +50,6 @@ const Home: NextPage = () => {
           imageSrc="images/sd-card-library.png"
           caption="電子工作でICレコーダー用に作ったSDカードライブラリ。PICの少ないリソースでも動くようにメモリとプログラムメモリをなるだけ使わないように書いている。"
           techs={['C']}
-          rightAlign
         />
         <EpochCard
           title="高校"
@@ -59,7 +61,6 @@ const Home: NextPage = () => {
           imageSrc="images/underwater-drone.jpg"
           caption="高校2年の文化祭で作って展示した。ブラウザ上でモーターの制御とカメラ映像が見れる。なお、水中ドローンという名目だが、水中で電波が届かないので実際には水上ドローンである。"
           techs={['C', 'HTML', 'CSS', 'JavaScript', 'Python']}
-          closeOnMount
         />
         <EpochCard
           title="大学"
@@ -84,7 +85,6 @@ const Home: NextPage = () => {
           demoUrl="http://khaosbbs.com/"
           caption="友達と二人で授業の評定サイト(WordPressテーマ)を作る。学部2年の時に作ったもので、いつかデザインを改善したいと思っている。"
           techs={['WordPress', 'PHP', 'MySQL', 'JavaScript', 'HTML', 'CSS']}
-          rightAlign
         />
         <WorkCard
           title="philip82148/mention-generator"
@@ -99,7 +99,6 @@ const Home: NextPage = () => {
           imageSrc="images/kishukusha-report-supporter.jpg"
           caption="日吉寄宿舎の各種届出を、届出を出す側も見る側も便利になるようにLINE BOTを作成した。"
           techs={['PHP']}
-          rightAlign
         />
         <WorkCard
           title="philip82148/kishukusha-meibo"
@@ -116,7 +115,6 @@ const Home: NextPage = () => {
           imageSrc="images/in-preparation.jpg"
           caption="このポートフォリオを作る。"
           techs={['Next.js', 'TypeScript']}
-          rightAlign
         />
         <EpochCard title="現在" />
       </PersonalHistory>

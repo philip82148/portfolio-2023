@@ -38,7 +38,7 @@ export const AutoHeightDivider: React.FC = () => {
       ref={dividerRef}
       orientation="vertical"
       flexItem
-      sx={{ transition: 'all 1s', height, m: '0 auto', borderRight: 2 }}
+      sx={{ transition: 'all 1s', height, m: '0 auto', borderRight: 2, borderColor: '#333' }}
     />
   )
 }
