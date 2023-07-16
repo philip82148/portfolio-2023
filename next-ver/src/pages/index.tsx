@@ -26,7 +26,7 @@ const Home: NextPage = () => {
       <PersonalHistory
         ref={personalHistoryRef}
         bgcolor="#fff"
-        closedOnMounts={[false, false, true, false]}
+        closedOnMounts={[false, false, true, false, false, true]}
       >
         <EpochCard
           title="小学6年~"
