@@ -20,8 +20,11 @@ const Rotate: React.FC<TransformProps & { axis: 'X' | 'Y' | 'Z' }> = ({
   let animation: string
 
   switch (phase) {
-    default:
+    case 0:
       animation = `${durationS}s cubic-bezier(0.4, 0, 0.2, 1) 0s both ${animationNamePrefix}phase0`
+      break
+    default:
+      animation = 'none'
       break
   }
 
