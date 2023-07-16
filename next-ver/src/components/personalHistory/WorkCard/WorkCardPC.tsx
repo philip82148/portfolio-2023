@@ -1,19 +1,20 @@
 import { Box, Fade, Link, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 
-import type { TechType } from './TechTag'
-import { TechTag } from './TechTag'
+import { TechTag } from '../TechTag'
 
-export const WorkCard: React.FC<{
-  title: string
-  imageSrc: string
-  url?: string
-  demoUrl?: string
-  caption: string
-  techs: TechType[]
-  closeOnMount?: boolean
-  rightAlign?: boolean
-}> = ({ title, imageSrc, url, demoUrl, caption, techs, closeOnMount, rightAlign }) => {
+import type { WorkCardProps } from '.'
+
+export const WorkCardPC: React.FC<WorkCardProps> = ({
+  title,
+  imageSrc,
+  url,
+  demoUrl,
+  caption,
+  techs,
+  closeOnMount,
+  rightAlign,
+}) => {
   // open/close用
   const [isClosed, setIsClosed] = useState(!!closeOnMount)
   const [parentBoxHeight, setParentBoxHeight] = useState<number>()
