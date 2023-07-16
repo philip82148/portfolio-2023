@@ -30,6 +30,9 @@ const InnerPersonalHistory: React.ForwardRefRenderFunction<HTMLDivElement, Perso
     <Box ref={ref} sx={{ bgcolor }}>
       <Container fixed={isPC} sx={{ pt: 10, pb: 10 }} disableGutters={!isPC}>
         <Stack alignItems="center">
+          <Typography fontSize={'1.6rem'} fontWeight={700} sx={{ p: 3, pb: 1, mb: 10 }}>
+            ---------- 以下製作中 ----------
+          </Typography>
           <Typography variant="h2" sx={{ borderBottom: '2px solid #333', p: 3, pb: 1, mb: 10 }}>
             History
           </Typography>
