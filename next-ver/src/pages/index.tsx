@@ -40,6 +40,7 @@ const Home: NextPage = () => {
           caption="中毒並みに時間を忘れて作業に熱中してしまうことがあり、普通のタイマーでは作業をやめられなかったため、電気ショックで時間を知らせるタイマーを作った。"
           closeOnMount
           techs={['PICアセンブラ']}
+          rightAlign
         />
         <WorkCard
           title="philip82148/SDCardLibrary"
@@ -60,6 +61,7 @@ const Home: NextPage = () => {
           caption="高校2年の文化祭で作って展示した。ブラウザ上でモーターの制御とカメラ映像が見れる。なお、水中ドローンという名目だが、水中で電波が届かないので実際には水上ドローンである。"
           techs={['C', 'HTML', 'CSS', 'JavaScript', 'Python']}
           closeOnMount
+          rightAlign
         />
         <EpochCard
           title="大学"
@@ -92,6 +94,7 @@ const Home: NextPage = () => {
           imageSrc="images/mention-generator.png"
           caption="日吉寄宿舎でアンケートに回答しなかった人全員をLINEでメンションしており、手作業で回答していない人を調べてメンションするのは大変なので、自動化するChrome拡張を作った。"
           techs={['JavaScript', 'HTML', 'CSS']}
+          rightAlign
         />
         <WorkCard
           title="philip82148/kishukusha-report-supporter"
@@ -108,6 +111,7 @@ const Home: NextPage = () => {
           imageSrc="images/in-preparation.jpg"
           caption="日吉寄宿舎で寮生の名簿を作る作業があり、電話番号や住所のフォーマットを整える作業が毎年大変だったので、自動化するプログラムを作った。"
           techs={['Next.js', 'TypeScript']}
+          rightAlign
         />
         <WorkCard
           title="philip82148/portfolio"

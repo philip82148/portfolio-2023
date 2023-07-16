@@ -23,6 +23,7 @@ export const MainVisual: React.FC<{
         width: '100vw',
         background: 'url(images/bg.jpg)',
         backgroundSize: 'cover',
+        overflow: 'hidden',
       }}
     >
       <Stack
