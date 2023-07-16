@@ -1,4 +1,4 @@
-import { Box, Fade, Link, Paper, Stack, Typography } from '@mui/material'
+import { Box, Fade, Link, Stack, Typography } from '@mui/material'
 
 import { TechTag } from '../TechTag'
 
@@ -11,6 +11,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
   demoUrl,
   caption,
   techs,
+  rightAlign,
 }) => {
   // // open/close用
   // const [isClosed, setIsClosed] = useState(!!closeOnMount)
@@ -92,55 +93,47 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
 
   return (
     <Fade in={true} timeout={1000}>
-      <Paper
-        elevation={2}
-        sx={{ bgcolor: '#d3e1df', color: '#333', p: 4, ml: 3, mr: 3 }}
-        onClick={() => {
-          // isClosed ? open() : close()
-        }}
-      >
-        <Stack>
-          <Link
-            href={url}
-            underline="none"
-            sx={{
-              fontWeight: 700,
-              textDecoration: 'none',
-              color: '#333',
-              fontSize: '1.6rem',
-              textAlign: 'center',
-              mb: 1,
-            }}
-          >
-            <span>{title}</span>
+      <Stack sx={{ bgcolor: rightAlign ? '#e5e8e7' : '#d3e1df', color: '#333', p: 4 }}>
+        <Link
+          href={url}
+          underline="none"
+          sx={{
+            fontWeight: 700,
+            textDecoration: 'none',
+            color: '#333',
+            fontSize: '1.6rem',
+            textAlign: 'center',
+            mb: 1,
+          }}
+        >
+          <span>{title}</span>
+        </Link>
+        <Box sx={{ height: 300 }}>
+          <img
+            src={imageSrc}
+            alt=""
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </Box>
+        {demoUrl && (
+          <Link href={demoUrl} color="#333" variant="body1" sx={{ textAlign: 'center', mt: 1 }}>
+            {demoUrl}
           </Link>
-          <Box sx={{ height: 300 }}>
-            <img
-              src={imageSrc}
-              alt=""
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            />
-          </Box>
-          {demoUrl && (
-            <Link href={demoUrl} color="#333" variant="body1" sx={{ textAlign: 'center', mt: 1 }}>
-              {demoUrl}
-            </Link>
-          )}
-          <Typography sx={{ mt: 1 }}>{caption}</Typography>
-          <Stack
-            direction="row"
-            justifyContent="center"
-            flexWrap="wrap"
-            useFlexGap
-            spacing={1}
-            sx={{ mt: 4 }}
-          >
-            {techs?.map((tag, i) => (
-              <TechTag key={i} techType={tag} sx={{ color: '#333', borderColor: '#333' }} />
-            ))}
-          </Stack>
+        )}
+        <Typography sx={{ mt: 1 }}>{caption}</Typography>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          flexWrap="wrap"
+          useFlexGap
+          spacing={1}
+          sx={{ mt: 4 }}
+        >
+          {techs?.map((tag, i) => (
+            <TechTag key={i} techType={tag} sx={{ color: '#333', borderColor: '#333' }} />
+          ))}
         </Stack>
-      </Paper>
+      </Stack>
     </Fade>
   )
 }

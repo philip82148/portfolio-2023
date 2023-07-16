@@ -1,15 +1,11 @@
 import { Paper, Stack, Typography } from '@mui/material'
 
-import { MovableCard } from './MovableCard'
-import type { TechType } from './TechTag'
-import { TechTag } from './TechTag'
+import { MovableCard } from '../MovableCard'
+import { TechTag } from '../TechTag'
 
-export const EpochCard: React.FC<{
-  title: string
-  caption?: string
-  newTechs?: TechType[]
-  rightAlign?: boolean
-}> = ({ title, caption, newTechs, rightAlign }) => {
+import type { EpochCardProps } from '.'
+
+export const EpochCardPC: React.FC<EpochCardProps> = ({ title, caption, newTechs, rightAlign }) => {
   return (
     <>
       {caption ? (
@@ -18,7 +14,7 @@ export const EpochCard: React.FC<{
             elevation={2}
             sx={{
               borderRadius: 5,
-              width: { lg: 800, xs: 650 },
+              width: { lg: 800, md: 650 },
               p: { md: '30px 80px', xs: 4 },
             }}
           >
