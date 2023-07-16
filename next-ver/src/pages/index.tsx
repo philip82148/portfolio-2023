@@ -33,6 +33,7 @@ const Home: NextPage = () => {
           title="中学校"
           caption="電子工作でマイコン用にC言語とPICのアセンブリ言語を学んだ。ここには載せていないが、SDカードライブラリをPICのアセンブリ言語でも書いており、そのおかげでC言語のポインタの概念が理解できた。"
           newTechs={['C', 'PICアセンブラ']}
+          rightAlign
         />
         <WorkCard
           title="電気ショックタイマー(電子工作)"
@@ -48,12 +49,12 @@ const Home: NextPage = () => {
           imageSrc="images/sd-card-library.png"
           caption="電子工作でICレコーダー用に作ったSDカードライブラリ。PICの少ないリソースでも動くようにメモリとプログラムメモリをなるだけ使わないように書いている。"
           techs={['C']}
-          rightAlign
         />
         <EpochCard
           title="高校"
           caption="電子工作で水中ドローンを作った。その際、ブラウザで操作できるコントローラを作ったため、HTML等ウェブ系の言語と、サーバー用にPythonを使った。"
           newTechs={['HTML', 'CSS', 'JavaScript', 'Python']}
+          rightAlign
         />
         <WorkCard
           title="水中ドローン(電子工作)"
@@ -94,7 +95,6 @@ const Home: NextPage = () => {
           imageSrc="images/mention-generator.png"
           caption="日吉寄宿舎でアンケートに回答しなかった人全員をLINEでメンションしており、手作業で回答していない人を調べてメンションするのは大変なので、自動化するChrome拡張を作った。"
           techs={['JavaScript', 'HTML', 'CSS']}
-          rightAlign
         />
         <WorkCard
           title="philip82148/kishukusha-report-supporter"
@@ -111,7 +111,6 @@ const Home: NextPage = () => {
           imageSrc="images/in-preparation.jpg"
           caption="日吉寄宿舎で寮生の名簿を作る作業があり、電話番号や住所のフォーマットを整える作業が毎年大変だったので、自動化するプログラムを作った。"
           techs={['Next.js', 'TypeScript']}
-          rightAlign
         />
         <WorkCard
           title="philip82148/portfolio"
