@@ -5,6 +5,7 @@ export type TechType =
   | 'Java'
   | 'PICアセンブラ'
   | 'C'
+  | 'C++'
   | 'JavaScript'
   | 'Python'
   | 'HTML'
@@ -19,6 +20,7 @@ export type TechType =
   | 'React'
   | 'Next.js'
   | 'NestJS'
+  | 'Shell'
 export const TechTag: React.FC<{ techType: TechType; sx?: SxProps<Theme> }> = ({
   techType,
   sx,

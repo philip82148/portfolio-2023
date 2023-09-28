@@ -9,7 +9,7 @@ export type WorkCardProps = {
   imageSrc: string
   url?: string
   demoUrl?: string
-  caption: string
+  caption: React.ReactNode
   techs: TechType[]
   isClosed?: boolean
   rightAlign?: boolean

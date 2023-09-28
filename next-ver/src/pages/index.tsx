@@ -76,6 +76,7 @@ const Home: NextPage = () => {
             'React',
             'Next.js',
             'NestJS',
+            'C++',
           ]}
         />
         <WorkCard
@@ -113,8 +114,27 @@ const Home: NextPage = () => {
           url="https://github.com/philip82148/portfolio"
           demoUrl="https://philip82148.github.io/portfolio/"
           imageSrc="images/in-preparation.jpg"
-          caption="このポートフォリオを作る。"
+          caption="このポートフォリオを作る。ギミックは凝っているが、デザインが気に入っておらず開発のモチベーションがストップしている。ので、スマホ版が崩壊している。"
           techs={['Next.js', 'TypeScript']}
+        />
+        <WorkCard
+          title="philip82148/simplerich-zsh-theme"
+          url="https://github.com/philip82148/simplerich-zsh-theme"
+          imageSrc="https://github.com/philip82148/simplerich-zsh-theme/raw/main/readme/demo.png"
+          caption="Oh-My-Zshのテーマを作った。Gitの、いくつのファイルがstaged, changed, untrackedかやリモートリポジトリから何コミット前にある、後にある、という情報が一目でわかるテーマ。既存のリポジトリを組み合わせて作っただけだが。"
+          techs={['Shell']}
+        />
+        <WorkCard
+          title="philip82148/cpp-dump"
+          url="https://github.com/philip82148/cpp-dump"
+          imageSrc="https://github.com/philip82148/cpp-dump/raw/main/readme/supports-various-types.png"
+          caption={
+            <>
+              競プロをはじめたが、C++にダンプ関数がなかったので、あらゆる型の変数を文字列表現にして標準エラー出力に出力するダンプ関数を
+              <b style={{ fontSize: '120%' }}>本気で作ってみた。</b>
+            </>
+          }
+          techs={['C++']}
         />
         <EpochCard title="現在" />
       </PersonalHistory>
