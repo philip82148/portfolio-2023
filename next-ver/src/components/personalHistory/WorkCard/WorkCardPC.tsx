@@ -19,6 +19,9 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
 }) => {
   // open/close用
   const [parentBoxHeight, setParentBoxHeight] = useState<number>()
+  const [openingOrClosingTimeout, setOpeningOrClosingTimeout] = useState<NodeJS.Timeout | null>(
+    null,
+  )
 
   const paperRef = useRef<HTMLDivElement>(null)
   const dummyTitleRef = useRef<HTMLAnchorElement>(null)
@@ -47,6 +50,15 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
       window.removeEventListener('resize', onResize)
     }
   }, [isClosed, rightAlign])
+
+  useEffect(() => {
+    if (openingOrClosingTimeout) clearTimeout(openingOrClosingTimeout)
+
+    const timeoutId = setTimeout(() => {
+      setOpeningOrClosingTimeout(null)
+    }, 1000)
+    setOpeningOrClosingTimeout(timeoutId)
+  }, [isClosed])
 
   // image拡大用
   const [imageBoxHeight, setImageBoxHeight] = useState(0)
@@ -84,15 +96,52 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
     imageRef.current.addEventListener('load', onImageLoad)
   }, [])
 
+  // Paper/Titleホバー時用
+  const [isPaperHovered, setIsPaperHovered] = useState(false)
+  const [isTitleHovered, setIsTitleHovered] = useState(false)
+  const [hoverChangingTimeout, setHoverChangingTimeout] = useState<NodeJS.Timeout | null>(null)
+
+  const titleRef = useRef<HTMLAnchorElement>(null)
+
+  useEffect(() => {
+    const makeHandler = (type: 'mouseenter' | 'mouseleave', setter: (value: boolean) => void) => {
+      return () => {
+        setter(type === 'mouseenter')
+
+        if (hoverChangingTimeout) clearTimeout(hoverChangingTimeout)
+
+        const timeoutId = setTimeout(() => {
+          setHoverChangingTimeout(null)
+        }, 500)
+        setHoverChangingTimeout(timeoutId)
+      }
+    }
+
+    paperRef.current?.addEventListener('mouseenter', makeHandler('mouseenter', setIsPaperHovered))
+    paperRef.current?.addEventListener('mouseleave', makeHandler('mouseleave', setIsPaperHovered))
+
+    titleRef.current?.addEventListener('mouseenter', makeHandler('mouseenter', setIsTitleHovered))
+    titleRef.current?.addEventListener('mouseleave', makeHandler('mouseleave', setIsTitleHovered))
+  }, [])
+
   return (
     <Box
       className={isClosed ? 'closed' : undefined} // AutoDivider状態判定用
-      sx={{
-        transition: 'all 1s',
-        position: 'relative',
-        height: parentBoxHeight,
-        fontSize: '1.6rem',
-      }}
+      sx={[
+        {
+          transition: 'all 1s, filter 0.2s ease, transform 0.2s ease',
+          position: 'relative',
+          height: parentBoxHeight,
+          fontSize: '1.6rem',
+        },
+        (isTitleHovered || (!isClosed && isPaperHovered)) && {
+          filter: 'brightness(1.1)',
+          transform: 'translateY(-4px)',
+        },
+        (isTitleHovered || isPaperHovered || !!hoverChangingTimeout) && {
+          zIndex: 10,
+        },
+      ]}
     >
       <MovableCard
         align={isClosed ? 'center-start' : rightAlign ? 'right' : 'left'}
@@ -107,6 +156,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
         innerSx={{ width: { lg: 430, xs: 350 } }}
       >
         <Link
+          ref={titleRef}
           onClick={(e) => {
             if (isClosed) {
               e.preventDefault()
@@ -124,16 +174,37 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
               position: 'relative',
               zIndex: 1,
               transition: 'all 1s',
-              width: { lg: 430, xs: 350 },
+              maxWidth: { lg: 430, xs: 350 },
+              width: 'fit-content',
+              '&:after': {
+                content: '""',
+                display: 'block',
+                width: '100%',
+                height: '2px',
+                bgcolor: '#f3f3f3',
+                opacity: 0,
+                transition: 'all .1s ease',
+                transform: 'translateY(6px)',
+              },
+            },
+            !!url && {
+              '&:hover:after': {
+                transform: 'translateY(0)',
+                opacity: 1,
+              },
             },
             !!isClosed && {
               cursor: 'pointer',
               color: '#2daf67',
-              width: { xs: 'auto' },
+              maxWidth: { xs: '100vw' },
               ml: -25,
-              transition: 'all 1s, filter 0.3s ease',
-              '&:hover': {
-                filter: 'brightness(1.15)',
+              '&:after': {
+                height: 0,
+              },
+            },
+            !!openingOrClosingTimeout && {
+              '&:after': {
+                height: 0,
               },
             },
           ]}
@@ -156,10 +227,6 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                 bgcolor: '#259758',
                 position: 'relative',
                 color: '#f3f3f3',
-                transition: 'background-color 0.3s ease',
-                '&:hover': {
-                  bgcolor: '#29a661',
-                },
               }}
               onClick={onClick}
             >
@@ -170,20 +237,52 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                     width: { lg: 430, xs: 350 },
                   }}
                 >
-                  <Link
-                    underline="none"
-                    ref={dummyTitleRef}
-                    sx={{ fontWeight: 700, visibility: 'hidden' }}
+                  <Box
+                    sx={{
+                      mb: 1,
+                      '&:after': {
+                        content: '""',
+                        display: 'block',
+                        width: '100%',
+                        height: '2px',
+                      },
+                    }}
                   >
-                    <span>{title}</span>
-                  </Link>
+                    <Link
+                      underline="none"
+                      ref={dummyTitleRef}
+                      sx={{ display: 'block', fontWeight: 700, visibility: 'hidden' }}
+                    >
+                      <span>{title}</span>
+                    </Link>
+                  </Box>
                   {demoUrl && (
                     <Link
                       href={demoUrl}
-                      underline="hover"
+                      underline="none"
                       variant="body1"
                       target="_blank"
-                      sx={{ zIndex: 1, color: '#f3f3f3c7' }}
+                      sx={{
+                        zIndex: 1,
+                        color: '#f3f3f3c7',
+                        width: 'fit-content',
+                        mt: -1,
+                        mb: 1.5,
+                        '&:after': {
+                          content: '""',
+                          display: 'block',
+                          width: '100%',
+                          height: '1px',
+                          bgcolor: '#f3f3f3c7',
+                          opacity: 0,
+                          transition: 'all .1s ease',
+                          transform: 'translateY(6px)',
+                        },
+                        '&:hover:after': {
+                          transform: 'translateY(0)',
+                          opacity: 1,
+                        },
+                      }}
                       onClick={(e) => {
                         e.stopPropagation()
                       }}
