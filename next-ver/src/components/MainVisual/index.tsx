@@ -20,7 +20,7 @@ export const MainVisual: React.FC<{
       sx={{
         minHeight: { xl: 864, lg: 675, md: 506 },
         height: '100vh',
-        width: '100vw',
+        width: '100%',
         background: 'url(images/bg.jpg)',
         backgroundSize: 'cover',
         overflow: 'hidden',

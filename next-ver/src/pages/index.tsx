@@ -22,10 +22,10 @@ const Home: NextPage = () => {
           { display: 'Portfolio Ver. 3' },
         ]}
       />
-      <Separator bgcolorUp="#d3e1df" bgcolorDown="#fff" />
+      <Separator bgcolorUp="#259758" bgcolorDown="#fafafa" />
       <PersonalHistory
         ref={personalHistoryRef}
-        bgcolor="#fff"
+        bgcolor="#fafafa"
         closedOnMounts={[false, false, true, false, false, true]}
       >
         <EpochCard
@@ -118,7 +118,7 @@ const Home: NextPage = () => {
         />
         <EpochCard title="現在" />
       </PersonalHistory>
-      <Separator bgcolorUp="#fff" bgcolorDown="#d3e1df" skewDirection="down" />
+      <Separator bgcolorUp="#fafafa" bgcolorDown="#259758" skewDirection="down" />
     </>
   )
 }

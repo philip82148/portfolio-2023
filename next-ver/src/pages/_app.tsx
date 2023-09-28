@@ -12,7 +12,12 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       <meta httpEquiv="Cache-Control" content="no-cache" />
       <meta httpEquiv="Pragma" content="no-cache" />
       <meta httpEquiv="Expires" content="0" />
-      <link rel="stylesheet" href="https://ss159178.stars.ne.jp/css/normalize.css?1348127897942" />
+      {process.env.NODE_ENV !== 'development' && (
+        <link
+          rel="stylesheet"
+          href="https://ss159178.stars.ne.jp/css/normalize.css?1348127897942"
+        />
+      )}
 
       <title>{`Ryota Sasaki's Portfolio Ver. 1`}</title>
       <meta name="description" content="Ryota SasakiのPortfolio Ver. 1" />
@@ -57,6 +62,14 @@ const theme = createTheme({
       'MS PGothic',
       'sans-serif',
     ].join(','),
+    h2: {
+      textAlign: 'center',
+      borderBottom: '2px solid #e5e5e5',
+      paddingBottom: 10,
+      margin: '0 140px 80px',
+      fontSize: '2.8rem',
+      color: '#555',
+    },
   },
   palette: {
     background: {

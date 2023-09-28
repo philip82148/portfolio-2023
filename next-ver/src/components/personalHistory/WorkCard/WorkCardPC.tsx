@@ -30,7 +30,8 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
   const close = (): void => {
     if (dummyTitleRef.current) {
       const span = dummyTitleRef.current.firstElementChild
-      const lineHeight = span?.getClientRects()[0].height
+      const lineCount = span?.getClientRects().length ?? 1
+      const lineHeight = dummyTitleRef.current.getBoundingClientRect().height / lineCount
       setParentBoxHeight(lineHeight)
     }
   }
@@ -119,7 +120,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
               display: 'block',
               fontWeight: 700,
               textDecoration: 'none',
-              color: '#333',
+              color: '#f3f3f3',
               position: 'relative',
               zIndex: 1,
               transition: 'all 1s',
@@ -127,9 +128,13 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
             },
             !!isClosed && {
               cursor: 'pointer',
-              color: '#129c70', // '#258d6c'
+              color: '#2daf67',
               width: { xs: 'auto' },
               ml: -25,
+              transition: 'all 1s, filter 0.3s ease',
+              '&:hover': {
+                filter: 'brightness(1.15)',
+              },
             },
           ]}
         >
@@ -142,95 +147,114 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
         innerSx={{ width: { lg: 800, xs: 650 } }}
       >
         <Fade in={!isClosed} timeout={1000}>
-          <Paper
-            ref={paperRef}
-            elevation={2}
-            sx={{
-              borderRadius: 5,
-              bgcolor: '#d3e1df', // '#1e765a',
-              position: 'relative',
-            }}
-            onClick={onClick}
-          >
-            <MovableCard align={rightAlign ? 'right' : 'left'} outerSx={{ p: 4 }}>
-              <Stack
-                ref={captionBoxRef}
-                sx={{
-                  width: { lg: 430, xs: 350 },
-                }}
-              >
-                <Link
-                  underline="none"
-                  ref={dummyTitleRef}
-                  sx={{ fontWeight: 700, visibility: 'hidden' }}
-                >
-                  <span>{title}</span>
-                </Link>
-                {demoUrl && (
-                  <Link href={demoUrl} color="#333" underline="hover" variant="body1">
-                    {demoUrl}
-                  </Link>
-                )}
-                <Typography>{caption}</Typography>
-                <Stack direction="row" flexWrap="wrap" useFlexGap spacing={1} sx={{ mt: 6 }}>
-                  {techs?.map((tag, i) => (
-                    <TechTag key={i} techType={tag} sx={{ color: '#333', borderColor: '#333' }} />
-                  ))}
-                </Stack>
-              </Stack>
-            </MovableCard>
-            <MovableCard
-              align={rightAlign ? 'left' : 'right'}
-              outerSx={{ position: 'absolute', top: 0, left: 0, p: 4 }}
+          <Box>
+            <Paper
+              ref={paperRef}
+              elevation={2}
+              sx={{
+                borderRadius: 5,
+                bgcolor: '#259758',
+                position: 'relative',
+                color: '#f3f3f3',
+                transition: 'background-color 0.3s ease',
+                '&:hover': {
+                  bgcolor: '#29a661',
+                },
+              }}
+              onClick={onClick}
             >
-              <Box
-                ref={imageBoxRef}
-                sx={{
-                  position: 'relative',
-                  width: { lg: 250, xs: 200 },
-                  height: imageBoxHeight,
-                }}
+              <MovableCard align={rightAlign ? 'right' : 'left'} outerSx={{ p: 4 }}>
+                <Stack
+                  ref={captionBoxRef}
+                  sx={{
+                    width: { lg: 430, xs: 350 },
+                  }}
+                >
+                  <Link
+                    underline="none"
+                    ref={dummyTitleRef}
+                    sx={{ fontWeight: 700, visibility: 'hidden' }}
+                  >
+                    <span>{title}</span>
+                  </Link>
+                  {demoUrl && (
+                    <Link
+                      href={demoUrl}
+                      underline="hover"
+                      variant="body1"
+                      target="_blank"
+                      sx={{ zIndex: 1, color: '#f3f3f3c7' }}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                      }}
+                    >
+                      {demoUrl}
+                    </Link>
+                  )}
+                  <Typography>{caption}</Typography>
+                  <Stack direction="row" flexWrap="wrap" useFlexGap spacing={1} sx={{ mt: 6 }}>
+                    {techs?.map((tag, i) => (
+                      <TechTag
+                        key={i}
+                        techType={tag}
+                        sx={{ color: '#f3f3f3', borderColor: '#f3f3f3' }}
+                      />
+                    ))}
+                  </Stack>
+                </Stack>
+              </MovableCard>
+              <MovableCard
+                align={rightAlign ? 'left' : 'right'}
+                outerSx={{ position: 'absolute', top: 0, left: 0, p: 4 }}
               >
                 <Box
-                  component="a"
+                  ref={imageBoxRef}
                   sx={{
-                    position: 'absolute',
-                    zIndex: 2,
-                    top: '50%',
-                    left: '50%',
-                    overflow: 'hidden',
-                    transform: 'translate(-50%, -50%)',
-                    transition: 'all 0.5s 0.5s',
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: 3,
-                    '&:hover': {
-                      zIndex: 3,
-                      ...imageSize,
-                      borderRadius: 0,
-                      transform: 'translate(-50%, -50%) scale(2)',
-                    },
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation()
+                    position: 'relative',
+                    width: { lg: 250, xs: 200 },
+                    height: imageBoxHeight,
                   }}
                 >
-                  <img
-                    ref={imageRef}
-                    src={imageSrc}
-                    alt=""
-                    style={{
+                  <Box
+                    sx={{
                       position: 'absolute',
+                      zIndex: 2,
                       top: '50%',
                       left: '50%',
+                      overflow: 'hidden',
                       transform: 'translate(-50%, -50%)',
-                      ...imageSize,
+                      transition: 'all 0.5s 0.5s',
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: 3,
+                      '&:hover': {
+                        zIndex: 3,
+                        ...imageSize,
+                        borderRadius: 0,
+                        transform: 'translate(-50%, -50%) scale(2)',
+                      },
                     }}
-                  />
+                    onClick={(e) => {
+                      e.stopPropagation()
+                    }}
+                  >
+                    <img
+                      ref={imageRef}
+                      src={imageSrc}
+                      alt=""
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        ...imageSize,
+                      }}
+                    />
+                  </Box>
                 </Box>
-              </Box>
-            </MovableCard>
-          </Paper>
+              </MovableCard>
+            </Paper>
+          </Box>
         </Fade>
       </MovableCard>
     </Box>

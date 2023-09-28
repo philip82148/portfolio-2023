@@ -33,9 +33,9 @@ const InnerPersonalHistory: React.ForwardRefRenderFunction<HTMLDivElement, Perso
           <Typography fontSize={'1.6rem'} fontWeight={700} sx={{ p: 3, pb: 1, mb: 10 }}>
             ---------- 以下製作中 ----------
           </Typography>
-          <Typography variant="h2" sx={{ borderBottom: '2px solid #333', p: 3, pb: 1, mb: 10 }}>
-            History
-          </Typography>
+          <Stack sx={{ width: '100%' }}>
+            <Typography variant="h2">History</Typography>
+          </Stack>
           <Stack divider={isPC && <AutoHeightDivider />} sx={{ width: '100%' }}>
             {children.map((child, i, children) =>
               cloneElement(child, {
