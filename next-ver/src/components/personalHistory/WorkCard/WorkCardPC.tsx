@@ -1,4 +1,5 @@
-import { Box, Fade, Link, Paper, Stack, Typography } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, Fade, IconButton, Link, Modal, Paper, Stack, Typography } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 
 import { MovableCard } from '../MovableCard'
@@ -27,16 +28,18 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
   const dummyTitleRef = useRef<HTMLAnchorElement>(null)
 
   const open = (): void => {
-    if (paperRef.current) setParentBoxHeight(paperRef.current.offsetHeight)
+    if (!paperRef.current) return
+
+    setParentBoxHeight(paperRef.current.offsetHeight)
   }
 
   const close = (): void => {
-    if (dummyTitleRef.current) {
-      const span = dummyTitleRef.current.firstElementChild
-      const lineCount = span?.getClientRects().length ?? 1
-      const lineHeight = dummyTitleRef.current.getBoundingClientRect().height / lineCount
-      setParentBoxHeight(lineHeight)
-    }
+    if (!dummyTitleRef.current) return
+
+    const span = dummyTitleRef.current.firstElementChild
+    const lineCount = span?.getClientRects().length ?? 1
+    const lineHeight = dummyTitleRef.current.getBoundingClientRect().height / lineCount
+    setParentBoxHeight(lineHeight)
   }
 
   useEffect(() => {
@@ -60,18 +63,26 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
     setOpeningOrClosingTimeout(timeoutId)
   }, [isClosed])
 
-  // image拡大用
+  // image box用
   const [imageBoxHeight, setImageBoxHeight] = useState(0)
 
   const captionBoxRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!captionBoxRef.current) return
+    const onResize = (): void => {
+      if (!captionBoxRef.current) return
 
-    const { offsetHeight: captionBoxHeight } = captionBoxRef.current
+      const { offsetHeight: captionBoxHeight } = captionBoxRef.current
 
-    setImageBoxHeight(captionBoxHeight)
+      setImageBoxHeight(captionBoxHeight)
+    }
+
+    onResize()
+    captionBoxRef.current?.addEventListener('resize', onResize)
   }, [])
+
+  // modal用
+  const [openModal, setOpenModal] = useState(false)
 
   // Paper/Titleホバー時用
   const [isPaperHovered, setIsPaperHovered] = useState(false)
@@ -293,6 +304,10 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                     maxHeight: imageBoxHeight,
                     overflow: 'hidden',
                   }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setOpenModal(true)
+                  }}
                 >
                   <img
                     src={imageSrc}
@@ -310,6 +325,45 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
           </Box>
         </Fade>
       </MovableCard>
+      <Modal
+        open={openModal}
+        onClose={() => {
+          setOpenModal(false)
+        }}
+      >
+        <Box>
+          <IconButton
+            onClick={() => {
+              setOpenModal(false)
+            }}
+            sx={{ position: 'absolute', right: 0 }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <Box
+            sx={{
+              display: 'flex',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              boxShadow: 24,
+            }}
+          >
+            <img
+              src={imageSrc}
+              alt=""
+              style={{
+                maxHeight: '80vh',
+                maxWidth: '80vw',
+                height: '100%',
+                width: '100%',
+                objectFit: 'contain',
+              }}
+            />
+          </Box>
+        </Box>
+      </Modal>
     </Box>
   )
 }
