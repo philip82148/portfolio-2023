@@ -62,38 +62,15 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
 
   // image拡大用
   const [imageBoxHeight, setImageBoxHeight] = useState(0)
-  const [imageSize, setImageSize] = useState({ width: 0, height: 0 })
 
   const captionBoxRef = useRef<HTMLDivElement>(null)
-  const imageBoxRef = useRef<HTMLDivElement>(null)
-  const imageRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
-    const onImageLoad = (): void => {
-      if (!captionBoxRef.current || !imageBoxRef.current || !imageRef.current) return
+    if (!captionBoxRef.current) return
 
-      const { offsetHeight: captionBoxHeight } = captionBoxRef.current
-      const { offsetWidth: imageBoxWidth } = imageBoxRef.current
-      const { naturalWidth, naturalHeight } = imageRef.current
+    const { offsetHeight: captionBoxHeight } = captionBoxRef.current
 
-      setImageBoxHeight(captionBoxHeight)
-
-      // object-fit: coverとなるように拡大したサイズにする
-      const scale = Math.max(imageBoxWidth / naturalWidth, captionBoxHeight / naturalHeight)
-      const width = naturalWidth * scale
-      const height = naturalHeight * scale
-
-      setImageSize({ width, height })
-    }
-
-    if (!imageRef.current) return
-
-    if (imageRef.current.complete) {
-      onImageLoad()
-      return
-    }
-
-    imageRef.current.addEventListener('load', onImageLoad)
+    setImageBoxHeight(captionBoxHeight)
   }, [])
 
   // Paper/Titleホバー時用
@@ -129,8 +106,8 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
       className={isClosed ? 'closed' : undefined} // AutoDivider状態判定用
       sx={[
         {
+          display: 'grid',
           transition: 'all 1s, filter 0.2s ease, transform 0.2s ease',
-          position: 'relative',
           height: parentBoxHeight,
           fontSize: '1.6rem',
         },
@@ -138,17 +115,12 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
           filter: 'brightness(1.1)',
           transform: 'translateY(-4px)',
         },
-        (isTitleHovered || isPaperHovered || !!hoverChangingTimeout) && {
-          zIndex: 10,
-        },
       ]}
     >
       <MovableCard
         align={isClosed ? 'center-start' : rightAlign ? 'right' : 'left'}
         outerSx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
+          gridArea: '1 / 1 / 2 / 2',
           transition: 'all 1s',
           p: 4,
           pt: !isClosed ? 4 : 0,
@@ -214,7 +186,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
       </MovableCard>
       <MovableCard
         align={rightAlign ? 'right' : 'left'}
-        outerSx={{ position: 'absolute', top: 0, left: 0 }}
+        outerSx={{ gridArea: '1 / 1 / 2 / 2' }}
         innerSx={{ width: { lg: 800, xs: 650 } }}
       >
         <Fade in={!isClosed} timeout={1000}>
@@ -225,12 +197,15 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
               sx={{
                 borderRadius: 5,
                 bgcolor: '#259758',
-                position: 'relative',
+                display: 'grid',
                 color: '#f3f3f3',
               }}
               onClick={onClick}
             >
-              <MovableCard align={rightAlign ? 'right' : 'left'} outerSx={{ p: 4 }}>
+              <MovableCard
+                align={rightAlign ? 'right' : 'left'}
+                outerSx={{ gridArea: '1 / 1 / 2 / 2', p: 4 }}
+              >
                 <Stack
                   ref={captionBoxRef}
                   sx={{
@@ -304,52 +279,31 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
               </MovableCard>
               <MovableCard
                 align={rightAlign ? 'left' : 'right'}
-                outerSx={{ position: 'absolute', top: 0, left: 0, p: 4 }}
+                outerSx={{ gridArea: '1 / 1 / 2 / 2', p: 4 }}
+                innerSx={{
+                  display: 'grid',
+                  alignItems: 'center',
+                  justifyItems: 'center',
+                  height: '100%',
+                }}
               >
                 <Box
-                  ref={imageBoxRef}
                   sx={{
-                    position: 'relative',
                     width: { lg: 250, xs: 200 },
-                    height: imageBoxHeight,
+                    maxHeight: imageBoxHeight,
+                    overflow: 'hidden',
                   }}
                 >
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      zIndex: 2,
-                      top: '50%',
-                      left: '50%',
-                      overflow: 'hidden',
-                      transform: 'translate(-50%, -50%)',
-                      transition: 'all 0.5s 0.5s',
+                  <img
+                    src={imageSrc}
+                    alt=""
+                    style={{
                       width: '100%',
                       height: '100%',
-                      borderRadius: 3,
-                      '&:hover': {
-                        zIndex: 3,
-                        ...imageSize,
-                        borderRadius: 0,
-                        transform: 'translate(-50%, -50%) scale(2)',
-                      },
+                      objectFit: 'cover',
+                      objectPosition: 'center top',
                     }}
-                    onClick={(e) => {
-                      e.stopPropagation()
-                    }}
-                  >
-                    <img
-                      ref={imageRef}
-                      src={imageSrc}
-                      alt=""
-                      style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        ...imageSize,
-                      }}
-                    />
-                  </Box>
+                  />
                 </Box>
               </MovableCard>
             </Paper>

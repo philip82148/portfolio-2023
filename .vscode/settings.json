@@ -14,5 +14,6 @@
     "selva",
     "simplerich",
     "Wantedly"
-  ]
+  ],
+  "errorLens.enabled": false
 }
