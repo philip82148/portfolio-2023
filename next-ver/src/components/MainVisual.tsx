@@ -1,13 +1,9 @@
 import { Box, Stack } from '@mui/material'
-import { Pacifico, Crete_Round } from 'next/font/google'
-import type { MouseEventHandler } from 'react'
+import { Crete_Round } from 'next/font/google'
 
-const nameFont = Pacifico({ weight: '400', preload: false })
 const mainFont = Crete_Round({ weight: '400', preload: false })
 
-export const MainVisual: React.FC<{
-  listItems: Array<{ display: string; onClick?: MouseEventHandler<HTMLDivElement>; href?: string }>
-}> = () => {
+export const MainVisual: React.FC = () => {
   return (
     <Stack
       justifyContent="end"

@@ -8,6 +8,7 @@ import { TechTag } from '../TechTag'
 import type { WorkCardProps } from '.'
 
 export const WorkCardPC: React.FC<WorkCardProps> = ({
+  type,
   title,
   imageSrc,
   url,
@@ -18,6 +19,12 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
   rightAlign,
   onClick,
 }) => {
+  const cardColor = {
+    programming: 'primary.main',
+    electronics: 'secondary.main', // '#259758', // '#9edd52',
+    craft: 'secondary.main',
+  }[type]
+
   // open/close用
   const [parentBoxHeight, setParentBoxHeight] = useState<number>()
   const [openingOrClosingTimeout, setOpeningOrClosingTimeout] = useState<NodeJS.Timeout | null>(
@@ -61,6 +68,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
       setOpeningOrClosingTimeout(null)
     }, 1000)
     setOpeningOrClosingTimeout(timeoutId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isClosed])
 
   // image box用
@@ -110,6 +118,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
 
     titleRef.current?.addEventListener('mouseenter', makeHandler('mouseenter', setIsTitleHovered))
     titleRef.current?.addEventListener('mouseleave', makeHandler('mouseleave', setIsTitleHovered))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -178,7 +187,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
             },
             !!isClosed && {
               cursor: 'pointer',
-              color: 'primary.main',
+              color: cardColor,
               maxWidth: { xs: '100vw' },
               ml: -25,
               '&:after': {
@@ -207,7 +216,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
               elevation={2}
               sx={{
                 borderRadius: 5,
-                bgcolor: 'primary.main',
+                bgcolor: cardColor,
                 display: 'grid',
                 color: '#f3f3f3',
               }}
@@ -221,6 +230,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                   ref={captionBoxRef}
                   sx={{
                     width: { lg: 430, xs: 350 },
+                    minHeight: 200,
                   }}
                 >
                   <Box
@@ -277,15 +287,17 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                     </Link>
                   )}
                   <Typography>{caption}</Typography>
-                  <Stack direction="row" flexWrap="wrap" useFlexGap spacing={1} sx={{ mt: 6 }}>
-                    {techs?.map((tag, i) => (
-                      <TechTag
-                        key={i}
-                        techType={tag}
-                        sx={{ color: '#f3f3f3', borderColor: '#f3f3f3' }}
-                      />
-                    ))}
-                  </Stack>
+                  {techs && (
+                    <Stack direction="row" flexWrap="wrap" useFlexGap spacing={1} sx={{ mt: 6 }}>
+                      {techs.map((tag, i) => (
+                        <TechTag
+                          key={i}
+                          techType={tag}
+                          sx={{ color: '#f3f3f3', borderColor: '#f3f3f3' }}
+                        />
+                      ))}
+                    </Stack>
+                  )}
                 </Stack>
               </MovableCard>
               <MovableCard
