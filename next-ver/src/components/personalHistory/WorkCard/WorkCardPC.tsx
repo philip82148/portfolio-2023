@@ -338,7 +338,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
             }}
             sx={{ position: 'absolute', right: 0 }}
           >
-            <CloseIcon />
+            <CloseIcon sx={{ color: '#fff' }} fontSize="large" />
           </IconButton>
           <Box
             sx={{
