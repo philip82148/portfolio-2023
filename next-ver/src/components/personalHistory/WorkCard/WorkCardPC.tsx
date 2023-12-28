@@ -178,7 +178,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
             },
             !!isClosed && {
               cursor: 'pointer',
-              color: '#2daf67',
+              color: 'primary.main',
               maxWidth: { xs: '100vw' },
               ml: -25,
               '&:after': {
@@ -207,7 +207,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
               elevation={2}
               sx={{
                 borderRadius: 5,
-                bgcolor: '#259758',
+                bgcolor: 'primary.main',
                 display: 'grid',
                 color: '#f3f3f3',
               }}

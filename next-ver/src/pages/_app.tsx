@@ -75,6 +75,9 @@ const theme = createTheme({
     background: {
       default: '#fff',
     },
+    primary: {
+      main: '#f7912b',
+    },
     text: {
       primary: '#333',
     },

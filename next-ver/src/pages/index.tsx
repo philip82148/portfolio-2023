@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import { useRef } from 'react'
 
+import { Header } from '@/components/Header'
 import { MainVisual } from '@/components/MainVisual'
 import { Separator } from '@/components/Separator'
 import { EpochCard, PersonalHistory, WorkCard } from '@/components/personalHistory'
@@ -10,6 +11,7 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <Header />
       <MainVisual
         listItems={[
           { display: 'About Me' },
@@ -22,10 +24,11 @@ const Home: NextPage = () => {
           { display: 'Portfolio Ver. 3' },
         ]}
       />
-      <Separator bgcolorUp="#259758" bgcolorDown="#fafafa" />
+      {/* <Box sx={{ height: '140px' }}></Box> */}
+      {/* <Separator bgcolorDown="#fafafa" bgcolorUp="#fafafa" /> */}
       <PersonalHistory
         ref={personalHistoryRef}
-        bgcolor="#fafafa"
+        bgcolor="background.default"
         closedOnMounts={[false, false, true, false, false, true]}
       >
         <EpochCard
