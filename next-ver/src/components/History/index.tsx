@@ -10,7 +10,7 @@ export const History: React.FC = () => {
   const isPC = useIsPC()
 
   return (
-    <Container fixed={isPC} sx={{ mt: 14, mb: 14 }} disableGutters={!isPC}>
+    <Container fixed={isPC} sx={{ pt: 14, pb: 14 }} disableGutters={!isPC} id="history">
       <Stack alignItems="center">
         <Typography variant="h2">HISTORY</Typography>
         <HistoryBody closedOnMounts={[false, true, false, false, true, true, false, false, true]}>

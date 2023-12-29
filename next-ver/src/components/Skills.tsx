@@ -6,7 +6,7 @@ export const Skills: React.FC = () => {
   const isPC = useIsPC()
 
   return (
-    <Stack sx={{ bgcolor: 'primary.main', pt: 10, pb: 10 }} alignItems="center">
+    <Stack sx={{ bgcolor: 'primary.main', pt: 10, pb: 10 }} alignItems="center" id="skills">
       {/* <Typography variant="h2" color="#fff" borderColor="#fff">
         SKILLS
       </Typography> */}

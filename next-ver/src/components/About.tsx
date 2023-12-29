@@ -6,7 +6,7 @@ export const About: React.FC = () => {
   const isPC = useIsPC()
 
   return (
-    <Container fixed={isPC} sx={{ mt: 10, mb: 15 }} disableGutters={!isPC}>
+    <Container fixed={isPC} sx={{ pt: 10, pb: 15 }} disableGutters={!isPC} id="about">
       <Stack sx={{ width: '100%' }} alignItems="center">
         <Typography variant="h2">ABOUT</Typography>
         <Stack
