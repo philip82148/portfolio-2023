@@ -1,12 +1,11 @@
-import { css } from '@emotion/react'
-import { Box, Button, Container, Stack } from '@mui/material'
+import { Box, Button, Container, Stack, styled } from '@mui/material'
 import { Dosis } from 'next/font/google'
 import { useEffect, useState } from 'react'
 
 const h2Font = Dosis({ preload: false })
 // const mainFont = Crete_Round({ weight: '400', preload: false })
 
-const hpButtonCss = css({
+const HpButton = styled(Button)({
   height: 60,
   borderRadius: 0,
   textTransform: 'none',
@@ -14,14 +13,14 @@ const hpButtonCss = css({
   padding: '0 12px',
 })
 
-const snsButtonCss = css({
+const SnsButton = styled(Button)({
   height: 60,
   borderRadius: 0,
   minWidth: 0,
   padding: '15px 12px',
 })
 
-const headerButtonCss = css({
+const HeaderButton = styled(Button)({
   height: 60,
   borderRadius: 0,
   fontFamily: h2Font.style.fontFamily,
@@ -66,7 +65,7 @@ export const Header: React.FC = () => {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Stack direction="row" alignItems="center">
-            <Button css={hpButtonCss} href="/" color="inherit">
+            <HpButton href="/" color="inherit">
               <Stack direction="row" alignItems="center">
                 <Box sx={{ width: 48, height: 48, borderRadius: 24, overflow: 'hidden', mr: 2 }}>
                   <img
@@ -77,72 +76,65 @@ export const Header: React.FC = () => {
                 </Box>
                 Ryota Sasaki
               </Stack>
-            </Button>
+            </HpButton>
             <Stack direction="row">
-              <Button href="https://github.com/philip82148" css={snsButtonCss} color="inherit">
+              <SnsButton href="https://github.com/philip82148" color="inherit">
                 <img
                   src="images/logos/github.svg"
                   alt=""
                   style={{ height: '100%', width: 'auto' }}
                 />
-              </Button>
-              <Button href="https://zenn.dev/sassan" css={snsButtonCss} color="inherit">
+              </SnsButton>
+              <SnsButton href="https://zenn.dev/sassan" color="inherit">
                 <img src="images/logos/zenn.svg" alt="" style={{ height: '100%', width: 'auto' }} />
-              </Button>
-              <Button href="https://qiita.com/philip82148" css={snsButtonCss} color="inherit">
+              </SnsButton>
+              <SnsButton href="https://qiita.com/philip82148" color="inherit">
                 <img
                   src="images/logos/qiita.png"
                   alt=""
                   style={{ height: '100%', width: 'auto' }}
                 />
-              </Button>
-              <Button href="https://twitter.com/philip82148" css={snsButtonCss} color="inherit">
+              </SnsButton>
+              <SnsButton href="https://twitter.com/philip82148" color="inherit">
                 <img src="images/logos/x.png" alt="" style={{ height: '100%', width: 'auto' }} />
-              </Button>
-              <Button href="https://dev.to/philip82148" css={snsButtonCss} color="inherit">
+              </SnsButton>
+              <SnsButton href="https://dev.to/philip82148" color="inherit">
                 <img src="images/logos/dev.svg" alt="" style={{ height: '100%', width: 'auto' }} />
-              </Button>
-              <Button
-                href="https://www.wantedly.com/id/ryouta_sasaki_ag"
-                css={snsButtonCss}
-                color="inherit"
-              >
+              </SnsButton>
+              <SnsButton href="https://www.wantedly.com/id/ryouta_sasaki_ag" color="inherit">
                 <img
                   src="images/logos/wantedly.svg"
                   alt=""
                   style={{ height: '100%', width: 'auto' }}
                 />
-              </Button>
+              </SnsButton>
             </Stack>
           </Stack>
           <Stack direction="row" alignItems="center">
-            <Button
-              css={headerButtonCss}
+            <HeaderButton
               color="inherit"
               onClick={() =>
                 document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
               }
             >
               ABOUT
-            </Button>
-            <Button
-              css={headerButtonCss}
+            </HeaderButton>
+            <HeaderButton
               color="inherit"
               onClick={() =>
                 document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' })
               }
             >
               SKILLS
-            </Button>
-            <Button
-              css={headerButtonCss}
+            </HeaderButton>
+            <HeaderButton
               color="inherit"
               onClick={() =>
                 document.getElementById('history')?.scrollIntoView({ behavior: 'smooth' })
               }
             >
               HISTORY
-            </Button>
+            </HeaderButton>
           </Stack>
         </Stack>
       </Container>

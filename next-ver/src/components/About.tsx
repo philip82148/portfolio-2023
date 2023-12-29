@@ -1,6 +1,22 @@
-import { Box, Container, Stack, Typography } from '@mui/material'
+import { Box, Container, Stack, Typography, styled } from '@mui/material'
 
 import { useIsPC } from '@/lib/useIsPC'
+
+const NameTypography = styled(Typography)(({ theme }) => ({
+  fontSize: '2.8rem',
+  fontWeight: 600,
+  marginBottom: theme.spacing(0.5),
+}))
+
+const ItemTypography = styled(Typography)(({ theme }) => ({
+  marginTop: 10,
+  color: theme.palette.text.secondary,
+  fontSize: '1.2rem',
+}))
+
+const ContentTypography = styled(Typography)(() => ({
+  fontSize: '1.2rem',
+}))
 
 export const About: React.FC = () => {
   const isPC = useIsPC()
@@ -23,13 +39,13 @@ export const About: React.FC = () => {
             />
           </Box>
           <Stack sx={{ width: 400 }}>
-            <Typography sx={{ fontSize: '2.8rem' }}>Ryota Sasaki</Typography>
-            <Typography>所属</Typography>
-            <Typography>慶應義塾大学 理工学部 電気情報工学科 4年</Typography>
-            <Typography>趣味</Typography>
-            <Typography>電子工作/カラオケ/アニメ/ピアノ</Typography>
-            <Typography>特技</Typography>
-            <Typography>円周率100桁言える</Typography>
+            <NameTypography>Ryota Sasaki</NameTypography>
+            <ItemTypography>所属</ItemTypography>
+            <ContentTypography>慶應義塾大学 理工学部 電気情報工学科 4年</ContentTypography>
+            <ItemTypography>趣味</ItemTypography>
+            <ContentTypography>電子工作/カラオケ/アニメ/ピアノ</ContentTypography>
+            <ItemTypography>特技</ItemTypography>
+            <ContentTypography>円周率100桁言える</ContentTypography>
           </Stack>
         </Stack>
       </Stack>
