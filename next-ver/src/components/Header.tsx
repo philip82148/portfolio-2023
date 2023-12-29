@@ -26,9 +26,9 @@ export const Header: React.FC = () => {
             </Stack>
           </Button>
           <Stack direction="row" alignItems="center">
-            <Button>About Me</Button>
-            <Button>My Skills</Button>
-            <Button>My History</Button>
+            <Button>About</Button>
+            <Button>Skills</Button>
+            <Button>History</Button>
           </Stack>
         </Stack>
       </Container>
