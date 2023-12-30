@@ -23,7 +23,7 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
   const isPC = useIsPC()
 
   return (
-    <Stack divider={isPC && <AutoHeightDivider />} sx={{ width: '100%' }}>
+    <Stack divider={<AutoHeightDivider />} sx={{ width: '100%' }}>
       {children.map((child, i, children) =>
         cloneElement(child, {
           onClick: () => {
