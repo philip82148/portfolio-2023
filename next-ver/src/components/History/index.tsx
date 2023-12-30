@@ -25,11 +25,10 @@ export const History: React.FC = () => {
           />
           <WorkCard
             type="programming"
-            title="philip82148/SDCardLibrary"
-            url="https://github.com/philip82148/SDCardLibrary"
-            imageSrc="images/sd-card-library.png"
-            caption="電子工作でICレコーダー用に作ったSDカードライブラリ。PICの少ないリソースでも動くようにメモリとプログラムメモリをなるだけ使わないように書いている。"
-            techs={['C']}
+            title="メモ帳"
+            imageSrc="images/in-preparation.jpg"
+            caption="プログラミングで初めて作ったアプリ"
+            techs={['Java']}
           />
           <EpochCard
             title="中学校"
