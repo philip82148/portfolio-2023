@@ -25,8 +25,8 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
             href="https://ss159178.stars.ne.jp/css/normalize.css?1348127897942"
           />
         )}
-        <title>{`Ryota Sasaki's Portfolio Ver. 1`}</title>
-        <meta name="description" content="Ryota SasakiのPortfolio Ver. 1" />
+        <title>{`Ryota Sasaki`}</title>
+        <meta name="description" content="Ryota SasakiのPortfolioです。" />
 
         <link rel="icon" href={`${basePath}/favicon.ico`} />
         <link rel="apple-touch-icon" href={`${basePath}/apple-touch-icon.png`} />
