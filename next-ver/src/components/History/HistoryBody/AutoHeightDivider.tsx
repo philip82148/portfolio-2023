@@ -43,6 +43,7 @@ export const AutoHeightDivider: React.FC = () => {
           m: '0 auto',
           borderRight: 2,
           borderColor: '#e0e0e0',
+          zIndex: -1,
         },
         isPreviousClosed && { mt: 1 },
         isNextClosed && { mb: 1 },
