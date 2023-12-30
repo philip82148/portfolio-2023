@@ -10,7 +10,7 @@ export const History: React.FC = () => {
   const isPC = useIsPC()
 
   return (
-    <Container fixed={isPC} sx={{ pt: 14, pb: 14 }} disableGutters={!isPC} id="history">
+    <Container fixed={isPC} sx={{ mt: 4, pt: 10, pb: 14 }} disableGutters={!isPC} id="history">
       <Stack alignItems="center">
         <Typography variant="h2">HISTORY</Typography>
         <HistoryBody closedOnMounts={[false, true, false, false, true, true, false, false, true]}>
@@ -47,9 +47,9 @@ export const History: React.FC = () => {
           />
           <WorkCard
             type="craft"
-            title="ボート(工作)"
+            title="ボート3台目(工作)"
             imageSrc="images/in-preparation.jpg"
-            caption="父と二人で人が乗れるボートを作った。"
+            caption="今度は自分一人で3mのボートを作った。"
           />
           <WorkCard
             type="programming"
