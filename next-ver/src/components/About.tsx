@@ -31,7 +31,7 @@ export const About: React.FC = () => {
           alignItems="center"
           sx={{ width: '100%', maxWidth: 950 }}
         >
-          <Box sx={{ width: 400, borderRadius: 200, overflow: 'hidden', display: 'flex' }}>
+          <Box sx={{ width: 400, borderRadius: '50%', overflow: 'hidden', display: 'flex' }}>
             <img
               src="https://avatars.githubusercontent.com/u/92205270?v=4"
               alt=""
