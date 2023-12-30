@@ -1,5 +1,16 @@
 import CloseIcon from '@mui/icons-material/Close'
-import { Box, Fade, IconButton, Link, Modal, Paper, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  Fade,
+  IconButton,
+  Link,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 
 import { MovableCard } from '../MovableCard'
@@ -61,6 +72,9 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
   // modal用
   const [openModal, setOpenModal] = useState(false)
 
+  const theme = useTheme()
+  const isOverSm = useMediaQuery(theme.breakpoints.up('sm'))
+
   return (
     <Box
       sx={{
@@ -70,7 +84,10 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
         color: '#fff',
       }}
     >
-      <MovableCard align={isClosed ? 'center-start' : 'left'} outerSx={{ width: '100%' }}>
+      <MovableCard
+        align={isClosed && isOverSm ? 'center-start' : 'left'}
+        outerSx={{ width: '100%' }}
+      >
         <Link
           href={url}
           target="_blank"
@@ -79,7 +96,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
             display: 'block',
             position: 'absolute',
             zIndex: 1,
-            ml: isClosed ? { sm: -25, xs: 'calc(16px - 50%)' } : 2,
+            ml: isClosed && isOverSm ? -25 : 2,
             mr: 2,
             fontWeight: 700,
             fontSize: '1.4rem',
