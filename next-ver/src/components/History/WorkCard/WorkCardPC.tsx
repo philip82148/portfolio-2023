@@ -73,7 +73,10 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
     }
 
     onResize()
-    captionBoxRef.current?.addEventListener('resize', onResize)
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('resize', onResize)
+    }
   }, [])
 
   // modal用
@@ -254,7 +257,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                 <Box
                   sx={{
                     width: { lg: 250, xs: 200 },
-                    maxHeight: imageBoxHeight,
+                    height: imageBoxHeight,
                     overflow: 'hidden',
                   }}
                   onClick={(e) => {
