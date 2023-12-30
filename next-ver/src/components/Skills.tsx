@@ -1,22 +1,29 @@
-import { Box, Container, Stack, Typography } from '@mui/material'
-
-import { useIsPC } from '@/lib/useIsPC'
+import { Container, Stack, Typography } from '@mui/material'
 
 export const Skills: React.FC = () => {
-  const isPC = useIsPC()
-
   return (
-    <Stack sx={{ bgcolor: 'primary.main', pt: 10, pb: 10 }} alignItems="center">
+    <Stack
+      sx={{ bgcolor: 'primary.main', pt: { lg: 8, md: 5, xs: 3 }, pb: { lg: 8, md: 5, xs: 3 } }}
+      alignItems="center"
+    >
       {/* <Typography variant="h2" color="#fff" borderColor="#fff">
         SKILLS
       </Typography> */}
-      <Container fixed={isPC} disableGutters={!isPC} sx={{ mt: -2, pt: 2 }} id="skills">
+      <Container>
         <Stack
-          sx={{ width: '100%', bgcolor: 'background.default', pt: 8, pb: 16 }}
+          sx={{
+            width: '100%',
+            bgcolor: 'background.default',
+            pb: { lg: 10, md: 7, xs: 6 },
+            pl: { lg: 16, md: 14, sm: 8, xs: 4 },
+            pr: { lg: 16, md: 14, sm: 8, xs: 4 },
+          }}
           alignItems="center"
         >
           {/* <Typography variant="h3">LANGUAGES</Typography> */}
-          <Typography variant="h2">SKILLS</Typography>
+          <Typography variant="h2" sx={{ mt: { lg: 0, md: -3, xs: -4 } }} id="skills">
+            SKILLS
+          </Typography>
           {/* <Box sx={{ width: 500 }}>
             <img
               src="https://skillicons.dev/icons?i=ts,js,cpp,c,java,py,php,html,css,mysql&perline=5"
@@ -27,13 +34,11 @@ export const Skills: React.FC = () => {
         </Stack>
         <Stack sx={{ width: '100%', bgcolor: 'background.default' }} alignItems="center">
           <Typography variant="h3">FRAMEWORKS</Typography> */}
-          <Box sx={{ width: 800 }}>
-            <img
-              src="https://skillicons.dev/icons?i=ts,js,nextjs,react,nestjs,prisma,nodejs,docker,cpp,c,java,py,php,jquery,html,css,flutter,kotlin,graphql,mysql,wordpress,gcp,firebase,raspberrypi&perline=6"
-              alt=""
-              style={{ width: '100%' }}
-            />
-          </Box>
+          <img
+            src="https://skillicons.dev/icons?i=ts,js,nextjs,react,nestjs,prisma,nodejs,docker,cpp,c,java,py,php,jquery,html,css,flutter,kotlin,graphql,mysql,wordpress,gcp,firebase,raspberrypi&perline=6"
+            alt=""
+            style={{ width: '100%' }}
+          />
         </Stack>
       </Container>
     </Stack>

@@ -40,7 +40,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
 }
 export default App
 
-const theme = createTheme({
+let theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -50,6 +50,8 @@ const theme = createTheme({
       xl: 1536,
     },
   },
+})
+theme = createTheme(theme, {
   typography: {
     fontFamily: [
       'Avenir',
@@ -81,6 +83,17 @@ const theme = createTheme({
       color: '#000',
       fontFamily: h2Font.style.fontFamily,
       letterSpacing: 2,
+      paddingTop: theme.spacing(10),
+      [theme.breakpoints.down('lg')]: {
+        fontSize: '2.4rem',
+      },
+      [theme.breakpoints.down('md')]: {
+        fontSize: '2.2rem',
+        paddingTop: theme.spacing(9),
+      },
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '1.8rem',
+      },
     },
     h3: {
       fontWeight: 700,

@@ -25,9 +25,11 @@ const ContentTypography = styled(Typography)(() => ({
 
 export const About: React.FC = () => {
   return (
-    <Container fixed sx={{ pt: 10, pb: 15 }} id="about">
+    <Container fixed sx={{ pb: 15 }}>
       <Stack sx={{ width: '100%' }} alignItems="center">
-        <Typography variant="h2">ABOUT</Typography>
+        <Typography variant="h2" id="about">
+          ABOUT
+        </Typography>
         <Stack
           direction={{ md: 'row', xs: 'column' }}
           justifyContent="space-between"

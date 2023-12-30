@@ -10,9 +10,11 @@ export const History: React.FC = () => {
   const isPC = useIsPC()
 
   return (
-    <Container fixed={isPC} sx={{ mt: 4, pt: 10, pb: 14 }} disableGutters={!isPC} id="history">
+    <Container fixed={isPC} sx={{ mt: 4, pb: 14 }} disableGutters={!isPC}>
       <Stack alignItems="center">
-        <Typography variant="h2">HISTORY</Typography>
+        <Typography variant="h2" id="history">
+          HISTORY
+        </Typography>
         <HistoryBody closedOnMounts={[false, true, false, false, true, true, false, false, true]}>
           <EpochCard
             title="小学6年~"
