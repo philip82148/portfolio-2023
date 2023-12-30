@@ -1,139 +1,219 @@
-import { Box, Fade, Link, Stack, Typography } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, Fade, IconButton, Link, Modal, Paper, Stack, Typography } from '@mui/material'
+import { useEffect, useRef, useState } from 'react'
 
+import { MovableCard } from '../MovableCard'
 import { TechTag } from '../TechTag'
 
 import type { WorkCardProps } from '.'
 
 export const WorkCardSP: React.FC<WorkCardProps> = ({
+  type,
   title,
   imageSrc,
   url,
   demoUrl,
   caption,
   techs,
-  rightAlign,
+  isClosed,
+  onClick,
 }) => {
-  // // open/close用
-  // const [isClosed, setIsClosed] = useState(!!closeOnMount)
-  // const [parentBoxHeight, setParentBoxHeight] = useState<number>()
-  // const [dummyTitlePosition, setDummyTitlePosition] = useState<{
-  //   top: number
-  //   left: number | string
-  // }>()
+  const cardColor = {
+    programming: 'primary.main',
+    electronics: 'secondary.main', // '#259758', // '#9edd52',
+    craft: 'secondary.main',
+  }[type]
 
-  // const paperRef = useRef<HTMLDivElement>(null)
-  // const dummyTitleRef = useRef<HTMLAnchorElement>(null)
+  // open/close用
+  const [parentBoxHeight, setParentBoxHeight] = useState<number>()
+  const [titleTop, setTitleTop] = useState<number>()
 
-  // const open = (): void => {
-  //   setIsClosed(false)
-  //   if (paperRef.current) setParentBoxHeight(paperRef.current.offsetHeight)
-  //   if (dummyTitleRef.current) {
-  //     const { offsetTop: top, offsetLeft: left } = dummyTitleRef.current
-  //     setDummyTitlePosition({ top, left })
-  //   }
-  // }
+  const paperRef = useRef<HTMLDivElement>(null)
+  const dummyTitleRef = useRef<HTMLAnchorElement>(null)
 
-  // const close = (): void => {
-  //   setIsClosed(true)
-  //   if (dummyTitleRef.current) {
-  //     const span = dummyTitleRef.current.firstElementChild
-  //     const lineHeight = span?.getClientRects()[0].height
-  //     setParentBoxHeight(lineHeight)
-  //   }
-  //   setDummyTitlePosition({ top: 0, left: '50%' })
-  // }
+  const open = (): void => {
+    if (!paperRef.current || !dummyTitleRef.current) return
 
-  // useEffect(() => {
-  //   const onResize = (): void => {
-  //     isClosed ? close() : open()
-  //   }
+    setParentBoxHeight(paperRef.current.offsetHeight)
+    setTitleTop(dummyTitleRef.current.offsetTop)
+  }
 
-  //   onResize()
-  //   window.addEventListener('resize', onResize)
-  //   return () => {
-  //     window.removeEventListener('resize', onResize)
-  //   }
-  // }, [isClosed])
+  const close = (): void => {
+    if (!dummyTitleRef.current) return
 
-  // // image拡大用
-  // const [imageBoxHeight, setImageBoxHeight] = useState(0)
-  // const [imageSize, setImageSize] = useState({ width: 0, height: 0 })
+    const titleHeight = dummyTitleRef.current.getBoundingClientRect().height
+    setParentBoxHeight(titleHeight)
+    setTitleTop(0)
+  }
 
-  // const captionBoxRef = useRef<HTMLDivElement>(null)
-  // const imageBoxRef = useRef<HTMLDivElement>(null)
-  // const imageRef = useRef<HTMLImageElement>(null)
+  useEffect(() => {
+    const onResize = (): void => {
+      isClosed ? close() : open()
+    }
 
-  // useEffect(() => {
-  //   const onImageLoad = (): void => {
-  //     if (!captionBoxRef.current || !imageBoxRef.current || !imageRef.current) return
+    onResize()
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('resize', onResize)
+    }
+  }, [isClosed])
 
-  //     const { offsetHeight: captionBoxHeight } = captionBoxRef.current
-  //     const { offsetWidth: imageBoxWidth } = imageBoxRef.current
-  //     const { naturalWidth, naturalHeight } = imageRef.current
-
-  //     setImageBoxHeight(captionBoxHeight)
-
-  //     // object-fit: coverとなるように拡大したサイズにする
-  //     const scale = Math.max(imageBoxWidth / naturalWidth, captionBoxHeight / naturalHeight)
-  //     const width = naturalWidth * scale
-  //     const height = naturalHeight * scale
-
-  //     setImageSize({ width, height })
-  //   }
-
-  //   if (!imageRef.current) return
-
-  //   if (imageRef.current.complete) {
-  //     onImageLoad()
-  //     return
-  //   }
-
-  //   imageRef.current.addEventListener('load', onImageLoad)
-  // }, [])
+  // modal用
+  const [openModal, setOpenModal] = useState(false)
 
   return (
-    <Fade in={true} timeout={1000}>
-      <Stack sx={{ bgcolor: rightAlign ? '#e5e8e7' : '#d3e1df', color: '#333', p: 4 }}>
+    <Box
+      sx={{
+        position: 'relative',
+        transition: 'height 1s',
+        height: parentBoxHeight,
+        color: '#fff',
+      }}
+    >
+      <MovableCard align={isClosed ? 'center-start' : 'left'} outerSx={{ width: '100%' }}>
         <Link
           href={url}
+          target="_blank"
           underline="none"
           sx={{
+            display: 'block',
+            position: 'absolute',
+            zIndex: 1,
+            ml: isClosed ? { sm: -25, xs: 'calc(16px - 50%)' } : 2,
+            mr: 2,
             fontWeight: 700,
-            textDecoration: 'none',
-            color: '#333',
-            fontSize: '1.6rem',
-            textAlign: 'center',
-            mb: 1,
+            fontSize: '1.4rem',
+            transition: 'all 1s',
+            top: titleTop,
+            color: isClosed ? cardColor : '#fff',
+          }}
+          onClick={(e) => {
+            if (isClosed) {
+              e.preventDefault()
+              onClick?.()
+            }
           }}
         >
-          <span>{title}</span>
+          {title}
         </Link>
-        <Box sx={{ height: 300 }}>
+      </MovableCard>
+      <Fade in={!isClosed} timeout={1000}>
+        <Paper
+          ref={paperRef}
+          elevation={2}
+          sx={{ bgcolor: cardColor, color: '#fff' }}
+          onClick={onClick}
+        >
+          <Box
+            sx={{ height: 200 }}
+            onClick={(e) => {
+              e.stopPropagation()
+              setOpenModal(true)
+            }}
+          >
+            <img
+              src={imageSrc}
+              alt=""
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center top',
+              }}
+            />
+          </Box>
+          <Stack sx={{ p: 2, pt: 3, pb: 3 }}>
+            <Link
+              underline="none"
+              ref={dummyTitleRef}
+              color="inherit"
+              sx={{
+                display: 'block',
+                fontWeight: 700,
+                visibility: 'hidden',
+                fontSize: '1.4rem',
+              }}
+            >
+              {title}
+            </Link>
+            {demoUrl && (
+              <Link
+                href={demoUrl}
+                underline="none"
+                color="inherit"
+                target="_blank"
+                sx={{ width: 'min-content' }}
+                onClick={(e) => {
+                  e.stopPropagation()
+                }}
+              >
+                {demoUrl}
+              </Link>
+            )}
+            <Typography sx={{ pt: 2 }}>{caption}</Typography>
+            {techs && (
+              <Stack
+                direction="row"
+                // justifyContent="center"
+                flexWrap="wrap"
+                useFlexGap
+                spacing={1}
+                sx={{ pt: 2 }}
+              >
+                {techs?.map((tag, i) => (
+                  <TechTag
+                    key={i}
+                    techType={tag}
+                    sx={{ color: '#fff', borderColor: '#fff', fontSize: '0.8rem' }}
+                  />
+                ))}
+              </Stack>
+            )}
+          </Stack>
+        </Paper>
+      </Fade>
+      <Modal
+        open={openModal}
+        onClose={() => {
+          setOpenModal(false)
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            boxShadow: 24,
+            color: '#fff',
+          }}
+        >
+          <IconButton
+            onClick={() => {
+              setOpenModal(false)
+            }}
+            color="inherit"
+            sx={{
+              position: 'absolute',
+              left: '100%',
+              bottom: '100%',
+              transform: 'translate(-20%, 20%)',
+            }}
+          >
+            <CloseIcon color="inherit" fontSize="large" />
+          </IconButton>
           <img
             src={imageSrc}
             alt=""
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{
+              maxHeight: '80vh',
+              maxWidth: '80vw',
+              objectFit: 'contain',
+            }}
           />
         </Box>
-        {demoUrl && (
-          <Link href={demoUrl} color="#333" variant="body1" sx={{ textAlign: 'center', mt: 1 }}>
-            {demoUrl}
-          </Link>
-        )}
-        <Typography sx={{ mt: 1 }}>{caption}</Typography>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          flexWrap="wrap"
-          useFlexGap
-          spacing={1}
-          sx={{ mt: 4 }}
-        >
-          {techs?.map((tag, i) => (
-            <TechTag key={i} techType={tag} sx={{ color: '#333', borderColor: '#333' }} />
-          ))}
-        </Stack>
-      </Stack>
-    </Fade>
+      </Modal>
+    </Box>
   )
 }

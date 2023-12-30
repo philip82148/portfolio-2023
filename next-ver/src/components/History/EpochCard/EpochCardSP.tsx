@@ -8,24 +8,28 @@ export const EpochCardSP: React.FC<EpochCardProps> = ({ title, caption, newTechs
   return (
     <>
       {caption ? (
-        <Stack sx={{ p: 2, borderTop: '1px solid #ddd', borderBottom: '1px solid #ddd' }}>
-          <Typography sx={{ fontSize: '1.6rem', fontWeight: 700, textAlign: 'left' }}>
-            {title}
-          </Typography>
-          <Typography sx={{ mt: 1 }}>{caption}</Typography>
-          {newTechs && (
-            <>
-              <Typography
-                sx={{ fontSize: '1.2rem', fontWeight: 700, mt: 3, mb: 1, textAlign: 'left' }}
-              >
-                新しく覚えた言語/フレームワーク
-              </Typography>
-              <Stack direction="row" justifyContent="start" flexWrap="wrap" useFlexGap spacing={1}>
-                {newTechs?.map((tech, i) => <TechTag key={i} techType={tech} />)}
-              </Stack>
-            </>
-          )}
-        </Stack>
+        <Paper elevation={2} sx={{ p: 2, pt: 3, pb: 3 }}>
+          <Stack>
+            <Typography sx={{ fontSize: '1.6rem', fontWeight: 700 }}>{title}</Typography>
+            <Typography sx={{ mt: 1 }}>{caption}</Typography>
+            {newTechs && (
+              <>
+                <Typography sx={{ fontSize: '1.2rem', fontWeight: 700, mt: 3, mb: 1 }}>
+                  新しく覚えた言語/フレームワーク
+                </Typography>
+                <Stack
+                  direction="row"
+                  justifyContent="start"
+                  flexWrap="wrap"
+                  useFlexGap
+                  spacing={1}
+                >
+                  {newTechs?.map((tech, i) => <TechTag key={i} techType={tech} />)}
+                </Stack>
+              </>
+            )}
+          </Stack>
+        </Paper>
       ) : (
         <Paper
           elevation={2}
