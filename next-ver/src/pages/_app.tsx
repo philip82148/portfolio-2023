@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app'
 import { Dosis } from 'next/font/google'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import Script from 'next/script'
 
 const h2Font = Dosis({ preload: false })
 
@@ -31,6 +32,20 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         <link rel="icon" href={`${basePath}/favicon.ico`} />
         <link rel="apple-touch-icon" href={`${basePath}/apple-touch-icon.png`} />
       </Head>
+      {process.env.NODE_ENV !== 'development' && (
+        <>
+          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-E2VFB0PSST"></Script>
+          <Script id="google-analytics">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-E2VFB0PSST');
+            `}
+          </Script>
+        </>
+      )}
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Component {...pageProps} />
