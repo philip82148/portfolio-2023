@@ -4,33 +4,40 @@ import { createTheme } from '@mui/material/styles'
 import type { AppProps } from 'next/app'
 import { Dosis } from 'next/font/google'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 const h2Font = Dosis({ preload: false })
 
-const App: React.FC<AppProps> = ({ Component, pageProps }) => (
-  <>
-    <Head>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="width=device-width,initial-scale=1" />
-      <meta httpEquiv="Cache-Control" content="no-cache" />
-      <meta httpEquiv="Pragma" content="no-cache" />
-      <meta httpEquiv="Expires" content="0" />
-      {process.env.NODE_ENV !== 'development' && (
-        <link
-          rel="stylesheet"
-          href="https://ss159178.stars.ne.jp/css/normalize.css?1348127897942"
-        />
-      )}
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
+  const { basePath } = useRouter()
 
-      <title>{`Ryota Sasaki's Portfolio Ver. 1`}</title>
-      <meta name="description" content="Ryota SasakiのPortfolio Ver. 1" />
-    </Head>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Component {...pageProps} />
-    </ThemeProvider>
-  </>
-)
+  return (
+    <>
+      <Head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta httpEquiv="Cache-Control" content="no-cache" />
+        <meta httpEquiv="Pragma" content="no-cache" />
+        <meta httpEquiv="Expires" content="0" />
+        {process.env.NODE_ENV !== 'development' && (
+          <link
+            rel="stylesheet"
+            href="https://ss159178.stars.ne.jp/css/normalize.css?1348127897942"
+          />
+        )}
+        <title>{`Ryota Sasaki's Portfolio Ver. 1`}</title>
+        <meta name="description" content="Ryota SasakiのPortfolio Ver. 1" />
+
+        <link rel="icon" href={`${basePath}/favicon.ico`} />
+        <link rel="apple-touch-icon" href={`${basePath}/apple-touch-icon.png`} />
+      </Head>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </>
+  )
+}
 export default App
 
 const theme = createTheme({

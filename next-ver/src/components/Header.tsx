@@ -1,5 +1,6 @@
 import { Box, Button, Container, Stack, styled } from '@mui/material'
 import { Dosis } from 'next/font/google'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 const h2Font = Dosis({ preload: false })
@@ -48,6 +49,8 @@ export const Header: React.FC = () => {
     }
   }, [])
 
+  const { basePath } = useRouter()
+
   return (
     <Box
       sx={{
@@ -65,7 +68,7 @@ export const Header: React.FC = () => {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Stack direction="row" alignItems="center">
-            <HpButton href="/" color="inherit">
+            <HpButton href={`${basePath}/`} color="inherit">
               <Stack direction="row" alignItems="center">
                 <Box sx={{ width: 48, height: 48, borderRadius: 24, overflow: 'hidden', mr: 2 }}>
                   <img
