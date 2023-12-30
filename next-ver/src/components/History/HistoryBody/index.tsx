@@ -3,8 +3,6 @@ import React, { cloneElement, useState } from 'react'
 
 import { AutoHeightDivider } from './AutoHeightDivider'
 
-import { useIsPC } from '@/lib/useIsPC'
-
 type PersonalHistoryProps = {
   children: React.ReactElement[]
   closedOnMounts: boolean[]
@@ -19,8 +17,6 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
     if (update) rightAlign = nextRightAlign
     return nextRightAlign
   }
-
-  const isPC = useIsPC()
 
   return (
     <Stack divider={<AutoHeightDivider />} sx={{ width: '100%' }}>
