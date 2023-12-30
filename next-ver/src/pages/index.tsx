@@ -16,6 +16,11 @@ const Home: NextPage = () => {
       <Skills />
       <History />
       <Footer />
+      <style jsx global>{`
+        body {
+          overflow-x: hidden;
+        }
+      `}</style>
     </>
   )
 }
