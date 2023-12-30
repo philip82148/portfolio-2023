@@ -141,19 +141,19 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
           }}
           href={url}
           target="_blank"
+          underline="none"
           sx={[
             {
               display: 'block',
-              fontWeight: 700,
-              textDecoration: 'none',
-              color: '#fff',
               position: 'relative',
               zIndex: 1,
+              fontWeight: 700,
+              color: '#fff',
               transition: 'all 1s, transform 0s, filter 0s',
               maxWidth: { lg: 430, xs: 350 },
               width: 'fit-content',
             },
-            !!url && {
+            (!!url || !!isClosed) && {
               '&:hover': {
                 transform: 'translateY(-4px)',
                 filter: isClosed ? 'brightness(1.2)' : 'brightness(0.8)',
@@ -211,10 +211,10 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                       href={demoUrl}
                       underline="none"
                       variant="body1"
+                      color="inherit"
                       target="_blank"
                       sx={{
                         zIndex: 1,
-                        color: '#fff',
                         width: 'fit-content',
                         mt: -1,
                         mb: 1.5,
@@ -295,18 +295,19 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
             left: '50%',
             transform: 'translate(-50%, -50%)',
             boxShadow: 24,
+            color: '#fff',
           }}
         >
           <IconButton
             onClick={() => {
               setOpenModal(false)
             }}
+            color="inherit"
             sx={{
               position: 'absolute',
               left: '100%',
               bottom: '100%',
               transform: 'translate(-20%, 20%)',
-              color: '#fff',
             }}
           >
             <CloseIcon color="inherit" fontSize="large" />
