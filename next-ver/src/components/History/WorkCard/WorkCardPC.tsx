@@ -27,9 +27,6 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
 
   // open/close用
   const [parentBoxHeight, setParentBoxHeight] = useState<number>()
-  const [openingOrClosingTimeout, setOpeningOrClosingTimeout] = useState<NodeJS.Timeout | null>(
-    null,
-  )
 
   const paperRef = useRef<HTMLDivElement>(null)
   const dummyTitleRef = useRef<HTMLAnchorElement>(null)
@@ -61,16 +58,6 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
     }
   }, [isClosed, rightAlign])
 
-  useEffect(() => {
-    if (openingOrClosingTimeout) clearTimeout(openingOrClosingTimeout)
-
-    const timeoutId = setTimeout(() => {
-      setOpeningOrClosingTimeout(null)
-    }, 1000)
-    setOpeningOrClosingTimeout(timeoutId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isClosed])
-
   // image box用
   const [imageBoxHeight, setImageBoxHeight] = useState(0)
 
@@ -95,29 +82,22 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
   // Paper/Titleホバー時用
   const [isPaperHovered, setIsPaperHovered] = useState(false)
   const [isTitleHovered, setIsTitleHovered] = useState(false)
-  const [hoverChangingTimeout, setHoverChangingTimeout] = useState<NodeJS.Timeout | null>(null)
 
   const titleRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
-    const makeHandler = (type: 'mouseenter' | 'mouseleave', setter: (value: boolean) => void) => {
+    const makeHandler = (setter: (value: boolean) => void, value: boolean) => {
       return () => {
-        setter(type === 'mouseenter')
-
-        if (hoverChangingTimeout) clearTimeout(hoverChangingTimeout)
-
-        const timeoutId = setTimeout(() => {
-          setHoverChangingTimeout(null)
-        }, 500)
-        setHoverChangingTimeout(timeoutId)
+        setter(value)
       }
     }
 
-    paperRef.current?.addEventListener('mouseenter', makeHandler('mouseenter', setIsPaperHovered))
-    paperRef.current?.addEventListener('mouseleave', makeHandler('mouseleave', setIsPaperHovered))
+    paperRef.current?.addEventListener('mouseenter', makeHandler(setIsPaperHovered, true))
+    paperRef.current?.addEventListener('mouseleave', makeHandler(setIsPaperHovered, false))
 
-    titleRef.current?.addEventListener('mouseenter', makeHandler('mouseenter', setIsTitleHovered))
-    titleRef.current?.addEventListener('mouseleave', makeHandler('mouseleave', setIsTitleHovered))
+    titleRef.current?.addEventListener('mouseenter', makeHandler(setIsTitleHovered, true))
+    titleRef.current?.addEventListener('mouseleave', makeHandler(setIsTitleHovered, false))
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -127,21 +107,22 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
       sx={[
         {
           display: 'grid',
-          transition: 'all 1s, filter 0.2s ease, transform 0.2s ease',
+          transition: 'height 1s',
           height: parentBoxHeight,
           fontSize: '1.6rem',
         },
-        (isTitleHovered || (!isClosed && isPaperHovered)) && {
-          filter: 'brightness(1.1)',
-          transform: 'translateY(-4px)',
-        },
+        !isClosed &&
+          (isTitleHovered || isPaperHovered) && {
+            transform: 'translateY(-4px)',
+            filter: 'brightness(1.1)',
+          },
       ]}
     >
       <MovableCard
         align={isClosed ? 'center-start' : rightAlign ? 'right' : 'left'}
         outerSx={{
           gridArea: '1 / 1 / 2 / 2',
-          transition: 'all 1s',
+          transition: 'padding-top 1s',
           p: 4,
           pt: !isClosed ? 4 : 0,
         }}
@@ -162,27 +143,17 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
               display: 'block',
               fontWeight: 700,
               textDecoration: 'none',
-              color: '#f3f3f3',
+              color: '#fff',
               position: 'relative',
               zIndex: 1,
-              transition: 'all 1s',
+              transition: 'all 1s, transform 0s, filter 0s',
               maxWidth: { lg: 430, xs: 350 },
               width: 'fit-content',
-              '&:after': {
-                content: '""',
-                display: 'block',
-                width: '100%',
-                height: '2px',
-                bgcolor: '#f3f3f3',
-                opacity: 0,
-                transition: 'all .1s ease',
-                transform: 'translateY(6px)',
-              },
             },
             !!url && {
-              '&:hover:after': {
-                transform: 'translateY(0)',
-                opacity: 1,
+              '&:hover': {
+                transform: 'translateY(-4px)',
+                filter: isClosed ? 'brightness(1.2)' : 'brightness(0.8)',
               },
             },
             !!isClosed && {
@@ -190,14 +161,6 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
               color: cardColor,
               maxWidth: { xs: '100vw' },
               ml: -25,
-              '&:after': {
-                height: 0,
-              },
-            },
-            !!openingOrClosingTimeout && {
-              '&:after': {
-                height: 0,
-              },
             },
           ]}
         >
@@ -218,7 +181,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                 borderRadius: 5,
                 bgcolor: cardColor,
                 display: 'grid',
-                color: '#f3f3f3',
+                color: '#fff',
               }}
               onClick={onClick}
             >
@@ -233,25 +196,13 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                     minHeight: 200,
                   }}
                 >
-                  <Box
-                    sx={{
-                      mb: 1,
-                      '&:after': {
-                        content: '""',
-                        display: 'block',
-                        width: '100%',
-                        height: '2px',
-                      },
-                    }}
+                  <Link
+                    underline="none"
+                    ref={dummyTitleRef}
+                    sx={{ display: 'block', fontWeight: 700, visibility: 'hidden', mb: 1 }}
                   >
-                    <Link
-                      underline="none"
-                      ref={dummyTitleRef}
-                      sx={{ display: 'block', fontWeight: 700, visibility: 'hidden' }}
-                    >
-                      <span>{title}</span>
-                    </Link>
-                  </Box>
+                    <span>{title}</span>
+                  </Link>
                   {demoUrl && (
                     <Link
                       href={demoUrl}
@@ -260,23 +211,13 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                       target="_blank"
                       sx={{
                         zIndex: 1,
-                        color: '#f3f3f3c7',
+                        color: '#fff',
                         width: 'fit-content',
                         mt: -1,
                         mb: 1.5,
-                        '&:after': {
-                          content: '""',
-                          display: 'block',
-                          width: '100%',
-                          height: '1px',
-                          bgcolor: '#f3f3f3c7',
-                          opacity: 0,
-                          transition: 'all .1s ease',
-                          transform: 'translateY(6px)',
-                        },
-                        '&:hover:after': {
-                          transform: 'translateY(0)',
-                          opacity: 1,
+                        '&:hover': {
+                          transform: 'translateY(-4px)',
+                          filter: 'brightness(0.8)',
                         },
                       }}
                       onClick={(e) => {
@@ -293,7 +234,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                         <TechTag
                           key={i}
                           techType={tag}
-                          sx={{ color: '#f3f3f3', borderColor: '#f3f3f3' }}
+                          sx={{ color: '#fff', borderColor: '#fff' }}
                         />
                       ))}
                     </Stack>
@@ -343,37 +284,41 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
           setOpenModal(false)
         }}
       >
-        <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            boxShadow: 24,
+          }}
+        >
           <IconButton
             onClick={() => {
               setOpenModal(false)
             }}
-            sx={{ position: 'absolute', right: 0 }}
-          >
-            <CloseIcon sx={{ color: '#fff' }} fontSize="large" />
-          </IconButton>
-          <Box
             sx={{
-              display: 'flex',
               position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              boxShadow: 24,
+              left: '100%',
+              bottom: '100%',
+              transform: 'translate(-20%, 20%)',
+              color: '#fff',
             }}
           >
-            <img
-              src={imageSrc}
-              alt=""
-              style={{
-                maxHeight: '80vh',
-                maxWidth: '80vw',
-                height: '100%',
-                width: '100%',
-                objectFit: 'contain',
-              }}
-            />
-          </Box>
+            <CloseIcon color="inherit" fontSize="large" />
+          </IconButton>
+          <img
+            src={imageSrc}
+            alt=""
+            style={{
+              maxHeight: '80vh',
+              maxWidth: '80vw',
+              height: '100%',
+              width: '100%',
+              objectFit: 'contain',
+            }}
+          />
         </Box>
       </Modal>
     </Box>

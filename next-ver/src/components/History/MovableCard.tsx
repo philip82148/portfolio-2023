@@ -9,7 +9,7 @@ export const MovableCard: React.FC<
     innerSx?: SxProps<Theme>
   }>
 > = ({ align = 'left', children, outerSx, innerSx }) => {
-  const [marginLeft, setMarginLeft] = useState<number | string>('auto')
+  const [marginLeft, setMarginLeft] = useState<number>()
 
   const parentBoxRef = useRef<HTMLDivElement>(null)
   const childBoxRef = useRef<HTMLDivElement>(null)
@@ -27,9 +27,9 @@ export const MovableCard: React.FC<
       const { offsetWidth: childWidth } = childBoxRef.current
 
       if (align === 'right') {
-        setMarginLeft(`${parentWidth - childWidth}px`)
+        setMarginLeft(parentWidth - childWidth)
       } else {
-        setMarginLeft(`${parentWidth / 2}px`)
+        setMarginLeft(parentWidth / 2)
       }
     }
 
@@ -48,8 +48,9 @@ export const MovableCard: React.FC<
           ref={childBoxRef}
           sx={{
             width: 'min-content',
-            transition: 'all 1s',
-            ml: marginLeft,
+            transition: 'margin-left 1s',
+            ml: typeof marginLeft === 'number' ? `${marginLeft}px` : 'auto',
+            mr: typeof marginLeft === 'number' ? `-${marginLeft}px` : 'auto',
             ...innerSx,
           }}
         >
