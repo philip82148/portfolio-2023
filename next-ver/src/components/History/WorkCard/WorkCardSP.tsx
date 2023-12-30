@@ -63,7 +63,6 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
 
   return (
     <Box
-      className={isClosed ? 'closed' : undefined} // AutoDivider状態判定用
       sx={{
         position: 'relative',
         transition: 'height 1s',
