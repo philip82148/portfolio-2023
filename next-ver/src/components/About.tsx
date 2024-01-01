@@ -1,6 +1,7 @@
 import { Box, Container, Stack, Typography, styled } from '@mui/material'
 
 const NameTypography = styled(Typography)(({ theme }) => ({
+  color: theme.typography.h2.color,
   fontSize: '2.8rem',
   fontWeight: 600,
   marginBottom: theme.spacing(0.5),
@@ -13,8 +14,8 @@ const NameTypography = styled(Typography)(({ theme }) => ({
 }))
 
 const ItemTypography = styled(Typography)(({ theme }) => ({
+  ...theme.typography.body2,
   marginTop: 10,
-  color: theme.palette.text.secondary,
   fontSize: '1.2rem',
 }))
 
