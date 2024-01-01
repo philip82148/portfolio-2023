@@ -9,7 +9,7 @@ export const Skills: React.FC = () => {
       {/* <Typography variant="h2" color="#fff" borderColor="#fff">
         SKILLS
       </Typography> */}
-      <Container>
+      <Container fixed>
         <Stack
           sx={{
             width: '100%',

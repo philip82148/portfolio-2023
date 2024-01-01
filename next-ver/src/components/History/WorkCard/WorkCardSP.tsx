@@ -36,30 +36,22 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
   }[type]
 
   // open/close用
-  const [parentBoxHeight, setParentBoxHeight] = useState<number>()
-  const [titleTop, setTitleTop] = useState<number>()
+  const [openParentBoxHeight, setOpenParentBoxHeight] = useState<number>()
+  const [closedParentBoxHeight, setClosedParentBoxHeight] = useState<number>()
+  const [openTitleTop, setOpenTitleTop] = useState<number>()
 
   const paperRef = useRef<HTMLDivElement>(null)
   const dummyTitleRef = useRef<HTMLAnchorElement>(null)
 
-  const open = (): void => {
-    if (!paperRef.current || !dummyTitleRef.current) return
-
-    setParentBoxHeight(paperRef.current.offsetHeight)
-    setTitleTop(dummyTitleRef.current.offsetTop)
-  }
-
-  const close = (): void => {
-    if (!dummyTitleRef.current) return
-
-    const titleHeight = dummyTitleRef.current.getBoundingClientRect().height
-    setParentBoxHeight(titleHeight)
-    setTitleTop(0)
-  }
-
   useEffect(() => {
     const onResize = (): void => {
-      isClosed ? close() : open()
+      if (!paperRef.current || !dummyTitleRef.current) return
+
+      setOpenParentBoxHeight(paperRef.current.offsetHeight)
+      setOpenTitleTop(dummyTitleRef.current.offsetTop)
+
+      const titleHeight = dummyTitleRef.current.getBoundingClientRect().height
+      setClosedParentBoxHeight(titleHeight)
     }
 
     onResize()
@@ -67,7 +59,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
     return () => {
       window.removeEventListener('resize', onResize)
     }
-  }, [isClosed])
+  }, [])
 
   // modal用
   const [openModal, setOpenModal] = useState(false)
@@ -80,8 +72,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
       sx={{
         position: 'relative',
         transition: 'height 1s',
-        height: parentBoxHeight,
-        color: '#fff',
+        height: isClosed ? closedParentBoxHeight : openParentBoxHeight,
       }}
     >
       <MovableCard
@@ -89,6 +80,12 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
         outerSx={{ width: '100%' }}
       >
         <Link
+          onClick={(e) => {
+            if (isClosed) {
+              e.preventDefault()
+              onClick?.()
+            }
+          }}
           href={url}
           target="_blank"
           underline="none"
@@ -96,19 +93,16 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
             display: 'block',
             position: 'absolute',
             zIndex: 1,
-            ml: isClosed && isOverSm ? -25 : 2,
-            mr: 2,
+            color: cardColor,
             fontWeight: 700,
-            fontSize: '1.4rem',
-            transition: 'all 1s',
-            top: titleTop,
-            color: isClosed ? cardColor : '#fff',
-          }}
-          onClick={(e) => {
-            if (isClosed) {
-              e.preventDefault()
-              onClick?.()
-            }
+            fontSize: '1.3rem',
+            width: 'fit-content',
+            pl: { sm: 3, xs: 2 },
+            pr: { sm: 3, xs: 2 },
+            wordBreak: 'break-all',
+            transition: 'margin-left 1s, top 1s',
+            ml: !!isClosed && isOverSm ? -25 : 0,
+            top: isClosed ? 0 : openTitleTop,
           }}
         >
           {title}
@@ -117,15 +111,27 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
       <Fade in={!isClosed} timeout={1000}>
         <Paper
           ref={paperRef}
-          elevation={2}
-          sx={{ bgcolor: cardColor, color: '#fff' }}
+          variant="outlined"
+          sx={{ borderRadius: 4, overflow: 'hidden' }}
           onClick={onClick}
         >
-          <Box
-            sx={{ height: 200 }}
+          <Link
+            href={demoUrl}
+            target="_blank"
+            sx={{
+              display: 'block',
+              width: '100%',
+              height: { sm: 300, xs: 200 },
+              background: `url(${imageSrc})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center top',
+              [theme.breakpoints.between(380, 'sm')]: {
+                height: 220,
+              },
+            }}
             onClick={(e) => {
               e.stopPropagation()
-              setOpenModal(true)
+              if (!demoUrl) setOpenModal(true)
             }}
           >
             <img
@@ -138,8 +144,8 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
                 objectPosition: 'center top',
               }}
             />
-          </Box>
-          <Stack sx={{ p: 2, pt: 3, pb: 3 }}>
+          </Link>
+          <Stack sx={{ p: { sm: 3, xs: 2 } }}>
             <Link
               underline="none"
               ref={dummyTitleRef}
@@ -148,7 +154,8 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
                 display: 'block',
                 fontWeight: 700,
                 visibility: 'hidden',
-                fontSize: '1.4rem',
+                fontSize: '1.3rem',
+                wordBreak: 'break-all',
               }}
             >
               {title}
@@ -156,10 +163,15 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
             {demoUrl && (
               <Link
                 href={demoUrl}
+                variant="body2"
                 underline="none"
-                color="inherit"
                 target="_blank"
-                sx={{ width: 'min-content' }}
+                sx={{
+                  color: '#999',
+                  fontSize: '0.9rem',
+                  width: 'fit-content',
+                  wordBreak: 'break-all',
+                }}
                 onClick={(e) => {
                   e.stopPropagation()
                 }}
@@ -167,70 +179,63 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
                 {demoUrl}
               </Link>
             )}
-            <Typography sx={{ pt: 2 }}>{caption}</Typography>
+            <Typography variant="body2" sx={{ pt: 1 }}>
+              {caption}
+            </Typography>
             {techs && (
-              <Stack
-                direction="row"
-                // justifyContent="center"
-                flexWrap="wrap"
-                useFlexGap
-                spacing={1}
-                sx={{ pt: 2 }}
-              >
-                {techs?.map((tag, i) => (
-                  <TechTag
-                    key={i}
-                    techType={tag}
-                    sx={{ color: '#fff', borderColor: '#fff', fontSize: '0.8rem' }}
-                  />
+              <Stack direction="row" flexWrap="wrap" useFlexGap spacing={0.5} sx={{ pt: 2 }}>
+                {techs.map((tag, i) => (
+                  <TechTag key={i} techType={tag} color={cardColor} />
                 ))}
               </Stack>
             )}
           </Stack>
         </Paper>
       </Fade>
-      <Modal
-        open={openModal}
-        onClose={() => {
-          setOpenModal(false)
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            boxShadow: 24,
-            color: '#fff',
+      {!demoUrl && (
+        <Modal
+          open={openModal}
+          onClose={() => {
+            setOpenModal(false)
           }}
         >
-          <IconButton
-            onClick={() => {
-              setOpenModal(false)
-            }}
-            color="inherit"
+          <Box
             sx={{
+              display: 'flex',
               position: 'absolute',
-              left: '100%',
-              bottom: '100%',
-              transform: 'translate(-20%, 20%)',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              boxShadow: 24,
+              color: '#fff',
             }}
           >
-            <CloseIcon color="inherit" fontSize="large" />
-          </IconButton>
-          <img
-            src={imageSrc}
-            alt=""
-            style={{
-              maxHeight: '80vh',
-              maxWidth: '80vw',
-              objectFit: 'contain',
-            }}
-          />
-        </Box>
-      </Modal>
+            <IconButton
+              onClick={() => {
+                setOpenModal(false)
+              }}
+              color="inherit"
+              sx={{
+                position: 'absolute',
+                left: '100%',
+                bottom: '100%',
+                transform: 'translate(-20%, 20%)',
+              }}
+            >
+              <CloseIcon color="inherit" fontSize="large" />
+            </IconButton>
+            <img
+              src={imageSrc}
+              alt=""
+              style={{
+                maxHeight: '80vh',
+                maxWidth: '80vw',
+                objectFit: 'contain',
+              }}
+            />
+          </Box>
+        </Modal>
+      )}
     </Box>
   )
 }

@@ -1,12 +1,9 @@
 import MenuIcon from '@mui/icons-material/Menu'
 import { Box, Button, Container, Drawer, IconButton, Stack, styled } from '@mui/material'
-import { Dosis } from 'next/font/google'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { useIsPC } from '@/lib/useIsPC'
-
-const h2Font = Dosis({ preload: false })
 
 const HpButton = styled(Button)(({ theme }) => ({
   height: 60,
@@ -30,8 +27,9 @@ const SnsButton = styled(Button)({
 const HeaderButton = styled(Button)(({ theme }) => ({
   height: 60,
   borderRadius: 0,
-  fontFamily: h2Font.style.fontFamily,
-  fontWeight: 700,
+  color: theme.typography.h2.color,
+  fontFamily: theme.typography.h2.fontFamily,
+  fontWeight: theme.typography.h2.fontWeight,
   fontSize: '1rem',
   width: 80,
   [theme.breakpoints.down('md')]: {
