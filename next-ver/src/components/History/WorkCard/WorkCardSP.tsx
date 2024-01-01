@@ -122,7 +122,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
             width: 'fit-content',
             pl: { sm: 3, xs: 2 },
             pr: { sm: 3, xs: 2 },
-            wordBreak: 'break-all',
+            overflowWrap: 'anywhere',
             transition: 'margin-left 1s, top 1s',
             ml: !!isClosed && isOverSm ? -25 : 0,
             top: isClosed ? 0 : openTitleTop,
@@ -175,7 +175,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
                 fontWeight: 700,
                 visibility: 'hidden',
                 fontSize: '1.3rem',
-                wordBreak: 'break-all',
+                overflowWrap: 'anywhere',
               }}
             >
               {title}
@@ -190,7 +190,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
                   color: '#999',
                   fontSize: '0.9rem',
                   width: 'fit-content',
-                  wordBreak: 'break-all',
+                  overflowWrap: 'anywhere',
                 }}
                 onClick={onDemoClick}
               >
