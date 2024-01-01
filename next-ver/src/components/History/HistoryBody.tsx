@@ -2,17 +2,17 @@ import { Divider, Stack } from '@mui/material'
 import React, { cloneElement, useState } from 'react'
 
 type PersonalHistoryProps = {
-  children: React.ReactElement[]
+  children: Array<React.ReactElement<any, React.JSXElementConstructor<any>>>
   closedOnMounts: boolean[]
 }
 export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOnMounts }) => {
   const [isCloseds, setIsCloseds] = useState<boolean[]>(closedOnMounts)
 
-  let rightAlign = true
-  const nextRightAlign = (update: boolean = false): boolean => {
-    const nextRightAlign = !rightAlign
+  let currentRightAlign = false
+  const nextRightAlign = (update: boolean): boolean => {
+    const nextRightAlign = !currentRightAlign
 
-    if (update) rightAlign = nextRightAlign
+    if (update) currentRightAlign = nextRightAlign
     return nextRightAlign
   }
 
@@ -26,7 +26,7 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
           <React.Fragment key={i}>
             {i > 0 && (
               <Divider
-                key={i}
+                key={2 * i}
                 orientation="vertical"
                 flexItem
                 sx={[
@@ -44,16 +44,18 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
                 ]}
               />
             )}
-            {cloneElement(child, {
-              onClick: () => {
-                setIsCloseds((isCloseds) =>
-                  children.map((_child, j) => (j === i ? !isCloseds[j] : !!isCloseds[j])),
-                )
-              },
-              isClosed: isCurrentClosed,
-              rightAlign: isCurrentClosed ? nextRightAlign() : nextRightAlign(true),
-              key: i,
-            })}
+            {child.type.name === 'WorkCard'
+              ? cloneElement(child, {
+                  onClick: () => {
+                    setIsCloseds((isCloseds) =>
+                      children.map((_child, j) => (j === i ? !isCloseds[j] : !!isCloseds[j])),
+                    )
+                  },
+                  isClosed: isCurrentClosed,
+                  rightAlign: nextRightAlign(!isCurrentClosed),
+                  key: 2 * i + 1,
+                })
+              : child}
           </React.Fragment>
         )
       })}

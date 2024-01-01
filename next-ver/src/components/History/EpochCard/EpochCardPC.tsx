@@ -1,63 +1,40 @@
-import { Paper, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 
-import { MovableCard } from '../MovableCard'
 import { TechTag } from '../TechTag'
 
 import type { EpochCardProps } from '.'
 
-export const EpochCardPC: React.FC<EpochCardProps> = ({ title, caption, newTechs, rightAlign }) => {
+export const EpochCardPC: React.FC<EpochCardProps> = ({ title, caption, newTechs }) => {
   return (
-    <>
-      {caption ? (
-        <MovableCard align={rightAlign ? 'right' : 'left'}>
-          <Paper
-            elevation={2}
-            sx={{
-              borderRadius: 5,
-              width: { lg: 800, md: 650 },
-              p: { md: '30px 80px', xs: 4 },
-            }}
-          >
-            <Stack>
-              <Typography sx={{ fontSize: '1.6rem', fontWeight: 700, textAlign: 'left' }}>
-                {title}
-              </Typography>
-              <Typography variant="body2" sx={{ mt: 1 }}>
-                {caption}
-              </Typography>
-              {newTechs && (
-                <>
-                  <Typography
-                    sx={{ fontSize: '1.2rem', fontWeight: 700, mt: 3, mb: 1, textAlign: 'left' }}
-                  >
-                    新しく覚えた言語/フレームワーク
-                  </Typography>
-                  <Stack direction="row" flexWrap="wrap" useFlexGap spacing={0.5}>
-                    {newTechs.map((tag, i) => (
-                      <TechTag key={i} techType={tag} />
-                    ))}
-                  </Stack>
-                </>
-              )}
-            </Stack>
-          </Paper>
-        </MovableCard>
-      ) : (
-        <Paper
-          elevation={2}
-          sx={{
-            borderRadius: 5,
-            m: 'auto',
-            p: { md: '20px 40px', xs: 4 },
-          }}
-        >
-          <Stack>
-            <Typography sx={{ fontSize: '1.6rem', fontWeight: 700, textAlign: 'left' }}>
-              {title}
+    <Stack alignItems="center">
+      <Stack alignItems="center" sx={{ width: { lg: 600, xs: 700 }, p: 4 }}>
+        <Typography sx={{ fontSize: '1.3rem', fontWeight: 700 }}>{title}</Typography>
+        {caption && (
+          <>
+            <Typography variant="body2" sx={{ pt: 1 }}>
+              {caption}
             </Typography>
-          </Stack>
-        </Paper>
-      )}
-    </>
+            {newTechs && (
+              <>
+                <Typography sx={{ pt: 1, pb: 1, fontWeight: 700 }}>
+                  新しく覚えた言語/フレームワーク
+                </Typography>
+                <Stack
+                  direction="row"
+                  flexWrap="wrap"
+                  useFlexGap
+                  justifyContent="center"
+                  spacing={0.5}
+                >
+                  {newTechs.map((tag, i) => (
+                    <TechTag key={i} techType={tag} />
+                  ))}
+                </Stack>
+              </>
+            )}
+          </>
+        )}
+      </Stack>
+    </Stack>
   )
 }
