@@ -10,7 +10,7 @@ export const History: React.FC = () => {
   const isPC = useIsPC()
 
   return (
-    <Container fixed={isPC} sx={{ mt: 4, pb: 14 }}>
+    <Container fixed={isPC} sx={{ mt: { lg: 2, xs: 0 }, pb: 14 }}>
       <Stack alignItems="center">
         <Typography variant="h2" id="history">
           HISTORY
