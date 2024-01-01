@@ -116,7 +116,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
           onClick={onClick}
         >
           <Link
-            href={demoUrl ?? url}
+            href={demoUrl}
             target="_blank"
             sx={{
               display: 'block',
@@ -131,7 +131,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
             }}
             onClick={(e) => {
               e.stopPropagation()
-              if (!demoUrl && !url) setOpenModal(true)
+              if (!demoUrl) setOpenModal(true)
             }}
           >
             <img
@@ -192,48 +192,50 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
           </Stack>
         </Paper>
       </Fade>
-      <Modal
-        open={openModal}
-        onClose={() => {
-          setOpenModal(false)
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            boxShadow: 24,
-            color: '#fff',
+      {!demoUrl && (
+        <Modal
+          open={openModal}
+          onClose={() => {
+            setOpenModal(false)
           }}
         >
-          <IconButton
-            onClick={() => {
-              setOpenModal(false)
-            }}
-            color="inherit"
+          <Box
             sx={{
+              display: 'flex',
               position: 'absolute',
-              left: '100%',
-              bottom: '100%',
-              transform: 'translate(-20%, 20%)',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              boxShadow: 24,
+              color: '#fff',
             }}
           >
-            <CloseIcon color="inherit" fontSize="large" />
-          </IconButton>
-          <img
-            src={imageSrc}
-            alt=""
-            style={{
-              maxHeight: '80vh',
-              maxWidth: '80vw',
-              objectFit: 'contain',
-            }}
-          />
-        </Box>
-      </Modal>
+            <IconButton
+              onClick={() => {
+                setOpenModal(false)
+              }}
+              color="inherit"
+              sx={{
+                position: 'absolute',
+                left: '100%',
+                bottom: '100%',
+                transform: 'translate(-20%, 20%)',
+              }}
+            >
+              <CloseIcon color="inherit" fontSize="large" />
+            </IconButton>
+            <img
+              src={imageSrc}
+              alt=""
+              style={{
+                maxHeight: '80vh',
+                maxWidth: '80vw',
+                objectFit: 'contain',
+              }}
+            />
+          </Box>
+        </Modal>
+      )}
     </Box>
   )
 }

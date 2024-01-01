@@ -230,7 +230,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                 }}
               >
                 <Link
-                  href={demoUrl ?? url}
+                  href={demoUrl}
                   target="_blank"
                   sx={{
                     width: '100%',
@@ -241,7 +241,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                   }}
                   onClick={(e) => {
                     e.stopPropagation()
-                    if (!demoUrl && !url) setOpenModal(true)
+                    if (!demoUrl) setOpenModal(true)
                   }}
                 />
               </MovableCard>
@@ -249,7 +249,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
           </Box>
         </Fade>
       </MovableCard>
-      {!demoUrl && !url && (
+      {!demoUrl && (
         <Modal
           open={openModal}
           onClose={() => {
