@@ -1,13 +1,16 @@
 import { Stack, Typography } from '@mui/material'
 
-import { TechTag } from '../TechTag'
+import type { TechType } from './TechTag'
+import { TechTag } from './TechTag'
 
-import type { EpochCardProps } from '.'
-
-export const EpochCardPC: React.FC<EpochCardProps> = ({ title, caption, newTechs }) => {
+export const EpochCard: React.FC<{ title: string; caption?: string; newTechs?: TechType[] }> = ({
+  title,
+  caption,
+  newTechs,
+}) => {
   return (
     <Stack alignItems="center">
-      <Stack alignItems="center" sx={{ width: { lg: 600, xs: 700 }, p: 4 }}>
+      <Stack alignItems="center" sx={{ maxWidth: { md: 600, xs: 700 }, p: 4, pl: 0, pr: 0 }}>
         <Typography sx={{ fontSize: '1.3rem', fontWeight: 700 }}>{title}</Typography>
         {caption && (
           <>

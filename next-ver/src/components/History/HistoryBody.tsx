@@ -17,7 +17,7 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
   }
 
   return (
-    <Stack sx={{ width: '100%' }}>
+    <Stack sx={{ width: '100%', overflow: 'hidden' }}>
       {children.map((child, i, children) => {
         const isPreviousClosed = i > 0 ? !!isCloseds[i - 1] : false
         const isCurrentClosed = !!isCloseds[i]

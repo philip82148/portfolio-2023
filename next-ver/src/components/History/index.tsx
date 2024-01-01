@@ -4,9 +4,13 @@ import { EpochCard } from './EpochCard'
 import { HistoryBody } from './HistoryBody'
 import { WorkCard } from './WorkCard'
 
+import { useIsPC } from '@/lib/useIsPC'
+
 export const History: React.FC = () => {
+  const isPC = useIsPC()
+
   return (
-    <Container fixed sx={{ mt: 4, pb: 14 }}>
+    <Container fixed={isPC} sx={{ mt: 4, pb: 14 }}>
       <Stack alignItems="center">
         <Typography variant="h2" id="history">
           HISTORY

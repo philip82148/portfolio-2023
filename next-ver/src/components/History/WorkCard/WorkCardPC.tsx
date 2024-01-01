@@ -95,7 +95,6 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
         display: 'grid',
         transition: 'height 1s',
         height: isClosed ? closedParentBoxHeight : openParentBoxHeight,
-        fontSize: '1.6rem',
         transform: !isClosed && isCardHovered ? 'translateY(-4px)' : 'none',
       }}
     >
@@ -239,8 +238,6 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                     background: `url(${imageSrc})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center top',
-                    borderColor: cardColor,
-                    boxSizing: 'border-box',
                   }}
                   onClick={(e) => {
                     e.stopPropagation()
