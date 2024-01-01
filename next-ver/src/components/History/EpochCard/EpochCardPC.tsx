@@ -22,7 +22,9 @@ export const EpochCardPC: React.FC<EpochCardProps> = ({ title, caption, newTechs
               <Typography sx={{ fontSize: '1.6rem', fontWeight: 700, textAlign: 'left' }}>
                 {title}
               </Typography>
-              <Typography sx={{ mt: 1 }}>{caption}</Typography>
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                {caption}
+              </Typography>
               {newTechs && (
                 <>
                   <Typography
@@ -30,14 +32,10 @@ export const EpochCardPC: React.FC<EpochCardProps> = ({ title, caption, newTechs
                   >
                     新しく覚えた言語/フレームワーク
                   </Typography>
-                  <Stack
-                    direction="row"
-                    justifyContent="start"
-                    flexWrap="wrap"
-                    useFlexGap
-                    spacing={1}
-                  >
-                    {newTechs?.map((tech, i) => <TechTag key={i} techType={tech} />)}
+                  <Stack direction="row" flexWrap="wrap" useFlexGap spacing={0.5}>
+                    {newTechs.map((tag, i) => (
+                      <TechTag key={i} techType={tag} />
+                    ))}
                   </Stack>
                 </>
               )}

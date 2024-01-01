@@ -1,4 +1,3 @@
-import type { SxProps, Theme } from '@mui/material'
 import { Chip } from '@mui/material'
 
 export type TechType =
@@ -21,9 +20,9 @@ export type TechType =
   | 'Next.js'
   | 'NestJS'
   | 'Shell'
-export const TechTag: React.FC<{ techType: TechType; sx?: SxProps<Theme> }> = ({
+export const TechTag: React.FC<{ techType: TechType; color?: string }> = ({
   techType,
-  sx,
+  color = 'text.secondary',
 }) => {
-  return <Chip label={techType} variant="outlined" sx={{ fontSize: '1rem', p: '0 4px', ...sx }} />
+  return <Chip variant="outlined" label={techType} sx={{ color, borderColor: color }} />
 }
