@@ -1,6 +1,7 @@
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, Fade, IconButton, Link, Modal, Paper, Stack, Typography } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import type { SyntheticEvent } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { MovableCard } from '../MovableCard'
 import { TechTag } from '../TechTag'
@@ -53,7 +54,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
   }, [])
 
   // modal用
-  const [openModal, setOpenModal] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   // Paper/Titleホバー時用
   const [isPaperHovered, setIsPaperHovered] = useState(false)
@@ -80,14 +81,39 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
 
     titleRef.current?.addEventListener('mouseenter', makeHandler(setIsTitleHovered, true))
     titleRef.current?.addEventListener('mouseleave', makeHandler(setIsTitleHovered, false))
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const isCardHovered = isTitleHovered || isPaperHovered
 
   const captionBoxWidth = { lg: 800 * 0.6, xs: 650 * 0.6 }
   const imageBoxWidth = '40%'
+
+  // パフォーマンス改善
+  const onTitleClick = useCallback(
+    (e: SyntheticEvent<HTMLAnchorElement>) => {
+      if (isClosed) {
+        e.preventDefault()
+        onClick?.()
+      }
+    },
+    [isClosed, onClick],
+  )
+
+  const onDemoClick = useCallback((e: SyntheticEvent<HTMLAnchorElement>) => {
+    e.stopPropagation()
+  }, [])
+
+  const openModal = useCallback(
+    (e: SyntheticEvent<HTMLAnchorElement>) => {
+      e.stopPropagation()
+      if (!demoUrl) setIsModalOpen(true)
+    },
+    [demoUrl],
+  )
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false)
+  }, [])
 
   return (
     <Box
@@ -110,12 +136,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
       >
         <Link
           ref={titleRef}
-          onClick={(e) => {
-            if (isClosed) {
-              e.preventDefault()
-              onClick?.()
-            }
-          }}
+          onClick={onTitleClick}
           href={url}
           target="_blank"
           underline="none"
@@ -198,9 +219,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                             opacity: 0.8,
                           },
                         }}
-                        onClick={(e) => {
-                          e.stopPropagation()
-                        }}
+                        onClick={onDemoClick}
                       >
                         {demoUrl}
                       </Link>
@@ -241,10 +260,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                     backgroundSize: 'cover',
                     backgroundPosition: 'center top',
                   }}
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    if (!demoUrl) setOpenModal(true)
-                  }}
+                  onClick={openModal}
                 />
               </MovableCard>
             </Paper>
@@ -252,12 +268,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
         </Fade>
       </MovableCard>
       {!demoUrl && (
-        <Modal
-          open={openModal}
-          onClose={() => {
-            setOpenModal(false)
-          }}
-        >
+        <Modal open={isModalOpen} onClose={closeModal}>
           <Box
             sx={{
               display: 'flex',
@@ -270,9 +281,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
             }}
           >
             <IconButton
-              onClick={() => {
-                setOpenModal(false)
-              }}
+              onClick={closeModal}
               color="inherit"
               sx={{
                 position: 'absolute',

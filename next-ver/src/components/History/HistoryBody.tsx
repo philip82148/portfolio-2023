@@ -1,5 +1,5 @@
 import { Divider, Stack } from '@mui/material'
-import React, { cloneElement, useState } from 'react'
+import React, { cloneElement, useMemo, useRef, useState } from 'react'
 
 import { WorkCard } from './WorkCard'
 
@@ -8,8 +8,6 @@ type PersonalHistoryProps = {
   closedOnMounts: boolean[]
 }
 export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOnMounts }) => {
-  const [isCloseds, setIsCloseds] = useState<boolean[]>(closedOnMounts)
-
   let currentRightAlign = false
   const nextRightAlign = (update: boolean): boolean => {
     const nextRightAlign = !currentRightAlign
@@ -18,11 +16,26 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
     return nextRightAlign
   }
 
+  // パフォーマンス改善
+  const isCloseds = useRef<boolean[]>(closedOnMounts)
+  const setCount = useState(0)[1]
+
+  const flipIsClosedFuncs = useMemo(() => {
+    const forceUpdate = (): void => {
+      setCount((count) => count + 1)
+    }
+
+    return [...Array(children.length)].map((_, i) => () => {
+      isCloseds.current[i] = !isCloseds.current[i]
+      forceUpdate()
+    })
+  }, [children.length, setCount])
+
   return (
     <Stack sx={{ width: '100%', overflow: 'hidden', mt: { lg: -3, xs: -4 } }}>
-      {children.map((child, i, children) => {
-        const isPreviousClosed = i > 0 ? !!isCloseds[i - 1] : false
-        const isCurrentClosed = !!isCloseds[i]
+      {children.map((child, i) => {
+        const isPreviousClosed = i > 0 ? !!isCloseds.current[i - 1] : false
+        const isCurrentClosed = !!isCloseds.current[i]
 
         return (
           <React.Fragment key={i}>
@@ -48,11 +61,7 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
             )}
             {child.type === WorkCard
               ? cloneElement(child, {
-                  onClick: () => {
-                    setIsCloseds((isCloseds) =>
-                      children.map((_child, j) => (j === i ? !isCloseds[j] : !!isCloseds[j])),
-                    )
-                  },
+                  onClick: flipIsClosedFuncs[i],
                   isClosed: isCurrentClosed,
                   rightAlign: nextRightAlign(!isCurrentClosed),
                   key: 2 * i + 1,

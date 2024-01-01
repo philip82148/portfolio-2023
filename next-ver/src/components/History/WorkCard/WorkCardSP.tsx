@@ -11,7 +11,8 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import type { SyntheticEvent } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { MovableCard } from '../MovableCard'
 import { TechTag } from '../TechTag'
@@ -62,10 +63,37 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
   }, [])
 
   // modal用
-  const [openModal, setOpenModal] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const theme = useTheme()
   const isOverSm = useMediaQuery(theme.breakpoints.up('sm'))
+
+  // パフォーマンス改善
+  const onTitleClick = useCallback(
+    (e: SyntheticEvent<HTMLAnchorElement>) => {
+      if (isClosed) {
+        e.preventDefault()
+        onClick?.()
+      }
+    },
+    [isClosed, onClick],
+  )
+
+  const onDemoClick = useCallback((e: SyntheticEvent<HTMLAnchorElement>) => {
+    e.stopPropagation()
+  }, [])
+
+  const openModal = useCallback(
+    (e: SyntheticEvent<HTMLAnchorElement>) => {
+      e.stopPropagation()
+      if (!demoUrl) setIsModalOpen(true)
+    },
+    [demoUrl],
+  )
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false)
+  }, [])
 
   return (
     <Box
@@ -80,12 +108,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
         outerSx={{ width: '100%' }}
       >
         <Link
-          onClick={(e) => {
-            if (isClosed) {
-              e.preventDefault()
-              onClick?.()
-            }
-          }}
+          onClick={onTitleClick}
           href={url}
           target="_blank"
           underline="none"
@@ -129,10 +152,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
                 height: 220,
               },
             }}
-            onClick={(e) => {
-              e.stopPropagation()
-              if (!demoUrl) setOpenModal(true)
-            }}
+            onClick={openModal}
           >
             <img
               src={imageSrc}
@@ -172,9 +192,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
                   width: 'fit-content',
                   wordBreak: 'break-all',
                 }}
-                onClick={(e) => {
-                  e.stopPropagation()
-                }}
+                onClick={onDemoClick}
               >
                 {demoUrl}
               </Link>
@@ -193,12 +211,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
         </Paper>
       </Fade>
       {!demoUrl && (
-        <Modal
-          open={openModal}
-          onClose={() => {
-            setOpenModal(false)
-          }}
-        >
+        <Modal open={isModalOpen} onClose={closeModal}>
           <Box
             sx={{
               display: 'flex',
@@ -211,9 +224,7 @@ export const WorkCardSP: React.FC<WorkCardProps> = ({
             }}
           >
             <IconButton
-              onClick={() => {
-                setOpenModal(false)
-              }}
+              onClick={closeModal}
               color="inherit"
               sx={{
                 position: 'absolute',
