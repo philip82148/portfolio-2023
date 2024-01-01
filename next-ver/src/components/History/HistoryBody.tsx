@@ -18,18 +18,18 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
 
   // パフォーマンス改善
   const isCloseds = useRef<boolean[]>(closedOnMounts)
-  const setCount = useState(0)[1]
+  const setCount_ = useState(0)[1]
 
   const flipIsClosedFuncs = useMemo(() => {
     const forceUpdate = (): void => {
-      setCount((count) => count + 1)
+      setCount_((count) => count + 1)
     }
 
     return [...Array(children.length)].map((_, i) => () => {
       isCloseds.current[i] = !isCloseds.current[i]
       forceUpdate()
     })
-  }, [children.length, setCount])
+  }, [children.length, setCount_])
 
   return (
     <Stack sx={{ width: '100%', overflow: 'hidden', mt: { lg: -3, xs: -4 } }}>
