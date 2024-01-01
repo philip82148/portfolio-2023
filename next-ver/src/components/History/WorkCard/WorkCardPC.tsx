@@ -154,7 +154,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
         outerSx={{ gridArea: '1 / 1 / 2 / 2' }}
         innerSx={{ width: { lg: 800, xs: 650 } }}
       >
-        <Fade in={!isClosed} timeout={{ enter: 1000, exit: 800 }}>
+        <Fade in={!isClosed} timeout={500} style={{ transitionDelay: isClosed ? '0ms' : '500ms' }}>
           <Box sx={{ pb: isCardHovered ? '4px' : 0, mb: isCardHovered ? '-4px' : 0 }}>
             <Paper
               ref={paperRef}
@@ -192,9 +192,9 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                           width: 'fit-content',
                           color: '#999',
                           fontSize: '0.9rem',
-                          mt: 0.5,
+                          pt: 0.5,
                           '&:hover': {
-                            mt: 0,
+                            mt: -0.5,
                             pb: 0.5,
                             opacity: 0.8,
                           },
@@ -206,12 +206,12 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
                         {demoUrl}
                       </Link>
                     )}
-                    <Typography variant="body2" sx={{ mt: 1 }}>
+                    <Typography variant="body2" sx={{ pt: 1 }}>
                       {caption}
                     </Typography>
                   </Stack>
                   {techs && (
-                    <Stack direction="row" flexWrap="wrap" useFlexGap spacing={0.5} sx={{ mt: 2 }}>
+                    <Stack direction="row" flexWrap="wrap" useFlexGap spacing={0.5} sx={{ pt: 2 }}>
                       {techs.map((tag, i) => (
                         <TechTag key={i} techType={tag} color={cardColor} />
                       ))}
