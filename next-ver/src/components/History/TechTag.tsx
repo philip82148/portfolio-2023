@@ -1,4 +1,5 @@
 import { Chip } from '@mui/material'
+import React from 'react'
 
 export type TechType =
   | 'Java'
@@ -20,9 +21,9 @@ export type TechType =
   | 'Next.js'
   | 'NestJS'
   | 'Shell'
-export const TechTag: React.FC<{ techType: TechType; color?: string }> = ({
-  techType,
-  color = 'text.secondary',
-}) => {
-  return <Chip variant="outlined" label={techType} sx={{ color, borderColor: color }} />
-}
+export const TechTag = React.memo<{ techType: TechType; color?: string }>(
+  ({ techType, color = 'text.secondary' }) => {
+    return <Chip variant="outlined" label={techType} sx={{ color, borderColor: color }} />
+  },
+)
+TechTag.displayName = 'TechTag'

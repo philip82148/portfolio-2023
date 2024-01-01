@@ -3,8 +3,9 @@ import { Box, Fade, IconButton, Link, Modal, Paper, Stack, Typography } from '@m
 import type { SyntheticEvent } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { MovableCard } from '../MovableCard'
 import { TechTag } from '../TechTag'
+
+import { MovableCard } from './MovableCard'
 
 import type { WorkCardProps } from '.'
 

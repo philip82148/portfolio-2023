@@ -40,23 +40,9 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
         return (
           <React.Fragment key={i}>
             {i > 0 && (
-              <Divider
-                key={2 * i}
-                orientation="vertical"
-                flexItem
-                sx={[
-                  {
-                    transition: 'all 1s',
-                    height: 40,
-                    m: '0 auto',
-                    borderRight: 2,
-                    borderColor: '#e0e0e0',
-                    zIndex: -1,
-                  },
-                  isPreviousClosed && { mt: 1 },
-                  isCurrentClosed && { mb: 1 },
-                  isPreviousClosed && isCurrentClosed && { height: 0, mt: 0.5, mb: 0.5 },
-                ]}
+              <HistoryDivider
+                isPreviousClosed={isPreviousClosed}
+                isCurrentClosed={isCurrentClosed}
               />
             )}
             {child.type === WorkCard
@@ -64,7 +50,6 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
                   onClick: flipIsClosedFuncs[i],
                   isClosed: isCurrentClosed,
                   rightAlign: nextRightAlign(!isCurrentClosed),
-                  key: 2 * i + 1,
                 })
               : child}
           </React.Fragment>
@@ -73,3 +58,29 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
     </Stack>
   )
 }
+
+// パフォーマンス改善
+const HistoryDivider = React.memo<{ isPreviousClosed: boolean; isCurrentClosed: boolean }>(
+  ({ isPreviousClosed, isCurrentClosed }) => {
+    return (
+      <Divider
+        orientation="vertical"
+        flexItem
+        sx={[
+          {
+            transition: 'all 1s',
+            height: 40,
+            m: '0 auto',
+            borderRight: 2,
+            borderColor: '#e0e0e0',
+            zIndex: -1,
+          },
+          isPreviousClosed && { mt: 1 },
+          isCurrentClosed && { mb: 1 },
+          isPreviousClosed && isCurrentClosed && { height: 0, mt: 0.5, mb: 0.5 },
+        ]}
+      />
+    )
+  },
+)
+HistoryDivider.displayName = 'HistoryDivider'

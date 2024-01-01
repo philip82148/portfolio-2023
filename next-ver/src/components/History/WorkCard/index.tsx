@@ -1,3 +1,5 @@
+import React from 'react'
+
 import type { TechType } from '../TechTag'
 
 import { WorkCardPC } from './WorkCardPC'
@@ -18,7 +20,8 @@ export type WorkCardProps = {
   onClick?: () => void
 }
 export type WorkCardType = 'programming' | 'electronics' | 'craft'
-export const WorkCard: React.FC<WorkCardProps> = (props) => {
+export const WorkCard = React.memo<WorkCardProps>((props) => {
   const isPC = useIsPC()
   return <>{isPC ? <WorkCardPC {...props} /> : <WorkCardSP {...props} />}</>
-}
+})
+WorkCard.displayName = 'WorkCard'
