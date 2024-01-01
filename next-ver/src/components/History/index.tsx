@@ -6,7 +6,7 @@ import { WorkCard } from './WorkCard'
 
 export const History: React.FC = () => {
   return (
-    <Container sx={{ mt: 4, pb: 14 }}>
+    <Container fixed sx={{ mt: 4, pb: 14 }}>
       <Stack alignItems="center">
         <Typography variant="h2" id="history">
           HISTORY

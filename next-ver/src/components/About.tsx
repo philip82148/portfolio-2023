@@ -51,7 +51,7 @@ export const About: React.FC = () => {
               style={{ width: '100%' }}
             />
           </Box>
-          <Stack sx={{ width: { md: 400 } }}>
+          <Stack sx={{ width: { lg: 400 } }}>
             <NameTypography>Ryota Sasaki</NameTypography>
             <ItemTypography>所属</ItemTypography>
             <ContentTypography>慶應義塾大学 理工学部 電気情報工学科 4年</ContentTypography>
