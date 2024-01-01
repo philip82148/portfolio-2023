@@ -1,6 +1,8 @@
 import { Divider, Stack } from '@mui/material'
 import React, { cloneElement, useState } from 'react'
 
+import { WorkCard } from './WorkCard'
+
 type PersonalHistoryProps = {
   children: Array<React.ReactElement<any, React.JSXElementConstructor<any>>>
   closedOnMounts: boolean[]
@@ -44,7 +46,7 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
                 ]}
               />
             )}
-            {child.type.name === 'WorkCard'
+            {child.type === WorkCard
               ? cloneElement(child, {
                   onClick: () => {
                     setIsCloseds((isCloseds) =>
