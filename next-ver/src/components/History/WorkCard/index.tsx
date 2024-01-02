@@ -19,9 +19,14 @@ export type WorkCardProps = {
   rightAlign?: boolean
   onClick?: () => void
 }
+export type WorkCardSPProps = Omit<WorkCardProps, 'rightAlign'>
+
 export type WorkCardType = 'programming' | 'electronics' | 'craft'
+
 export const WorkCard = React.memo<WorkCardProps>((props) => {
   const isPC = useIsPC()
-  return <>{isPC ? <WorkCardPC {...props} /> : <WorkCardSP {...props} />}</>
+  const { rightAlign: _, ...propsForSP } = props
+
+  return <>{isPC ? <WorkCardPC {...props} /> : <WorkCardSP {...propsForSP} />}</>
 })
 WorkCard.displayName = 'WorkCard'

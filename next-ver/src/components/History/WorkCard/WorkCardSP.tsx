@@ -12,242 +12,232 @@ import {
   useTheme,
 } from '@mui/material'
 import type { SyntheticEvent } from 'react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 
 import { TechTag } from '../TechTag'
 
 import { MovableCard } from './MovableCard'
 
-import type { WorkCardProps } from '.'
+import type { WorkCardSPProps } from '.'
 
-export const WorkCardSP: React.FC<WorkCardProps> = ({
-  type,
-  title,
-  imageSrc,
-  url,
-  demoUrl,
-  caption,
-  techs,
-  isClosed,
-  onClick,
-}) => {
-  const cardColor = {
-    programming: 'primary.main',
-    electronics: 'secondary.main', // '#259758', // '#9edd52',
-    craft: 'secondary.main',
-  }[type]
+export const WorkCardSP = memo<WorkCardSPProps>(
+  ({ type, title, imageSrc, url, demoUrl, caption, techs, isClosed, onClick }) => {
+    const cardColor = {
+      programming: 'primary.main',
+      electronics: 'secondary.main', // '#259758', // '#9edd52',
+      craft: 'secondary.main',
+    }[type]
 
-  // open/close用
-  const [openParentBoxHeight, setOpenParentBoxHeight] = useState<number>()
-  const [closedParentBoxHeight, setClosedParentBoxHeight] = useState<number>()
-  const [openTitleTop, setOpenTitleTop] = useState<number>()
+    // open/close用
+    const [openParentBoxHeight, setOpenParentBoxHeight] = useState<number>()
+    const [closedParentBoxHeight, setClosedParentBoxHeight] = useState<number>()
+    const [openTitleTop, setOpenTitleTop] = useState<number>()
 
-  const paperRef = useRef<HTMLDivElement>(null)
-  const dummyTitleRef = useRef<HTMLAnchorElement>(null)
+    const paperRef = useRef<HTMLDivElement>(null)
+    const dummyTitleRef = useRef<HTMLAnchorElement>(null)
 
-  useEffect(() => {
-    const onResize = (): void => {
-      if (!paperRef.current || !dummyTitleRef.current) return
+    useEffect(() => {
+      const onResize = (): void => {
+        if (!paperRef.current || !dummyTitleRef.current) return
 
-      setOpenParentBoxHeight(paperRef.current.offsetHeight)
-      setOpenTitleTop(dummyTitleRef.current.offsetTop)
+        setOpenParentBoxHeight(paperRef.current.offsetHeight)
+        setOpenTitleTop(dummyTitleRef.current.offsetTop)
 
-      const titleHeight = dummyTitleRef.current.getBoundingClientRect().height
-      setClosedParentBoxHeight(titleHeight)
-    }
-
-    onResize()
-    window.addEventListener('resize', onResize)
-    return () => {
-      window.removeEventListener('resize', onResize)
-    }
-  }, [])
-
-  // modal用
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const theme = useTheme()
-  const isOverSm = useMediaQuery(theme.breakpoints.up('sm'))
-
-  // パフォーマンス改善
-  const onTitleClick = useCallback(
-    (e: SyntheticEvent<HTMLAnchorElement>) => {
-      if (isClosed) {
-        e.preventDefault()
-        onClick?.()
+        const titleHeight = dummyTitleRef.current.getBoundingClientRect().height
+        setClosedParentBoxHeight(titleHeight)
       }
-    },
-    [isClosed, onClick],
-  )
 
-  const onDemoClick = useCallback((e: SyntheticEvent<HTMLAnchorElement>) => {
-    e.stopPropagation()
-  }, [])
+      onResize()
+      window.addEventListener('resize', onResize)
+      return () => {
+        window.removeEventListener('resize', onResize)
+      }
+    }, [])
 
-  const openModal = useCallback(
-    (e: SyntheticEvent<HTMLAnchorElement>) => {
+    // modal用
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const theme = useTheme()
+    const isOverSm = useMediaQuery(theme.breakpoints.up('sm'))
+
+    // パフォーマンス改善
+    const onTitleClick = useCallback(
+      (e: SyntheticEvent<HTMLAnchorElement>) => {
+        if (isClosed) {
+          e.preventDefault()
+          onClick?.()
+        }
+      },
+      [isClosed, onClick],
+    )
+
+    const onDemoClick = useCallback((e: SyntheticEvent<HTMLAnchorElement>) => {
       e.stopPropagation()
-      if (!demoUrl) setIsModalOpen(true)
-    },
-    [demoUrl],
-  )
+    }, [])
 
-  const closeModal = useCallback(() => {
-    setIsModalOpen(false)
-  }, [])
+    const openModal = useCallback(
+      (e: SyntheticEvent<HTMLAnchorElement>) => {
+        e.stopPropagation()
+        if (!demoUrl) setIsModalOpen(true)
+      },
+      [demoUrl],
+    )
 
-  return (
-    <Box
-      sx={{
-        position: 'relative',
-        transition: 'height 1s',
-        height: isClosed ? closedParentBoxHeight : openParentBoxHeight,
-      }}
-    >
-      <MovableCard
-        align={isClosed && isOverSm ? 'center-start' : 'left'}
-        outerSx={{ width: '100%' }}
+    const closeModal = useCallback(() => {
+      setIsModalOpen(false)
+    }, [])
+
+    return (
+      <Box
+        sx={{
+          position: 'relative',
+          transition: 'height 1s',
+          height: isClosed ? closedParentBoxHeight : openParentBoxHeight,
+        }}
       >
-        <Link
-          onClick={onTitleClick}
-          href={url}
-          target="_blank"
-          underline="none"
-          sx={{
-            display: 'block',
-            position: 'absolute',
-            zIndex: 1,
-            color: cardColor,
-            fontWeight: 700,
-            fontSize: '1.3rem',
-            width: 'fit-content',
-            pl: { sm: 3, xs: 2 },
-            pr: { sm: 3, xs: 2 },
-            overflowWrap: 'anywhere',
-            transition: 'margin-left 1s, top 1s',
-            ml: !!isClosed && isOverSm ? -25 : 0,
-            top: isClosed ? 0 : openTitleTop,
-          }}
-        >
-          {title}
-        </Link>
-      </MovableCard>
-      <Fade in={!isClosed} timeout={1000}>
-        <Paper
-          ref={paperRef}
-          variant="outlined"
-          sx={{ borderRadius: 4, overflow: 'hidden' }}
-          onClick={onClick}
-        >
+        <MovableCard align={isClosed && isOverSm ? 'center-start' : 'left'}>
           <Link
-            href={demoUrl}
+            onClick={onTitleClick}
+            href={url}
             target="_blank"
+            underline="none"
             sx={{
               display: 'block',
-              width: '100%',
-              height: { sm: 300, xs: 200 },
-              background: `url(${imageSrc})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center top',
-              [theme.breakpoints.between(380, 'sm')]: {
-                height: 220,
-              },
+              position: 'absolute',
+              zIndex: 1,
+              color: cardColor,
+              fontWeight: 700,
+              fontSize: '1.3rem',
+              width: 'fit-content',
+              pl: { sm: 3, xs: 2 },
+              pr: { sm: 3, xs: 2 },
+              overflowWrap: 'anywhere',
+              transition: 'margin-left 1s, top 1s',
+              ml: !!isClosed && isOverSm ? -25 : 0,
+              top: isClosed ? 0 : openTitleTop,
             }}
-            onClick={openModal}
           >
-            <img
-              src={imageSrc}
-              alt=""
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center top',
-              }}
-            />
+            {title}
           </Link>
-          <Stack sx={{ p: { sm: 3, xs: 2 } }}>
+        </MovableCard>
+        <Fade in={!isClosed} timeout={1000}>
+          <Paper
+            ref={paperRef}
+            variant="outlined"
+            sx={{ borderRadius: 4, overflow: 'hidden' }}
+            onClick={onClick}
+          >
             <Link
-              underline="none"
-              ref={dummyTitleRef}
-              color="inherit"
+              href={demoUrl}
+              target="_blank"
               sx={{
                 display: 'block',
-                fontWeight: 700,
-                visibility: 'hidden',
-                fontSize: '1.3rem',
-                overflowWrap: 'anywhere',
+                width: '100%',
+                height: { sm: 300, xs: 200 },
+                background: `url(${imageSrc})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center top',
+                [theme.breakpoints.between(380, 'sm')]: {
+                  height: 220,
+                },
               }}
+              onClick={openModal}
             >
-              {title}
+              <img
+                src={imageSrc}
+                alt=""
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center top',
+                }}
+              />
             </Link>
-            {demoUrl && (
+            <Stack sx={{ p: { sm: 3, xs: 2 } }}>
               <Link
-                href={demoUrl}
-                variant="body2"
                 underline="none"
-                target="_blank"
+                ref={dummyTitleRef}
+                color="inherit"
                 sx={{
-                  color: '#999',
-                  fontSize: '0.9rem',
-                  width: 'fit-content',
+                  display: 'block',
+                  fontWeight: 700,
+                  visibility: 'hidden',
+                  fontSize: '1.3rem',
                   overflowWrap: 'anywhere',
                 }}
-                onClick={onDemoClick}
               >
-                {demoUrl}
+                {title}
               </Link>
-            )}
-            <Typography variant="body2" sx={{ pt: 1 }}>
-              {caption}
-            </Typography>
-            {techs && (
-              <Stack direction="row" flexWrap="wrap" useFlexGap spacing={0.5} sx={{ pt: 2 }}>
-                {techs.map((tag, i) => (
-                  <TechTag key={i} techType={tag} color={cardColor} />
-                ))}
-              </Stack>
-            )}
-          </Stack>
-        </Paper>
-      </Fade>
-      {!demoUrl && (
-        <Modal open={isModalOpen} onClose={closeModal}>
-          <Box
-            sx={{
-              display: 'flex',
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              boxShadow: 24,
-              color: '#fff',
-            }}
-          >
-            <IconButton
-              onClick={closeModal}
-              color="inherit"
+              {demoUrl && (
+                <Link
+                  href={demoUrl}
+                  variant="body2"
+                  underline="none"
+                  target="_blank"
+                  sx={{
+                    color: '#999',
+                    fontSize: '0.9rem',
+                    width: 'fit-content',
+                    overflowWrap: 'anywhere',
+                  }}
+                  onClick={onDemoClick}
+                >
+                  {demoUrl}
+                </Link>
+              )}
+              <Typography variant="body2" sx={{ pt: 1 }}>
+                {caption}
+              </Typography>
+              {techs && (
+                <Stack direction="row" flexWrap="wrap" useFlexGap spacing={0.5} sx={{ pt: 2 }}>
+                  {techs.map((tag, i) => (
+                    <TechTag key={i} techType={tag} color={cardColor} />
+                  ))}
+                </Stack>
+              )}
+            </Stack>
+          </Paper>
+        </Fade>
+        {!demoUrl && (
+          <Modal open={isModalOpen} onClose={closeModal}>
+            <Box
               sx={{
+                display: 'flex',
                 position: 'absolute',
-                left: '100%',
-                bottom: '100%',
-                transform: 'translate(-20%, 20%)',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                boxShadow: 24,
+                color: '#fff',
               }}
             >
-              <CloseIcon color="inherit" fontSize="large" />
-            </IconButton>
-            <img
-              src={imageSrc}
-              alt=""
-              style={{
-                maxHeight: '80vh',
-                maxWidth: '80vw',
-                objectFit: 'contain',
-              }}
-            />
-          </Box>
-        </Modal>
-      )}
-    </Box>
-  )
-}
+              <IconButton
+                onClick={closeModal}
+                color="inherit"
+                sx={{
+                  position: 'absolute',
+                  left: '100%',
+                  bottom: '100%',
+                  transform: 'translate(-20%, 20%)',
+                }}
+              >
+                <CloseIcon color="inherit" fontSize="large" />
+              </IconButton>
+              <img
+                src={imageSrc}
+                alt=""
+                style={{
+                  maxHeight: '80vh',
+                  maxWidth: '80vw',
+                  objectFit: 'contain',
+                }}
+              />
+            </Box>
+          </Modal>
+        )}
+      </Box>
+    )
+  },
+)
+WorkCardSP.displayName = 'WorkCardSP'
