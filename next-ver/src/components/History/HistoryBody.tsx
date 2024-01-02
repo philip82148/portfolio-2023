@@ -1,5 +1,5 @@
 import { Divider, Stack } from '@mui/material'
-import React, { cloneElement, useMemo, useRef, useState } from 'react'
+import { Fragment, cloneElement, memo, useMemo, useRef, useState } from 'react'
 
 import { WorkCard } from './WorkCard'
 
@@ -38,7 +38,7 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
         const isCurrentClosed = !!isCloseds.current[i]
 
         return (
-          <React.Fragment key={i}>
+          <Fragment key={i}>
             {i > 0 && (
               <HistoryDivider
                 isPreviousClosed={isPreviousClosed}
@@ -52,7 +52,7 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
                   rightAlign: nextRightAlign(!isCurrentClosed),
                 })
               : child}
-          </React.Fragment>
+          </Fragment>
         )
       })}
     </Stack>
@@ -60,7 +60,7 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
 }
 
 // パフォーマンス改善
-const HistoryDivider = React.memo<{ isPreviousClosed: boolean; isCurrentClosed: boolean }>(
+const HistoryDivider = memo<{ isPreviousClosed: boolean; isCurrentClosed: boolean }>(
   ({ isPreviousClosed, isCurrentClosed }) => {
     return (
       <Divider

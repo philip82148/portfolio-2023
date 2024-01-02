@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from '@mui/material'
 import { Box } from '@mui/material'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export const MovableCard: React.FC<
   React.PropsWithChildren<{
