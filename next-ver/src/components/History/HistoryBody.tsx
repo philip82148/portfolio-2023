@@ -3,11 +3,10 @@ import { Fragment, cloneElement, memo, useCallback, useMemo, useState } from 're
 
 import { WorkCard } from './WorkCard'
 
-type PersonalHistoryProps = {
+type HistoryBodyProps = {
   children: Array<React.ReactElement<any, React.JSXElementConstructor<any>>>
-  closedOnMounts?: boolean[]
 }
-export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOnMounts }) => {
+export const HistoryBody: React.FC<HistoryBodyProps> = ({ children }) => {
   let currentRightAlign = false
   const nextRightAlign = (update: boolean): boolean => {
     const nextRightAlign = !currentRightAlign
@@ -16,7 +15,7 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
     return nextRightAlign
   }
 
-  const [isCloseds, setIsCloseds] = useState<boolean[]>(closedOnMounts ?? [])
+  const [isCloseds, setIsCloseds] = useState<boolean[]>(() => Array(children.length).fill(false))
 
   const flipIsClosedFuncs = useMemo(() => {
     return [...Array(children.length)].map((_, i) => () => {
