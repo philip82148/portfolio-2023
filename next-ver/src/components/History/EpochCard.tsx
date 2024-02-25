@@ -9,15 +9,31 @@ export const EpochCard = React.memo<{ title: string; caption?: string; newTechs?
     return (
       <Stack alignItems="center">
         <Stack alignItems="center" sx={{ maxWidth: { md: 600, xs: 700 }, p: 4, pl: 0, pr: 0 }}>
-          <Typography sx={{ fontSize: '1.3rem', fontWeight: 700 }}>{title}</Typography>
+          <Typography
+            sx={{
+              fontSize: '1.3rem',
+              fontWeight: 700,
+              borderBottom: '2px solid #000',
+              p: '0 3px 1px',
+              mb: 2,
+            }}
+          >
+            {title}
+          </Typography>
           {caption && (
             <>
-              <Typography variant="body2" sx={{ pt: 1 }}>
-                {caption}
-              </Typography>
+              <Typography variant="body2">{caption}</Typography>
               {newTechs && (
                 <>
-                  <Typography sx={{ pt: 1, pb: 1, fontWeight: 700 }}>
+                  <Typography
+                    sx={{
+                      fontWeight: 700,
+                      borderBottom: '2px solid #000',
+                      p: '0 2px 1px',
+                      mt: 1.5,
+                      mb: 2,
+                    }}
+                  >
                     新しく覚えた言語/フレームワーク
                   </Typography>
                   <Stack
