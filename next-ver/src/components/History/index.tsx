@@ -15,7 +15,7 @@ export const History: React.FC = () => {
         <Typography variant="h2" id="history">
           HISTORY
         </Typography>
-        <HistoryBody closedOnMounts={[false, true, false, false, true, true, false, false, true]}>
+        <HistoryBody>
           <EpochCard
             title="小学6年~"
             caption="小説「ぼくらの七日間戦争」に出てくるエレクトロニクスの天才中学生のキャラクターに憧れ、独学で電子工作を始める。同時にパソコンの仕組みが知りたくてJavaを学ぶ。本を読みながらメモ帳を作ったりした。"

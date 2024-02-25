@@ -5,7 +5,7 @@ import { WorkCard } from './WorkCard'
 
 type PersonalHistoryProps = {
   children: Array<React.ReactElement<any, React.JSXElementConstructor<any>>>
-  closedOnMounts: boolean[]
+  closedOnMounts?: boolean[]
 }
 export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOnMounts }) => {
   let currentRightAlign = false
@@ -17,7 +17,7 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
   }
 
   // パフォーマンス改善
-  const isCloseds = useRef<boolean[]>(closedOnMounts)
+  const isCloseds = useRef<boolean[]>(closedOnMounts ?? [])
   const setCount_ = useState(0)[1]
 
   const flipIsClosedFuncs = useMemo(() => {
