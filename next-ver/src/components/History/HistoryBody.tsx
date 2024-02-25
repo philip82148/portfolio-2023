@@ -1,5 +1,5 @@
-import { Divider, Stack } from '@mui/material'
-import { Fragment, cloneElement, memo, useMemo, useRef, useState } from 'react'
+import { Button, ButtonGroup, Divider, Stack } from '@mui/material'
+import { Fragment, cloneElement, memo, useCallback, useMemo, useState } from 'react'
 
 import { WorkCard } from './WorkCard'
 
@@ -16,45 +16,68 @@ export const HistoryBody: React.FC<PersonalHistoryProps> = ({ children, closedOn
     return nextRightAlign
   }
 
-  // パフォーマンス改善
-  const isCloseds = useRef<boolean[]>(closedOnMounts ?? [])
-  const setCount_ = useState(0)[1]
+  const [isCloseds, setIsCloseds] = useState<boolean[]>(closedOnMounts ?? [])
 
   const flipIsClosedFuncs = useMemo(() => {
-    const forceUpdate = (): void => {
-      setCount_((count) => count + 1)
-    }
-
     return [...Array(children.length)].map((_, i) => () => {
-      isCloseds.current[i] = !isCloseds.current[i]
-      forceUpdate()
+      setIsCloseds((isCloseds) => {
+        const newIsCloseds = [...isCloseds]
+        newIsCloseds[i] = !isCloseds[i]
+
+        return newIsCloseds
+      })
     })
-  }, [children.length, setCount_])
+  }, [children.length])
+
+  const onAllClick = useCallback(() => {
+    setIsCloseds(Array(children.length).fill(false))
+  }, [children.length])
+
+  const onProgrammingClick = useCallback(() => {
+    setIsCloseds(
+      children.map((child) => child.type === WorkCard && child.props.type !== 'programming'),
+    )
+  }, [children])
+
+  const onNonProgrammingClick = useCallback(() => {
+    setIsCloseds(
+      children.map((child) => child.type === WorkCard && child.props.type === 'programming'),
+    )
+  }, [children])
 
   return (
-    <Stack sx={{ width: '100%', overflow: 'hidden', mt: { lg: -3, xs: -4 } }}>
-      {children.map((child, i) => {
-        const isPreviousClosed = i > 0 ? !!isCloseds.current[i - 1] : false
-        const isCurrentClosed = !!isCloseds.current[i]
+    <Stack alignItems="center" sx={{ width: '100%' }}>
+      {/* <Box sx={{ color: '#777' }}> */}
+      <ButtonGroup variant="outlined" sx={{ mb: 3 }}>
+        <Button onClick={onAllClick}>All</Button>
+        <Button onClick={onProgrammingClick}>Programming</Button>
+        <Button onClick={onNonProgrammingClick}>Non-Programming</Button>
+      </ButtonGroup>
+      {/* </Box> */}
+      <Stack sx={{ width: '100%', overflow: 'hidden', mt: { lg: -3, xs: -4 } }}>
+        {children.map((child, i) => {
+          const isPreviousClosed = i > 0 ? !!isCloseds[i - 1] : false
+          const isCurrentClosed = !!isCloseds[i]
 
-        return (
-          <Fragment key={i}>
-            {i > 0 && (
-              <HistoryDivider
-                isPreviousClosed={isPreviousClosed}
-                isCurrentClosed={isCurrentClosed}
-              />
-            )}
-            {child.type === WorkCard
-              ? cloneElement(child, {
-                  onClick: flipIsClosedFuncs[i],
-                  isClosed: isCurrentClosed,
-                  rightAlign: nextRightAlign(!isCurrentClosed),
-                })
-              : child}
-          </Fragment>
-        )
-      })}
+          return (
+            <Fragment key={i}>
+              {i > 0 && (
+                <HistoryDivider
+                  isPreviousClosed={isPreviousClosed}
+                  isCurrentClosed={isCurrentClosed}
+                />
+              )}
+              {child.type === WorkCard
+                ? cloneElement(child, {
+                    onClick: flipIsClosedFuncs[i],
+                    isClosed: isCurrentClosed,
+                    rightAlign: nextRightAlign(!isCurrentClosed),
+                  })
+                : child}
+            </Fragment>
+          )
+        })}
+      </Stack>
     </Stack>
   )
 }
