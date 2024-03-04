@@ -129,7 +129,7 @@ export const History: React.FC = () => {
             url="https://github.com/philip82148/portfolio"
             demoUrl="https://philip82148.github.io/portfolio/"
             imageSrc="images/in-preparation.jpg"
-            caption="このポートフォリオを作る。ギミックは凝っているが、デザインが気に入っておらず開発のモチベーションがストップしている。ので、スマホ版が崩壊している。"
+            caption="このポートフォリオを作る。"
             techs={['Next.js', 'TypeScript']}
           />
           <WorkCard
