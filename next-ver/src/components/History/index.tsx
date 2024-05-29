@@ -54,7 +54,7 @@ export const History: React.FC = () => {
           />
           <WorkCard
             type="programming"
-            title="philip82148/SDCardLibrary"
+            title="SDカードライブラリ"
             url="https://github.com/philip82148/SDCardLibrary"
             imageSrc="images/sd-card-library.png"
             caption="電子工作でICレコーダー用に作ったSDカードライブラリ。PICの少ないリソースでも動くようにメモリとプログラムメモリをなるだけ使わないように書いている。"
@@ -91,7 +91,7 @@ export const History: React.FC = () => {
           />
           <WorkCard
             type="programming"
-            title="philip82148/selva"
+            title="授業評定サイト用WordPressテーマ「selva」"
             url="https://github.com/philip82148/selva"
             imageSrc="images/in-preparation.jpg"
             demoUrl="http://khaosbbs.com/"
@@ -100,7 +100,7 @@ export const History: React.FC = () => {
           />
           <WorkCard
             type="programming"
-            title="philip82148/mention-generator"
+            title="メンション生成Chrome拡張「M-GEN」"
             url="https://github.com/philip82148/mention-generator"
             imageSrc="images/mention-generator.png"
             caption="日吉寄宿舎でアンケートに回答しなかった人全員をLINEでメンションしており、手作業で回答していない人を調べてメンションするのは大変なので、自動化するChrome拡張を作った。"
@@ -108,7 +108,7 @@ export const History: React.FC = () => {
           />
           <WorkCard
             type="programming"
-            title="philip82148/kishukusha-report-supporter"
+            title="LINE BOT「寄宿舎届出サポート」"
             url="https://github.com/philip82148/kishukusha-report-supporter"
             imageSrc="images/kishukusha-report-supporter.jpg"
             caption="日吉寄宿舎の各種届出を、届出を出す側も見る側も便利になるようにLINE BOTを作成した。"
@@ -116,7 +116,7 @@ export const History: React.FC = () => {
           />
           <WorkCard
             type="programming"
-            title="philip82148/kishukusha-meibo"
+            title="名簿自動生成アプリ"
             url="https://github.com/philip82148/kishukusha-meibo"
             demoUrl="https://philip82148.github.io/kishukusha-meibo/"
             imageSrc="images/in-preparation.jpg"
@@ -125,7 +125,7 @@ export const History: React.FC = () => {
           />
           <WorkCard
             type="programming"
-            title="philip82148/portfolio"
+            title="ポートフォリオ"
             url="https://github.com/philip82148/portfolio"
             demoUrl="https://philip82148.github.io/portfolio/"
             imageSrc="images/in-preparation.jpg"
@@ -134,15 +134,15 @@ export const History: React.FC = () => {
           />
           <WorkCard
             type="programming"
-            title="philip82148/simplerich-zsh-theme"
+            title="Oh My Zshテーマ「simplerich-zsh-theme」"
             url="https://github.com/philip82148/simplerich-zsh-theme"
             imageSrc="https://github.com/philip82148/simplerich-zsh-theme/raw/main/readme/demo.png"
-            caption="Oh-My-Zshのテーマを作った。Gitの、いくつのファイルがstaged, changed, untrackedかやリモートリポジトリから何コミット前にある、後にある、という情報が一目でわかるテーマ。既存のリポジトリを組み合わせて作っただけだが。"
+            caption="Oh My Zshのテーマを作った。Gitの、いくつのファイルがstaged, changed, untrackedかやリモートリポジトリから何コミット前にある、後にある、という情報が一目でわかるテーマ。既存のリポジトリを組み合わせて作っただけだが。"
             techs={['Shell']}
           />
           <WorkCard
             type="programming"
-            title="philip82148/cpp-dump"
+            title="競プロ用デバッグツール「cpp-dump」"
             url="https://github.com/philip82148/cpp-dump"
             imageSrc="https://github.com/philip82148/cpp-dump/raw/main/readme/supports-various-types.png"
             caption={
