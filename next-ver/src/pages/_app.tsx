@@ -84,9 +84,6 @@ const theme = (() => {
         secondary: '#666',
       },
     },
-  })
-
-  const themeOption: ThemeOptions = {
     typography: {
       fontFamily: [
         robotoFont.style.fontFamily,
@@ -95,6 +92,11 @@ const theme = (() => {
         'Arial',
         'sans-serif',
       ].join(','),
+    },
+  })
+
+  const themeOption: ThemeOptions = {
+    typography: {
       h2: {
         fontWeight: 700,
         borderBottom: '3px solid #000',
