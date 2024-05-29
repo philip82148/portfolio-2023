@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Divider, Stack } from '@mui/material'
+import { Box, Button, ButtonGroup, Divider, Stack } from '@mui/material'
 import { Fragment, cloneElement, memo, useCallback, useMemo, useState } from 'react'
 
 import { WorkCard } from './WorkCard'
@@ -44,15 +44,20 @@ export const HistoryBody: React.FC<HistoryBodyProps> = ({ children }) => {
     )
   }, [children])
 
+  const onNoneClick = useCallback(() => {
+    setIsCloseds(children.map((child) => child.type === WorkCard))
+  }, [children])
+
   return (
     <Stack alignItems="center" sx={{ width: '100%' }}>
-      {/* <Box sx={{ color: '#777' }}> */}
-      <ButtonGroup variant="outlined" sx={{ mb: 3 }}>
-        <Button onClick={onAllClick}>All</Button>
-        <Button onClick={onProgrammingClick}>Programming</Button>
-        <Button onClick={onNonProgrammingClick}>Non-Programming</Button>
-      </ButtonGroup>
-      {/* </Box> */}
+      <Box sx={{ color: '#777' }}>
+        <ButtonGroup variant="outlined" color="inherit" sx={{ mb: 3 }}>
+          <Button onClick={onAllClick}>All</Button>
+          <Button onClick={onProgrammingClick}>Programming</Button>
+          <Button onClick={onNonProgrammingClick}>Non-Programming</Button>
+          <Button onClick={onNoneClick}>None</Button>
+        </ButtonGroup>
+      </Box>
       <Stack sx={{ width: '100%', overflow: 'hidden', mt: { lg: -3, xs: -4 } }}>
         {children.map((child, i) => {
           const isPreviousClosed = i > 0 ? !!isCloseds[i - 1] : false
