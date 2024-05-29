@@ -96,7 +96,7 @@ export const History: React.FC = () => {
             imageSrc="images/in-preparation.jpg"
             demoUrl="http://khaosbbs.com/"
             caption="友達と二人で授業の評定サイト(WordPressテーマ)を作る。学部2年の時に作ったもので、いつかデザインを改善したいと思っている。"
-            techs={['WordPress', 'PHP', 'MySQL', 'JavaScript', 'HTML', 'CSS']}
+            techs={['WordPress', 'PHP', 'jQuery', 'JavaScript', 'MySQL']}
           />
           <WorkCard
             type="programming"
@@ -104,7 +104,7 @@ export const History: React.FC = () => {
             url="https://github.com/philip82148/mention-generator"
             imageSrc="images/mention-generator.png"
             caption="日吉寄宿舎でアンケートに回答しなかった人全員をLINEでメンションしており、手作業で回答していない人を調べてメンションするのは大変なので、自動化するChrome拡張を作った。"
-            techs={['JavaScript', 'HTML', 'CSS']}
+            techs={['jQuery', 'JavaScript', 'HTML', 'CSS']}
           />
           <WorkCard
             type="programming"

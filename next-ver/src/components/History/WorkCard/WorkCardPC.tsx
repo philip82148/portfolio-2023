@@ -22,13 +22,9 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
   rightAlign,
   onClick,
 }) => {
-  const cardColor = {
-    programming: 'primary.main',
-    electronics: 'secondary.main', // '#259758', // '#9edd52',
-    craft: 'secondary.main',
-  }[type]
+  const cardColor = `${type}.main`
 
-  // open/close用
+  // open/close用 ---------------------------------------------------------------------------------
   const [openParentBoxHeight, setOpenParentBoxHeight] = useState<number>()
   const [closedParentBoxHeight, setClosedParentBoxHeight] = useState<number>()
 
@@ -55,10 +51,10 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
     }
   }, [])
 
-  // modal用
+  // modal用 ---------------------------------------------------------------------------------------
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  // Paper/Titleホバー時用
+  // Paper/Titleホバー時用 --------------------------------------------------------------------------
   const [isPaperHovered, setIsPaperHovered] = useState(false)
   const [isTitleHovered, setIsTitleHovered] = useState(false)
 
@@ -90,7 +86,7 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
   const captionBoxWidth = { lg: 800 * 0.6, xs: 650 * 0.6 }
   const imageBoxWidth = '40%'
 
-  // パフォーマンス改善
+  // パフォーマンス改善 ------------------------------------------------------------------------------
   const onTitleClick = useCallback(
     (e: SyntheticEvent<HTMLAnchorElement>) => {
       if (isClosed) {
@@ -176,7 +172,13 @@ export const WorkCardPC: React.FC<WorkCardProps> = ({
   )
 }
 
-// パフォーマンス改善
+// パフォーマンス改善 ----------------------------------------------------------------------------------
+const titleLinkBaseSx = {
+  display: 'block',
+  fontWeight: 700,
+  fontSize: '1.3rem',
+}
+
 const TitleMovableCardChild = memo<{
   titleRef: React.RefObject<HTMLAnchorElement>
   onTitleClick: (e: SyntheticEvent<HTMLAnchorElement>) => void
@@ -193,13 +195,11 @@ const TitleMovableCardChild = memo<{
       target="_blank"
       underline="none"
       sx={[
+        titleLinkBaseSx,
         {
-          display: 'block',
           position: 'relative',
           zIndex: 1,
           color: cardColor,
-          fontWeight: 700,
-          fontSize: '1.3rem',
           width: 'fit-content',
           transition: 'margin-left 1s, max-width 1s',
           maxWidth: '100%',
@@ -236,16 +236,7 @@ const CaptionMovableCardChild = memo<{
   return (
     <Stack justifyContent="space-between" sx={{ p: 4, minHeight: 200 }}>
       <Stack>
-        <Link
-          underline="none"
-          ref={dummyTitleRef}
-          sx={{
-            display: 'block',
-            fontWeight: 700,
-            fontSize: '1.3rem',
-            visibility: 'hidden',
-          }}
-        >
+        <Link underline="none" ref={dummyTitleRef} sx={[titleLinkBaseSx, { visibility: 'hidden' }]}>
           <span>{title}</span>
         </Link>
         {demoUrl && (

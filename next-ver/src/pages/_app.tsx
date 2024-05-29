@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@emotion/react'
 import { CssBaseline } from '@mui/material'
-import type { ThemeOptions } from '@mui/material/styles'
+import type { PaletteColorOptions, ThemeOptions } from '@mui/material/styles'
 import { createTheme } from '@mui/material/styles'
 import type { AppProps } from 'next/app'
 import { Dosis, Noto_Sans_JP, Roboto } from 'next/font/google'
@@ -127,7 +127,25 @@ const theme = (() => {
         fontSize: '1rem',
       },
     },
+    palette: {
+      programming: { main: partial.palette.primary.main },
+      electronics: { main: partial.palette.secondary.main },
+      craft: { main: '#259758' }, // '#9edd52',
+    },
   }
 
   return createTheme(partial, themeOption)
 })()
+
+type CustomPalette = {
+  programming?: PaletteColorOptions
+  electronics?: PaletteColorOptions
+  craft?: PaletteColorOptions
+}
+
+declare module '@mui/material/styles' {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface Palette extends CustomPalette {}
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface PaletteOptions extends CustomPalette {}
+}
