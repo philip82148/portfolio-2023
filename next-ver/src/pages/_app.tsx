@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import Script from 'next/script'
 
 const robotoFont = Roboto({ weight: ['400', '500', '700'], preload: false })
-const notoSansJPFont = Noto_Sans_JP({ preload: false })
+const notoSansJPFont = Noto_Sans_JP({ display: 'swap', preload: false })
 const h2Font = Dosis({ preload: false })
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
@@ -85,13 +85,7 @@ const theme = (() => {
       },
     },
     typography: {
-      fontFamily: [
-        robotoFont.style.fontFamily,
-        notoSansJPFont.style.fontFamily,
-        'Helvetica',
-        'Arial',
-        'sans-serif',
-      ].join(','),
+      fontFamily: [robotoFont.style.fontFamily, notoSansJPFont.style.fontFamily].join(','),
     },
   })
 
