@@ -51,17 +51,27 @@ export const HistoryBody: React.FC<HistoryBodyProps> = ({ children }) => {
   return (
     <Stack alignItems="center" sx={{ width: '100%' }}>
       <Box sx={{ color: '#777' }}>
-        <ButtonGroup variant="text" color="inherit" sx={{ mb: 3 }} size="large">
-          <Button onClick={onAllClick} sx={{ color: 'text.primary' }}>
+        <ButtonGroup
+          variant="text"
+          color="inherit"
+          sx={{ mb: 3, fontSize: { sm: '1rem', xs: '0.8rem' } }}
+        >
+          <Button onClick={onAllClick} sx={{ color: 'text.primary', fontSize: 'inherit' }}>
             All
           </Button>
-          <Button onClick={onProgrammingClick} sx={{ color: 'programming.main' }}>
+          <Button
+            onClick={onProgrammingClick}
+            sx={{ color: 'programming.main', fontSize: 'inherit' }}
+          >
             Programming
           </Button>
-          <Button onClick={onNonProgrammingClick} sx={{ color: 'nonProgramming.main' }}>
+          <Button
+            onClick={onNonProgrammingClick}
+            sx={{ color: 'nonProgramming.main', fontSize: 'inherit' }}
+          >
             Non-Programming
           </Button>
-          <Button onClick={onNoneClick} sx={{ color: 'text.primary' }}>
+          <Button onClick={onNoneClick} sx={{ color: 'text.primary', fontSize: 'inherit' }}>
             None
           </Button>
         </ButtonGroup>
