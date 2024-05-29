@@ -3,11 +3,13 @@ import { CssBaseline } from '@mui/material'
 import type { ThemeOptions } from '@mui/material/styles'
 import { createTheme } from '@mui/material/styles'
 import type { AppProps } from 'next/app'
-import { Dosis } from 'next/font/google'
+import { Dosis, Noto_Sans_JP, Roboto } from 'next/font/google'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
 
+const robotoFont = Roboto({ preload: false })
+const notoSansJPFont = Noto_Sans_JP({ preload: false })
 const h2Font = Dosis({ preload: false })
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
@@ -87,24 +89,10 @@ const theme = (() => {
   const themeOption: ThemeOptions = {
     typography: {
       fontFamily: [
-        'Avenir',
-        'Open Sans',
-        'Helvetica Neue',
+        robotoFont.style.fontFamily,
+        notoSansJPFont.style.fontFamily,
         'Helvetica',
         'Arial',
-        'Verdana',
-        'Roboto',
-        '游ゴシック',
-        'Yu Gothic',
-        '游ゴシック体',
-        'YuGothic',
-        'ヒラギノ角ゴ Pro W3',
-        'Hiragino Kaku Gothic Pro',
-        'Meiryo UI',
-        'メイリオ',
-        'Meiryo',
-        'ＭＳ Ｐゴシック',
-        'MS PGothic',
         'sans-serif',
       ].join(','),
       h2: {
