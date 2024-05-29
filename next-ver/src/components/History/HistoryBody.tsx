@@ -58,7 +58,7 @@ export const HistoryBody: React.FC<HistoryBodyProps> = ({ children }) => {
           <Button onClick={onProgrammingClick} sx={{ color: 'programming.main' }}>
             Programming
           </Button>
-          <Button onClick={onNonProgrammingClick} sx={{ color: 'electronics.main' }}>
+          <Button onClick={onNonProgrammingClick} sx={{ color: 'nonProgramming.main' }}>
             Non-Programming
           </Button>
           <Button onClick={onNoneClick} sx={{ color: 'text.primary' }}>

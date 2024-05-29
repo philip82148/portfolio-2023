@@ -130,7 +130,8 @@ const theme = (() => {
     palette: {
       programming: { main: partial.palette.primary.main },
       electronics: { main: partial.palette.secondary.main },
-      craft: { main: '#259758' }, // '#9edd52',
+      craft: { main: partial.palette.secondary.main }, // '#259758', '#9edd52',
+      nonProgramming: { main: partial.palette.secondary.main },
     },
   }
 
@@ -141,6 +142,7 @@ type CustomPalette = {
   programming?: PaletteColorOptions
   electronics?: PaletteColorOptions
   craft?: PaletteColorOptions
+  nonProgramming?: PaletteColorOptions
 }
 
 declare module '@mui/material/styles' {

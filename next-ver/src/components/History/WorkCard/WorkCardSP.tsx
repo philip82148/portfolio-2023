@@ -22,13 +22,9 @@ import type { WorkCardSPProps } from '.'
 
 export const WorkCardSP = memo<WorkCardSPProps>(
   ({ type, title, imageSrc, url, demoUrl, caption, techs, isClosed, onClick }) => {
-    const cardColor = {
-      programming: 'primary.main',
-      electronics: 'secondary.main', // '#259758', // '#9edd52',
-      craft: 'secondary.main',
-    }[type]
+    const cardColor = `${type}.main`
 
-    // open/close用
+    // open/close用 ---------------------------------------------------------------------------------
     const [openParentBoxHeight, setOpenParentBoxHeight] = useState<number>()
     const [closedParentBoxHeight, setClosedParentBoxHeight] = useState<number>()
     const [openTitleTop, setOpenTitleTop] = useState<number>()
@@ -54,13 +50,13 @@ export const WorkCardSP = memo<WorkCardSPProps>(
       }
     }, [])
 
-    // modal用
+    // modal用 ---------------------------------------------------------------------------------
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const theme = useTheme()
     const isOverSm = useMediaQuery(theme.breakpoints.up('sm'))
 
-    // パフォーマンス改善
+    // パフォーマンス改善 ------------------------------------------------------------------------------
     const onTitleClick = useCallback(
       (e: SyntheticEvent<HTMLAnchorElement>) => {
         if (isClosed) {
