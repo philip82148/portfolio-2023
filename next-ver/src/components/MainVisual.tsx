@@ -36,7 +36,7 @@ export const MainVisual: React.FC = () => {
           Ryota Sasaki
         </Box>
         <Box sx={{ fontSize: { lg: 26, sm: 20, xs: 16 } }}>
-          <span style={{ display: 'inline-block' }}>Keio University Student</span>
+          <span style={{ display: 'inline-block' }}>Keio University Student</span>&nbsp;
           <span style={{ display: 'inline-block' }}>Software Engineer</span>
         </Box>
       </Stack>
