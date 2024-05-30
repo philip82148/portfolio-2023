@@ -153,6 +153,13 @@ export const History: React.FC = () => {
             }
             techs={['C++']}
           />
+          <WorkCard
+            type="programming"
+            title="環境構築と開発の手順"
+            url="https://github.com/philip82148/env-setup"
+            imageSrc="images/in-preparation.jpg"
+            caption="自分の研究室のプログラミングをしたことがない人向けに環境構築と開発の手順のマニュアルを作った。"
+          />
           <EpochCard title="現在" />
         </HistoryBody>
       </Stack>
