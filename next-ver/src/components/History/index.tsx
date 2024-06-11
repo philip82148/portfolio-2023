@@ -112,7 +112,7 @@ export const History: React.FC = () => {
             url="https://github.com/philip82148/kishukusha-report-supporter"
             imageSrc="images/kishukusha-report-supporter.jpg"
             caption="日吉寄宿舎の各種届出を、届出を出す側も見る側も便利になるようにLINE BOTを作成した。"
-            techs={['PHP']}
+            techs={['PHP', 'MySQL']}
           />
           <WorkCard
             type="programming"
