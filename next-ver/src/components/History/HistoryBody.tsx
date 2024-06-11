@@ -24,7 +24,7 @@ export const HistoryBody: React.FC<HistoryBodyProps> = ({ children }) => {
     return nextRightAlign
   }
 
-  const [isCloseds, setIsCloseds] = useState<boolean[]>(
+  const [isCloseds, setIsCloseds] = useState<boolean[]>(() =>
     children.map((child) => child.type === WorkCard),
   )
 
