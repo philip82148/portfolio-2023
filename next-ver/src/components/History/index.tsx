@@ -24,7 +24,7 @@ export const History: React.FC = () => {
           <WorkCard
             type="craft"
             title="ボート(工作)"
-            imageSrc="images/in-preparation.jpg"
+            imageSrc="images/first-boat.jpg"
             caption="父と二人で人が乗れるボートを作った。"
           />
           <WorkCard
@@ -49,14 +49,14 @@ export const History: React.FC = () => {
           <WorkCard
             type="craft"
             title="ボート3台目(工作)"
-            imageSrc="images/in-preparation.jpg"
+            imageSrc="images/third-boat.jpg"
             caption="今度は自分一人で3mのボートを作った。"
           />
           <WorkCard
             type="programming"
             title="SDカードライブラリ"
             url="https://github.com/philip82148/SDCardLibrary"
-            imageSrc="images/sd-card-library.png"
+            imageSrc="images/sd-card-library.jpg"
             caption="電子工作でICレコーダー用に作ったSDカードライブラリ。PICの少ないリソースでも動くようにメモリとプログラムメモリをなるだけ使わないように書いている。"
             techs={['C']}
           />
@@ -102,7 +102,7 @@ export const History: React.FC = () => {
             type="programming"
             title="メンション生成Chrome拡張「M-GEN」"
             url="https://github.com/philip82148/mention-generator"
-            imageSrc="images/mention-generator.png"
+            imageSrc="images/mention-generator.jpg"
             caption="日吉寄宿舎でアンケートに回答しなかった人全員をLINEでメンションしており、手作業で回答していない人を調べてメンションするのは大変なので、自動化するChrome拡張を作った。"
             techs={['jQuery', 'JavaScript', 'HTML', 'CSS']}
           />
@@ -119,7 +119,7 @@ export const History: React.FC = () => {
             title="名簿自動生成アプリ"
             url="https://github.com/philip82148/kishukusha-meibo"
             demoUrl="https://philip82148.github.io/kishukusha-meibo/"
-            imageSrc="images/in-preparation.jpg"
+            imageSrc="images/kishukusha-report-meibo.jpg"
             caption="日吉寄宿舎で寮生の名簿を作る作業があり、電話番号や住所のフォーマットを整える作業が毎年大変だったので、自動化するプログラムを作った。"
             techs={['Next.js', 'TypeScript']}
           />
@@ -128,7 +128,7 @@ export const History: React.FC = () => {
             title="ポートフォリオ"
             url="https://github.com/philip82148/portfolio"
             demoUrl="https://philip82148.github.io/portfolio/"
-            imageSrc="images/in-preparation.jpg"
+            imageSrc="images/portfolio.jpg"
             caption="このポートフォリオを作る。"
             techs={['Next.js', 'TypeScript']}
           />
@@ -157,7 +157,7 @@ export const History: React.FC = () => {
             type="programming"
             title="環境構築と開発の手順"
             url="https://github.com/philip82148/env-setup"
-            imageSrc="images/in-preparation.jpg"
+            imageSrc="images/env-setup.jpg"
             caption="自分の研究室のプログラミングをしたことがない人向けに環境構築と開発の手順のマニュアルを作った。"
           />
           <EpochCard title="現在" />
