@@ -1,5 +1,14 @@
 import { Box, Button, ButtonGroup, Divider, Stack } from '@mui/material'
-import { Fragment, cloneElement, memo, useCallback, useMemo, useState } from 'react'
+import {
+  Fragment,
+  cloneElement,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
 import { WorkCard } from './WorkCard'
 
@@ -15,7 +24,9 @@ export const HistoryBody: React.FC<HistoryBodyProps> = ({ children }) => {
     return nextRightAlign
   }
 
-  const [isCloseds, setIsCloseds] = useState<boolean[]>(() => Array(children.length).fill(false))
+  const [isCloseds, setIsCloseds] = useState<boolean[]>(
+    children.map((child) => child.type === WorkCard),
+  )
 
   const flipIsClosedFuncs = useMemo(() => {
     return [...Array(children.length)].map((_, i) => () => {
@@ -48,8 +59,29 @@ export const HistoryBody: React.FC<HistoryBodyProps> = ({ children }) => {
     setIsCloseds(children.map((child) => child.type === WorkCard))
   }, [children])
 
+  const outermostStackRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!outermostStackRef.current) return
+
+    const observer = new IntersectionObserver(
+      ([entry], observer) => {
+        if (entry.isIntersecting) {
+          onAllClick()
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '0px 0px -50%' },
+    )
+    observer.observe(outermostStackRef.current)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [onAllClick])
+
   return (
-    <Stack alignItems="center" sx={{ width: '100%' }}>
+    <Stack ref={outermostStackRef} alignItems="center" sx={{ width: '100%' }}>
       <Box sx={{ color: '#777' }}>
         <ButtonGroup
           variant="text"
