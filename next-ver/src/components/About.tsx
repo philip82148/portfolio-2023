@@ -55,7 +55,7 @@ export const About: React.FC = () => {
           <Stack sx={{ width: { lg: 400 } }}>
             <NameTypography>Ryota Sasaki</NameTypography>
             <ItemTypography>所属</ItemTypography>
-            <ContentTypography>慶應義塾大学 理工学部 電気情報工学科 4年</ContentTypography>
+            <ContentTypography>東京大学大学院 工学系研究科 電気系工学専攻 1年</ContentTypography>
             <ItemTypography>趣味</ItemTypography>
             <ContentTypography>電子工作/カラオケ/アニメ/ピアノ</ContentTypography>
             <ItemTypography>特技</ItemTypography>
